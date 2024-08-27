@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: "Poppins", sans-serif;
+  line-height: 1.7;
+  color: #fff;
+  background: #1f2641;
+  background-image: url("./assets/images/bg-stars.svg");
+  overflow-x: hidden;
+}
+
+.blurred {
+  filter: blur(1px);
+  transition: filter 0.3s ease;
+}

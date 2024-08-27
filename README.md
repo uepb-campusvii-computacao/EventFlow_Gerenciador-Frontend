@@ -1,2 +1,1 @@
-# GerenciadorEventosSERCOMP
-Gerenciador de Eventos para o SERCOMP | UEPB CCEA CAMPUS VII
+# Front-End do Gerenciador de Eventos para o SERCOMP
