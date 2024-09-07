@@ -1,14 +1,14 @@
+import axiosInstance from "@/axiosInstance";
+import Modal from "@/components/ui/Modal";
+import Title from "@/components/ui/Title";
+import EventContext from "@/context/Event/EventContext";
+import Loading from "@/pages/Loading/Loading";
+import { Trash } from "@phosphor-icons/react";
 import { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaSpinner } from "react-icons/fa";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import axiosInstance from "@/axiosInstance";
-import Title from "@/components/ui/Title";
-import EventContext from "@/context/Event/EventContext";
-import Loading from "@/pages/Loading/Loading";
-import { Trash } from "@phosphor-icons/react";
-import Modal from "@/components/ui/Modal";
 
 const deleteUserDataEndpoint = (user_id) => {
   return `/admin/user/${user_id}`
@@ -28,7 +28,7 @@ const editParticipantDataEndpoint = (user_id) => {
 
 const AdminEdicaoUsuario = () => {
   const { user_id } = useParams();
-  const { events } = useContext(EventContext);
+  const { currentEvent } = useContext(EventContext);
   const [atividades, setAtividades] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const [open, setOpen] = useState(false);
@@ -54,11 +54,11 @@ const AdminEdicaoUsuario = () => {
   useEffect(() => {
     const fetchData = async () => {
       const { data: user } = await axiosInstance.get(
-        getParticipantDataEndpoint(events[0].uuid_evento, user_id)
+        getParticipantDataEndpoint(currentEvent, user_id)
       );
 
       const { data: activities } = await axiosInstance.get(
-        getFormDataEndpoint(events[0].uuid_evento)
+        getFormDataEndpoint(currentEvent)
       );
 
       await Promise.all([user, activities]);

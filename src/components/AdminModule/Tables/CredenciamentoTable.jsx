@@ -14,7 +14,7 @@ const toggleCredenciamentoEndpoint = (id_evento, user_id) => {
 };
 
 const CredenciamentoTable = ({ data }) => {
-  const { events } = useContext(EventContext);
+  const { currentEvent } = useContext(EventContext);
 
   const [users, setUsers] = useState(data);
   const [currentPage, setCurrentPage] = useState(1);
@@ -108,7 +108,7 @@ const CredenciamentoTable = ({ data }) => {
     target.disabled = true;
     try {
       await axiosInstance.put(
-        toggleCredenciamentoEndpoint(events[0].uuid_evento, user_id)
+        toggleCredenciamentoEndpoint(currentEvent, user_id)
       );
       toast.success("Credenciamento Marcado");
     } catch (error) {

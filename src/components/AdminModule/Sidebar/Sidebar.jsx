@@ -3,15 +3,16 @@ import SidebarContext from "@/context/Sidebar/SidebarContext";
 import paths from "@/paths.js";
 import PropTypes from "prop-types";
 import { useContext } from "react";
-import { FaAddressCard, FaGift, FaHome, FaShoppingCart, FaUserEdit } from "react-icons/fa";
-import { FaUserGroup } from "react-icons/fa6";
+import { FaAddressCard, FaBirthdayCake, FaGift, FaHome, FaShoppingCart, FaUserEdit } from "react-icons/fa";
+import { FaTicket, FaUserGroup } from "react-icons/fa6";
+import { Link } from "react-router-dom";
 
 const SidebarItem = ({ nome, link, icon }) => {
   return (
-    <a href={link} className="flex items-center px-3 hover:bg-blue-500 py-2 rounded-lg">
+    <Link to={link} className="flex items-center px-3 hover:bg-blue-500 py-2 rounded-lg">
       {icon}
       <span>{nome}</span>
-    </a>
+    </Link>
   );
 };
 
@@ -35,6 +36,20 @@ const Sidebar = () => {
               nome="Home"
               link={paths.home}
               icon={<FaHome className="w-6 h-6 mr-2 -mt-1" />}
+            />
+          </li>
+          <li className="mb-2 rounded hover:shadow">
+            <SidebarItem 
+              nome="Eventos"
+              link={paths.eventos}
+              icon={<FaBirthdayCake className="w-6 h-6 mr-2 -mt-1" />}
+            />
+          </li>
+          <li className="mb-2 rounded hover:shadow">
+            <SidebarItem 
+              nome="Lotes"
+              link={paths.lotes}
+              icon={<FaTicket className="w-6 h-6 mr-2 -mt-1" />}
             />
           </li>
           <li className="mb-2 rounded hover:shadow">

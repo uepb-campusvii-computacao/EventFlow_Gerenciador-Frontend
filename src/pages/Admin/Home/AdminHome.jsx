@@ -17,12 +17,12 @@ const AdminHome = () => {
     inscricoesPendentes: 0,
     inscricoesGratuitas: 0,
   });
-  const { events } = useContext(EventContext);
+  const { currentEvent } = useContext(EventContext);
 
   useEffect(() => {
     const fetchFinancialInformation = async () => {
       try {
-        const FINANCIAL_INFORMATION_ENDPOINT = `${BACKEND_DEFAULT_URL}/admin/events/${events[0].uuid_evento}/dashboard`;
+        const FINANCIAL_INFORMATION_ENDPOINT = `${BACKEND_DEFAULT_URL}/admin/events/${currentEvent}/dashboard`;
         const response = await axiosInstance.get(FINANCIAL_INFORMATION_ENDPOINT);
 
         const data = response.data;
@@ -45,7 +45,7 @@ const AdminHome = () => {
     };
 
     fetchFinancialInformation();
-  }, [events]);
+  }, [currentEvent]);
 
   return (
     <>
