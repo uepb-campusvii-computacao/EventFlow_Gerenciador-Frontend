@@ -1,16 +1,23 @@
 import AuthContext from "@/context/Auth/AuthContext";
+import EventContext from "@/context/Event/EventContext";
 import PropTypes from "prop-types";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { FaBars } from "react-icons/fa";
 
 const Navbar = ({sidebarOpen, setSidebarOpen}) => {
+  const { currentEvent, getEventDataById } = useContext(EventContext);
+  const [title, setTitle] = useState("Gerenciador de Eventos");
   const { logout } = useContext(AuthContext);
   
+  useEffect(() => {
+    setTitle(getEventDataById(currentEvent).nome);
+  }, [currentEvent, getEventDataById]);
+
   return (
     <div className="bg-gray-800 px-4 flex justify-between">
       <div className="flex items-center text-xl">
         <FaBars className="text-white me-4 cursor-pointer" onClick={() => setSidebarOpen(!sidebarOpen)}/>
-        <span className="text-white font-semibold">Gerenciador de Eventos</span>
+        <span className="text-white font-semibold">{title}</span>
       </div>
       <div className="flex items-center gap-x-5">
         <div className="relative">
