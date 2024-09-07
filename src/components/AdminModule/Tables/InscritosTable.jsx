@@ -1,10 +1,10 @@
+import Pagination from "@/components/ui/Pagination.jsx";
+import paths from "@/paths.js";
 import { DownloadSimple, Funnel, MagnifyingGlass } from "@phosphor-icons/react";
 import PropTypes from "prop-types";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { FaEdit } from "react-icons/fa";
 import * as XLSX from "xlsx";
-import paths from "@/paths.js";
-import Pagination from "@/components/ui/Pagination.jsx";
 import Popover from "../../ui/Popover";
 
 const InscritosTable = ({ data }) => {

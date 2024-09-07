@@ -11,9 +11,9 @@ const Layout = () => {
         <div className="h-full">
           <Sidebar />
         </div>
-        <div className="w-full">
-          <Dashboard />
+        <div className="w-full">          
           <EventProvider>
+            <Dashboard />
             <div className="container mx-auto px-5">
               <Outlet />
             </div>

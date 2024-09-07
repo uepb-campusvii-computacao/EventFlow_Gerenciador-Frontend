@@ -1,8 +1,9 @@
-import { useContext, useEffect, useState } from "react";
-import EventContext from "@/context/Event/EventContext";
 import axiosInstance from "@/axiosInstance";
-import Title from "@/components/ui/Title"
 import ProductCard from "@/components/AdminModule/Cards/ProductCard";
+import Title from "@/components/ui/Title";
+import EventContext from "@/context/Event/EventContext";
+import { useContext, useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 const getProdutosDataEndpoint = (event_id) => {
   return `/events/${event_id}/produtos`;
@@ -10,14 +11,14 @@ const getProdutosDataEndpoint = (event_id) => {
 
 const AdminLoja = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const { events } = useContext(EventContext);
+  const { currentEvent } = useContext(EventContext);
   const [tableData, setTableData] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const { data } = await axiosInstance.get(
-          getProdutosDataEndpoint(events[0].uuid_evento)
+          getProdutosDataEndpoint(currentEvent)
         );
 
         const mappedResponse = data.map((item) => {
@@ -40,7 +41,7 @@ const AdminLoja = () => {
     };
 
     fetchData();
-  }, [events]);
+  }, [currentEvent]);
   return (
     <div className="py-8">
       <Title title={"Produtos"}/>

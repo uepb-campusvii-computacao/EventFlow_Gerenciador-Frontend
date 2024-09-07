@@ -8,13 +8,13 @@ import { toast } from "react-toastify";
 
 const Sorteio = () => {
   const [users, setUsers] = useState([]);
-  const { events } = useContext(EventContext);
+  const { currentEvent } = useContext(EventContext);
   const [load, setLoad] = useState(true);
 
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const { data : { all_subscribers } } = await axiosInstance.get(`/admin/events/${events[0].uuid_evento}/inscricoes`);
+        const { data : { all_subscribers } } = await axiosInstance.get(`/admin/events/${currentEvent}/inscricoes`);
         setUsers(all_subscribers);
       } catch (error) {
         console.error("Erro ao buscar usuários:", error);
@@ -25,7 +25,7 @@ const Sorteio = () => {
     };
 
     fetchUsers();
-  }, [events, setLoad]);
+  }, [currentEvent, setLoad]);
 
   return <>
     {load ? (
