@@ -5,6 +5,7 @@ const paths = {
     credenciamento: "/credenciamento",
     inscritos: "/inscritos",
     home: "/",
+    lotes: "/lotes",
     sorteio_inscritos: "/inscritos/sorteio",
     eventos: "/eventos"
 }

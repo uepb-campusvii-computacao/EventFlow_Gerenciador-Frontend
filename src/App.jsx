@@ -18,6 +18,7 @@ import AdminHome from "./pages/Admin/Home/AdminHome";
 import AdminCompradores from "./pages/Admin/Loja/AdminCompradores";
 import AdminCompras from "./pages/Admin/Loja/AdminCompras";
 import AdminLoja from "./pages/Admin/Loja/AdminLoja";
+import Lotes from "./pages/Admin/Lotes/Lotes";
 import Sorteio from "./pages/Admin/Sorteio/Sorteio";
 import LoginForm from "./pages/Login/LoginForm";
 import NotFound from "./pages/NotFound/NotFound";
@@ -35,6 +36,7 @@ const App = () => {
               <Route exact path={paths.home} element={<AdminHome />} />
               <Route exact path={paths.credenciamento}  element={<AdminCredenciamento />} />
               <Route exact path={paths.eventos} element={<Eventos />} />
+              <Route exact path={paths.lotes} element={<Lotes />} />
               <Route exact path={paths.inscritos} element={<AdminInscritosEvento />} />
               <Route exact path={paths.atividades} element={<AdminAtividades />} />
               <Route exact path={`${paths.participante}/editar/:user_id`} element={<AdminEdicaoUsuario />} />

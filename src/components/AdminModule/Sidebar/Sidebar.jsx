@@ -4,7 +4,7 @@ import paths from "@/paths.js";
 import PropTypes from "prop-types";
 import { useContext } from "react";
 import { FaAddressCard, FaBirthdayCake, FaGift, FaHome, FaShoppingCart, FaUserEdit } from "react-icons/fa";
-import { FaUserGroup } from "react-icons/fa6";
+import { FaTicket, FaUserGroup } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 
 const SidebarItem = ({ nome, link, icon }) => {
@@ -43,6 +43,13 @@ const Sidebar = () => {
               nome="Eventos"
               link={paths.eventos}
               icon={<FaBirthdayCake className="w-6 h-6 mr-2 -mt-1" />}
+            />
+          </li>
+          <li className="mb-2 rounded hover:shadow">
+            <SidebarItem 
+              nome="Lotes"
+              link={paths.lotes}
+              icon={<FaTicket className="w-6 h-6 mr-2 -mt-1" />}
             />
           </li>
           <li className="mb-2 rounded hover:shadow">
