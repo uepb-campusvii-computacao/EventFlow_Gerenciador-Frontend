@@ -87,7 +87,6 @@ const AdminEdicaoUsuario = () => {
       setValue("minicurso", minicurso ? minicurso.uuid_atividade : "");
       setValue("workshop", workshop ? workshop.uuid_atividade : "");
 
-      console.log(atividades)
       setIsLoading(false);
     };
 
