@@ -87,11 +87,12 @@ const AdminEdicaoUsuario = () => {
       setValue("minicurso", minicurso ? minicurso.uuid_atividade : "");
       setValue("workshop", workshop ? workshop.uuid_atividade : "");
 
+      console.log(atividades)
       setIsLoading(false);
     };
 
     fetchData();
-  }, [setValue, events, user_id]);
+  }, [setValue, user_id, currentEvent]);
 
   async function onSubmit(data) {
     try {
