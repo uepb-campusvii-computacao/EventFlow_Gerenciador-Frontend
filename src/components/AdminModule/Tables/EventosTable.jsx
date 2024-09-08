@@ -1,5 +1,6 @@
 import EventContext from "@/context/Event/EventContext";
 import { useContext, useState } from "react";
+import { Link } from "react-router-dom";
 
 const formatarData = (date) => {
     const day = String(date.getDate()).padStart(2, '0');
@@ -42,6 +43,12 @@ export default function EventosTable() {
                             >
                                 Selecionar
                             </th>
+                            <th
+                                scope="col"
+                                className="px-6 py-3 text-center text-xs font-medium text-white uppercase tracking-wider"
+                            >
+                                
+                            </th>
                         </tr>
                     </thead>
                     <tbody className="bg-white divide-y divide-gray-200">
@@ -59,6 +66,9 @@ export default function EventosTable() {
                                         checked={selectedEvent === item.uuid_evento}
                                         onChange={() => handleSwitch(item.uuid_evento)}
                                     />
+                                </td>
+                                <td className="px-6 py-4 whitespace-nowrap text-black text-center">
+                                    <Link to={`editar/${item.uuid_evento}`}> editar </Link>
                                 </td>
                             </tr>
                         ))}
