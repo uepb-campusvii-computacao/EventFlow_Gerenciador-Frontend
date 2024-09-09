@@ -91,7 +91,7 @@ const AdminEdicaoUsuario = () => {
     };
 
     fetchData();
-  }, [setValue, events, user_id]);
+  }, [setValue, user_id, currentEvent]);
 
   async function onSubmit(data) {
     try {
