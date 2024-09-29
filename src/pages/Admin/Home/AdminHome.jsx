@@ -22,7 +22,7 @@ const AdminHome = () => {
   useEffect(() => {
     const fetchFinancialInformation = async () => {
       try {
-        const FINANCIAL_INFORMATION_ENDPOINT = `${BACKEND_DEFAULT_URL}/admin/events/${currentEvent}/dashboard`;
+        const FINANCIAL_INFORMATION_ENDPOINT = `${BACKEND_DEFAULT_URL}/events/${currentEvent}/dashboard`;
         const response = await axiosInstance.get(FINANCIAL_INFORMATION_ENDPOINT);
 
         const data = response.data;

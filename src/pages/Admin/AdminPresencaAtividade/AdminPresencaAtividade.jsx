@@ -12,7 +12,7 @@ const AdminPresencaAtividade = () => {
 
   const fetchData = async (activityId) => {
     try {
-      const response = await axiosInstance.get(`/admin/atividades/${activityId}/inscricoes`);
+      const response = await axiosInstance.get(`/atividades/${activityId}/inscricoes`);
 
       const mappedData = response.data.map((inscrito) => ({
         id: inscrito.uuid_user,

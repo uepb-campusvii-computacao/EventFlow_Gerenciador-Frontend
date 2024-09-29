@@ -11,7 +11,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const deleteUserDataEndpoint = (user_id) => {
-  return `/admin/user/${user_id}`
+  return `/user/${user_id}`
 }
 
 const getParticipantDataEndpoint = (event_id, user_id) => {
@@ -19,11 +19,11 @@ const getParticipantDataEndpoint = (event_id, user_id) => {
 };
 
 const getFormDataEndpoint = (event_id) => {
-  return `/admin/events/${event_id}/atividades`;
+  return `/events/${event_id}/atividades`;
 };
 
 const editParticipantDataEndpoint = (user_id) => {
-  return `/admin/user/${user_id}`;
+  return `/user/${user_id}`;
 };
 
 const AdminEdicaoUsuario = () => {
