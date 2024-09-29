@@ -16,7 +16,7 @@ export const EventProvider = ({ children }) => {
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const response = await axiosInstance.get(`/admin/user/${userInfo.id}/events`);
+        const response = await axiosInstance.get(`/user/${userInfo.id}/events`);
         const fetchedEvents = response.data;
         setEvents(fetchedEvents);
         if (fetchedEvents.length > 0) {

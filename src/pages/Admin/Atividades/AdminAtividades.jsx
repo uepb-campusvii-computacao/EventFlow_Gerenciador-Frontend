@@ -7,7 +7,7 @@ import { useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
 const getAtividadesDataEndpoint = (event_id) => {
-  return `/admin/events/${event_id}/atividades`;
+  return `/events/${event_id}/atividades`;
 };
 
 const AdminAtividades = () => {
