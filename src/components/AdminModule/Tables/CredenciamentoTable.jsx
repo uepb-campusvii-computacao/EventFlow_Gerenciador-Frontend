@@ -10,7 +10,7 @@ import * as XLSX from "xlsx";
 import Popover from "../../ui/Popover";
 
 const toggleCredenciamentoEndpoint = (id_evento, user_id) => {
-  return `${BACKEND_DEFAULT_URL}/admin/events/${id_evento}/inscricoes/credenciamento/${user_id}`;
+  return `${BACKEND_DEFAULT_URL}/events/${id_evento}/inscricoes/credenciamento/${user_id}`;
 };
 
 const CredenciamentoTable = ({ data }) => {
@@ -227,7 +227,7 @@ const CredenciamentoTable = ({ data }) => {
               <tr key={item.id}>
                 <td className="hidden">{item.id}</td>
                 <td
-                title={item.email}
+                  title={item.email}
                   className={`px-6 py-4 whitespace-nowrap text-black text-center`}
                 >
                   {item.name}

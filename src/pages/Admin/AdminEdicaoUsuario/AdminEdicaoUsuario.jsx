@@ -11,11 +11,11 @@ import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const deleteUserDataEndpoint = (user_id) => {
-  return `/user/${user_id}`
-}
+  return `/user/${user_id}`;
+};
 
 const getParticipantDataEndpoint = (event_id, user_id) => {
-  return `/event/${event_id}/inscricao/${user_id}`;
+  return `/events/${event_id}/inscricao/${user_id}`;
 };
 
 const getFormDataEndpoint = (event_id) => {
@@ -43,12 +43,10 @@ const AdminEdicaoUsuario = () => {
     mode: "all",
   });
 
-  async function handleDeleteUser(){
-    await axiosInstance.delete(
-      deleteUserDataEndpoint(user_id)
-    );
+  async function handleDeleteUser() {
+    await axiosInstance.delete(deleteUserDataEndpoint(user_id));
 
-    navigate("/inscritos")
+    navigate("/inscritos");
   }
 
   useEffect(() => {
@@ -330,7 +328,12 @@ const AdminEdicaoUsuario = () => {
             </p>
           </div>
           <div className="flex gap-4">
-            <button onClick={() => handleDeleteUser()} className="bg-red-500 rounded-md px-3 py-2 w-full">Excluir</button>
+            <button
+              onClick={() => handleDeleteUser()}
+              className="bg-red-500 rounded-md px-3 py-2 w-full"
+            >
+              Excluir
+            </button>
             <button
               className="bg-blue-300 rounded-md px-3 py-2 w-full"
               onClick={() => setOpen(false)}
