@@ -14,12 +14,14 @@ const Sorteio = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const { data : { all_subscribers } } = await axiosInstance.get(`/admin/events/${currentEvent}/inscricoes`);
+        const {
+          data: { all_subscribers },
+        } = await axiosInstance.get(`/events/${currentEvent}/inscricoes`);
         setUsers(all_subscribers);
       } catch (error) {
         console.error("Erro ao buscar usuários:", error);
         toast.error("Erro ao buscar usuários");
-      }finally{
+      } finally {
         setLoad(false);
       }
     };
@@ -27,17 +29,18 @@ const Sorteio = () => {
     fetchUsers();
   }, [currentEvent, setLoad]);
 
-  return <>
-    {load ? (
-      <Loading />
-    ) : (
-      <>
-        <Title title="Sorteio de Inscritos" />
-        <Raffle data={users} />
-      </>
-    )
-    }
-  </>;
+  return (
+    <>
+      {load ? (
+        <Loading />
+      ) : (
+        <>
+          <Title title="Sorteio de Inscritos" />
+          <Raffle data={users} />
+        </>
+      )}
+    </>
+  );
 };
 
 export default Sorteio;
