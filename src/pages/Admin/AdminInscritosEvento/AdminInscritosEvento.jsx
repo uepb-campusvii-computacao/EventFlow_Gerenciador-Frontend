@@ -7,7 +7,7 @@ import { useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
 const inscricoesEndpoint = (id_evento) => {
-  return `/admin/events/${id_evento}/inscricoes`;
+  return `/events/${id_evento}/inscricoes`;
 };
 
 const AdminInscritosEvento = () => {

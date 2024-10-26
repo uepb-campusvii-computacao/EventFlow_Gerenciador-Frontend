@@ -1,43 +1,48 @@
 import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import * as XLSX from 'xlsx';
+import * as XLSX from "xlsx";
 import axiosInstance from "../../../axiosInstance";
 
 const PresencaTable = ({ data, atividadeId }) => {
-  const [atividade, setAtividade] = useState({name: "Carregando...", responsaveis: "Sem Informação na Base de Dados"})
+  const [atividade, setAtividade] = useState({
+    name: "Carregando...",
+    responsaveis: "Sem Informação na Base de Dados",
+  });
 
   useEffect(() => {
-    const fetchData = async () =>{
-      try{
-        const {data} = await axiosInstance.get(`/admin/atividades/${atividadeId}`)
-        
-        setAtividade(prev => { 
-          return {...prev, name: data.nome}
-        })
-      }catch(error){
-        toast.error("Erro ao pegar dados do servidor, tente novamente")
+    const fetchData = async () => {
+      try {
+        const { data } = await axiosInstance.get(`/atividades/${atividadeId}`);
+
+        setAtividade((prev) => {
+          return { ...prev, name: data.nome };
+        });
+      } catch (error) {
+        toast.error("Erro ao pegar dados do servidor, tente novamente");
       }
-    }
+    };
 
     fetchData();
-  }, [atividadeId])
+  }, [atividadeId]);
 
   const marcarPresenca = async (user_id, { target }) => {
-    target.disabled = true
-    try{
-      await axiosInstance.put(`/admin/atividades/${atividadeId}/inscricoes/${user_id}/frequencia`)
-      toast.success("Presença registrada!")
-    }catch(error){
-      target.checked = !target.checked
+    target.disabled = true;
+    try {
+      await axiosInstance.put(
+        `/admin/atividades/${atividadeId}/inscricoes/${user_id}/frequencia`
+      );
+      toast.success("Presença registrada!");
+    } catch (error) {
+      target.checked = !target.checked;
       console.error("Erro ao marcar presença:", error);
-      toast.error("Não foi possível executar a ação")      
+      toast.error("Não foi possível executar a ação");
     }
-    target.disabled = false
-  }
+    target.disabled = false;
+  };
 
   const sanitizeFilename = (filename) => {
-    return filename.replace(/[<>:"/\\|?*]+/g, '-');
+    return filename.replace(/[<>:"/\\|?*]+/g, "-");
   };
 
   const convertToXLSX = () => {
@@ -46,20 +51,26 @@ const PresencaTable = ({ data, atividadeId }) => {
       Email: item.email,
       Presenca: item.presenca ? "Presente" : "Ausente",
     }));
-  
+
     const workbook = XLSX.utils.book_new();
     const worksheet = XLSX.utils.json_to_sheet(excelData);
-    XLSX.utils.book_append_sheet(workbook, worksheet, 'Presenças');
-  
-    const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
-  
-    const blob = new Blob([excelBuffer], {
-      type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8',
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Presenças");
+
+    const excelBuffer = XLSX.write(workbook, {
+      bookType: "xlsx",
+      type: "array",
     });
-  
+
+    const blob = new Blob([excelBuffer], {
+      type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8",
+    });
+
     const link = document.createElement("a");
     link.href = window.URL.createObjectURL(blob);
-    link.setAttribute("download", sanitizeFilename(`Lista Presença - ${atividade.name}.xlsx`));
+    link.setAttribute(
+      "download",
+      sanitizeFilename(`Lista Presença - ${atividade.name}.xlsx`)
+    );
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -68,8 +79,14 @@ const PresencaTable = ({ data, atividadeId }) => {
   return (
     <div className="flex flex-col">
       <div className="flex flex-col py-5">
-        <span><strong className="text-yellow-500">Atividade: </strong>{atividade.name}</span>
-        <span><strong className="text-yellow-500">Responsáveis: </strong>{atividade.responsaveis}</span>
+        <span>
+          <strong className="text-yellow-500">Atividade: </strong>
+          {atividade.name}
+        </span>
+        <span>
+          <strong className="text-yellow-500">Responsáveis: </strong>
+          {atividade.responsaveis}
+        </span>
       </div>
       <div className="w-full overflow-x-auto rounded-lg">
         <table className="w-full">
@@ -135,10 +152,10 @@ PresencaTable.propTypes = {
       id: PropTypes.string.isRequired,
       name: PropTypes.string.isRequired,
       email: PropTypes.string.isRequired,
-      presenca: PropTypes.bool.isRequired
+      presenca: PropTypes.bool.isRequired,
     })
   ).isRequired,
-  atividadeId: PropTypes.string.isRequired
+  atividadeId: PropTypes.string.isRequired,
 };
 
 export default PresencaTable;

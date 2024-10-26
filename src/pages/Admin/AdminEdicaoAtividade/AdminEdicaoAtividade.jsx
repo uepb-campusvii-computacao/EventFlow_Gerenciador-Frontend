@@ -1,14 +1,14 @@
+import axiosInstance from "@/axiosInstance";
+import Title from "@/components/ui/Title";
+import Loading from "@/pages/Loading/Loading";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaSpinner } from "react-icons/fa";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import axiosInstance from "@/axiosInstance";
-import Title from "@/components/ui/Title";
-import Loading from "@/pages/Loading/Loading";
 
 const fetchDataEndpoint = (atividade_id) => {
-  return `/admin/atividades/${atividade_id}`;
+  return `/atividades/${atividade_id}`;
 };
 
 const AdminEdicaoAtividade = () => {
