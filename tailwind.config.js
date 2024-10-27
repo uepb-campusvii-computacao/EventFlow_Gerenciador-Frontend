@@ -19,7 +19,10 @@ export default {
       }
   }
  },
-  plugins: [],
+  plugins: [
+  // eslint-disable-next-line no-undef
+  require('@tailwindcss/typography'),
+  ],
   variants: {
     extend: {
       display: ["focus-group"]
