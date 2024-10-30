@@ -1,35 +1,13 @@
 import PropTypes from "prop-types";
+import { useEffect, useState } from "react";
 import { FaEdit, FaSearch } from "react-icons/fa";
 import * as XLSX from "xlsx";
 import paths from "../../../paths.js";
-import { useEffect, useState } from "react";
 
 const AtividadesTable = ({ data }) => {
-<<<<<<< HEAD
-  const [atividadesExibidas, setAtividadesExibidas] = useState([]);
-  const [tipoAtividadeSelecionada, setTipoAtividadeSelecionada] = useState(null);
-  const [tiposAtividades, setTiposAtividades] = useState([]);
-
-  useEffect(() => {
-    if (data && typeof data === "object") {
-      const tiposComAtividades = Object.keys(data).filter(tipo => data[tipo].length > 0);
-      setTiposAtividades(tiposComAtividades);
-  
-      if (tiposComAtividades.length > 0) {
-        const atividadesFiltradas = Array.isArray(data[tiposComAtividades[0]])
-          ? data[tiposComAtividades[0]]
-          : [];
-        setAtividadesExibidas(atividadesFiltradas);
-        setTipoAtividadeSelecionada(tiposComAtividades[0]);
-      }
-    }
-    console.log(data);
-  }, [data]);
-=======
   const [atividadesExibidas, setAtividadesExibidas] = useState(data);
   const [tipoAtividadeSelecionada, setTipoAtividadeSelecionada] =
     useState(null);
->>>>>>> 77e92003745688637b5d20943994ae02be8b5056
 
   function filtrarAtividades(tipoAtividade) {
     const atividadesFiltradas = data.filter(
