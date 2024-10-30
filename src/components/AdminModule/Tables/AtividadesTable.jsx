@@ -13,13 +13,18 @@ const AtividadesTable = ({ data }) => {
     if (data && typeof data === "object") {
       const tiposComAtividades = Object.keys(data).filter(tipo => data[tipo].length > 0);
       setTiposAtividades(tiposComAtividades);
-
+  
       if (tiposComAtividades.length > 0) {
-        filtrarAtividades(tiposComAtividades[0]);
+        const atividadesFiltradas = Array.isArray(data[tiposComAtividades[0]])
+          ? data[tiposComAtividades[0]]
+          : [];
+        setAtividadesExibidas(atividadesFiltradas);
+        setTipoAtividadeSelecionada(tiposComAtividades[0]);
       }
     }
     console.log(data);
   }, [data]);
+  
 
   function filtrarAtividades(tipoAtividade) {
     const atividadesFiltradas = Array.isArray(data[tipoAtividade])

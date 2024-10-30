@@ -1,8 +1,7 @@
+import paths from '@/paths.js';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
-import paths from '@/paths.js';
 import AdminLayout from './components/AdminModule/Layout/Layout';
 import { AuthProvider } from './context/Auth/AuthContext';
 import PrivateRoute from './context/Auth/PrivateRoute';
