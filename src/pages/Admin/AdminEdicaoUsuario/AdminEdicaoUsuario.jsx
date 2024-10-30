@@ -45,6 +45,7 @@ const AdminEdicaoUsuario = () => {
 
   async function handleDeleteUser() {
     await axiosInstance.delete(deleteUserDataEndpoint(user_id));
+
     navigate("/inscritos");
   }
 
@@ -58,11 +59,14 @@ const AdminEdicaoUsuario = () => {
         getFormDataEndpoint(currentEvent)
       );
 
+      await Promise.all([user, activities]);
+
       setAtividades(activities);
 
       const {
         personal_user_information: { nome, nome_cracha, email, instituicao },
         status_pagamento,
+        atividades,
       } = user;
 
       setValue("nome", nome);
@@ -71,11 +75,15 @@ const AdminEdicaoUsuario = () => {
       setValue("instituicao", instituicao);
       setValue("status_pagamento", status_pagamento);
 
-      // Preencher valores de atividades de acordo com a estrutura dinâmica
-      Object.keys(activities).forEach((tipo) => {
-        const atividade = activities[tipo][0]; // Supondo que você quer pegar a primeira atividade
-        setValue(tipo, atividade ? atividade.uuid_atividade : "");
-      });
+      const oficina = atividades.find((a) => a.tipo_atividade === "OFICINA");
+      const minicurso = atividades.find(
+        (a) => a.tipo_atividade === "MINICURSO"
+      );
+      const workshop = atividades.find((a) => a.tipo_atividade === "WORKSHOP");
+
+      setValue("oficina", oficina ? oficina.uuid_atividade : "");
+      setValue("minicurso", minicurso ? minicurso.uuid_atividade : "");
+      setValue("workshop", workshop ? workshop.uuid_atividade : "");
 
       setIsLoading(false);
     };
@@ -110,46 +118,153 @@ const AdminEdicaoUsuario = () => {
         <div className="flex flex-col gap-4">
           <h2 className="text-lg font-bold">Dados Pessoais</h2>
           <div className="grid gap-4 sm:grid-cols-1 md:grid-cols-2">
-            {/* Campos de Dados Pessoais */}
-            {['nome', 'nome_cracha', 'email', 'instituicao'].map((field) => (
-              <div className="flex flex-col" key={field}>
-                <label htmlFor={field} className="block mb-2 text-sm text-gray-900 font-bold">
-                  {field === 'nome' ? 'Nome' : field === 'nome_cracha' ? 'Nome Cracha' : field === 'email' ? 'E-Mail' : 'Instituição'}
-                </label>
-                <input
-                  required
-                  type={field === 'email' ? 'email' : 'text'}
-                  id={field}
-                  placeholder={field === 'nome' ? 'Nome' : field === 'nome_cracha' ? 'Nome no crachá' : field === 'email' ? 'Email' : 'Instituição'}
-                  className={`${isSubmitting ? "blurred" : ""} input text-gray-900 bg-white shadow border border-gray-300 rounded h-10 p-3`}
-                  {...register(field, { required: true })}
-                  disabled={isSubmitting}
-                />
-              </div>
-            ))}
+            <div className="flex flex-col">
+              <label
+                htmlFor="first_name"
+                className="block mb-2 text-sm text-gray-900 font-bold"
+              >
+                Nome
+              </label>
+              <input
+                required
+                type="text"
+                id="first_name"
+                placeholder="Nome"
+                className={`${
+                  isSubmitting ? "blurred" : ""
+                } input text-gray-900 bg-white shadow border border-gray-300 rounded h-10 p-3`}
+                {...register("nome", { required: true })}
+                disabled={isSubmitting}
+              />
+            </div>
+            <div className="flex flex-col">
+              <label
+                htmlFor="nome_cracha"
+                className="block mb-2 text-sm text-gray-900 font-bold"
+              >
+                Nome Cracha
+              </label>
+              <input
+                required
+                type="text"
+                id="nome_cracha"
+                placeholder="Nome no crachá"
+                className={`${
+                  isSubmitting ? "blurred" : ""
+                } input text-gray-900 bg-white shadow border border-gray-300 rounded h-10 p-3`}
+                {...register("nome_cracha", { required: true })}
+                disabled={isSubmitting}
+              />
+            </div>
+
+            <div className="flex flex-col">
+              <label
+                htmlFor="email"
+                className="block mb-2 text-sm text-gray-900 font-bold"
+              >
+                E-Mail
+              </label>
+              <input
+                required
+                type="email"
+                id="email"
+                placeholder="Email"
+                className={`${
+                  isSubmitting ? "blurred" : ""
+                } input text-gray-900 bg-white shadow border border-gray-300 rounded h-10 p-3`}
+                {...register("email", { required: true })}
+                disabled={isSubmitting}
+              />
+            </div>
+
+            <div className="flex flex-col">
+              <label
+                htmlFor="instituicao"
+                className="block mb-2 text-sm text-gray-900 font-bold"
+              >
+                Instituição
+              </label>
+              <input
+                required
+                type="text"
+                id="instituicao"
+                placeholder="Instituição"
+                className={`${
+                  isSubmitting ? "blurred" : ""
+                } input text-gray-900 bg-white shadow border border-gray-300 rounded h-10 p-3`}
+                {...register("instituicao", { required: true })}
+                disabled={isSubmitting}
+              />
+            </div>
           </div>
         </div>
 
         <div className="flex flex-col">
           <p className="text-lg font-bold">Atividades</p>
           <div className="flex flex-col gap-4 w-full">
-            {Object.keys(atividades)
-              .filter((tipo) => atividades[tipo].length > 0) // Filtra tipos de atividades com dados
-              .map((tipo) => (
-                <select
-                  key={tipo}
-                  className={`${isSubmitting ? "blurred" : ""} select text-gray-900 bg-white shadow border border-gray-300 rounded p-3`}
-                  {...register(tipo)}
-                  disabled={isSubmitting}
-                >
-                  <option value="">{`${tipo.charAt(0).toUpperCase() + tipo.slice(1)}...`}</option>
-                  {atividades[tipo].map((atividade) => (
-                    <option key={atividade.uuid_atividade} value={atividade.uuid_atividade}>
-                      {atividade.nome} - Vagas {`(${atividade._count}/${atividade.max_participants})`}
+            <select
+              className={`${
+                isSubmitting ? "blurred" : ""
+              } select text-gray-900 bg-white shadow border border-gray-300 rounded p-3`}
+              {...register("minicurso")}
+              disabled={isSubmitting}
+            >
+              <option value="">Minicurso...</option>
+              {Array.isArray(atividades) &&
+                atividades
+                  .filter((a) => a.tipo_atividade === "MINICURSO")
+                  .map((minicurso) => (
+                    <option
+                      key={minicurso.uuid_atividade}
+                      value={minicurso.uuid_atividade}
+                    >
+                      {minicurso.nome} - Vagas{" "}
+                      {`(${minicurso._count.userAtividade}/${minicurso.max_participants})`}
                     </option>
                   ))}
-                </select>
-              ))}
+            </select>
+            <select
+              className={`${
+                isSubmitting ? "blurred" : ""
+              } select text-gray-900 bg-white shadow border border-gray-300 rounded p-3`}
+              {...register("workshop")}
+              disabled={isSubmitting}
+            >
+              <option value="">Workshop...</option>
+              {Array.isArray(atividades) &&
+                atividades
+                  .filter((a) => a.tipo_atividade === "WORKSHOP")
+                  .map((workshop) => (
+                    <option
+                      key={workshop.uuid_atividade}
+                      value={workshop.uuid_atividade}
+                    >
+                      {workshop.nome} - Vagas{" "}
+                      {`(${workshop._count.userAtividade}/${workshop.max_participants})`}
+                    </option>
+                  ))}
+            </select>
+            <select
+              className={`${
+                isSubmitting ? "blurred" : ""
+              } select text-gray-900 bg-white shadow border border-gray-300 rounded p-3`}
+              {...register("oficina")}
+              disabled={isSubmitting}
+            >
+              <option value="">Oficina...</option>
+              {Array.isArray(atividades) &&
+                atividades
+                  .filter((a) => a.tipo_atividade === "OFICINA")
+                  .map((oficina) => (
+                    <option
+                      key={oficina.uuid_atividade}
+                      value={oficina.uuid_atividade}
+                    >
+                      {oficina.nome} - Vagas{" "}
+                      {`(${oficina._count.userAtividade}/${oficina.max_participants})`}
+                    </option>
+                  ))}
+            </select>
           </div>
         </div>
 
@@ -157,7 +272,9 @@ const AdminEdicaoUsuario = () => {
           <p className="text-lg font-bold">Status de Pagamento</p>
           <select
             {...register("status_pagamento")}
-            className={`${isSubmitting ? "blurred" : ""} select text-gray-900 bg-white shadow border border-gray-300 rounded p-3`}
+            className={`${
+              isSubmitting ? "blurred" : ""
+            } select text-gray-900 bg-white shadow border border-gray-300 rounded p-3`}
           >
             <option value="">Selecione o Status de Pagamento...</option>
             <option value="PENDENTE">Pendente</option>

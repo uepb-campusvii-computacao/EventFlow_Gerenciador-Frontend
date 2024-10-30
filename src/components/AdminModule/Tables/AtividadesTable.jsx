@@ -1,10 +1,11 @@
 import PropTypes from "prop-types";
-import { useEffect, useState } from "react";
 import { FaEdit, FaSearch } from "react-icons/fa";
 import * as XLSX from "xlsx";
 import paths from "../../../paths.js";
+import { useEffect, useState } from "react";
 
 const AtividadesTable = ({ data }) => {
+<<<<<<< HEAD
   const [atividadesExibidas, setAtividadesExibidas] = useState([]);
   const [tipoAtividadeSelecionada, setTipoAtividadeSelecionada] = useState(null);
   const [tiposAtividades, setTiposAtividades] = useState([]);
@@ -24,14 +25,24 @@ const AtividadesTable = ({ data }) => {
     }
     console.log(data);
   }, [data]);
+=======
+  const [atividadesExibidas, setAtividadesExibidas] = useState(data);
+  const [tipoAtividadeSelecionada, setTipoAtividadeSelecionada] =
+    useState(null);
+>>>>>>> 77e92003745688637b5d20943994ae02be8b5056
 
   function filtrarAtividades(tipoAtividade) {
-    const atividadesFiltradas = Array.isArray(data[tipoAtividade])
-      ? data[tipoAtividade]
-      : [];
+    const atividadesFiltradas = data.filter(
+      (atividade) => atividade.tipo_atividade === tipoAtividade
+    );
+
     setAtividadesExibidas(atividadesFiltradas);
     setTipoAtividadeSelecionada(tipoAtividade);
   }
+
+  useEffect(() => {
+    filtrarAtividades("MINICURSO");
+  }, []);
 
   const convertToXLSX = () => {
     const excelData = atividadesExibidas.map((item) => ({
@@ -43,10 +54,10 @@ const AtividadesTable = ({ data }) => {
     const workbook = XLSX.utils.book_new();
     const worksheet = XLSX.utils.json_to_sheet(excelData);
 
-    worksheet["!cols"] = [
-      { wch: 70 },
-      { wch: 10 },
-      { wch: 10 },
+    worksheet['!cols'] = [
+      { wch: 70 }, // Largura da coluna para 'Atividade'
+      { wch: 10 }, // Largura da coluna para 'Inscricoes'
+      { wch: 10 }, // Largura da coluna para 'Vagas'
     ];
 
     XLSX.utils.book_append_sheet(workbook, worksheet, "Inscrições");
@@ -72,33 +83,62 @@ const AtividadesTable = ({ data }) => {
     <div className="flex flex-col">
       <div className="w-full overflow-x-auto rounded-lg">
         <div className="w-full flex flex-col items-center justify-center sm:gap-12 gap-4 sm:flex-row sm:mb-8 mb-4">
-          {tiposAtividades.map((tipo) => (
-            <button
-              key={tipo}
-              onClick={() => filtrarAtividades(tipo)}
-              className={`hover:bg-blue-900 w-full ${
-                tipoAtividadeSelecionada === tipo
-                  ? "bg-blue-900"
-                  : "bg-indigo-500"
-              } transition-colors font-bold text-3xl px-4 py-3 text-center rounded-md shadow-md`}
-            >
-              {tipo.charAt(0).toUpperCase() + tipo.slice(1)}
-            </button>
-          ))}
+          <button
+            onClick={() => filtrarAtividades("MINICURSO")}
+            className={`hover:bg-blue-900 w-full ${
+              tipoAtividadeSelecionada === "MINICURSO"
+                ? "bg-blue-900"
+                : "bg-indigo-500"
+            } transition-colors font-bold text-3xl px-4 py-3 text-center rounded-md shadow-md`}
+          >
+            Minicursos
+          </button>
+          <button
+            onClick={() => filtrarAtividades("OFICINA")}
+            className={`hover:bg-blue-900 w-full ${
+              tipoAtividadeSelecionada === "OFICINA"
+                ? "bg-blue-900"
+                : "bg-indigo-500"
+            } transition-colors font-bold text-3xl px-4 py-3 text-center rounded-md shadow-md`}
+          >
+            Oficinas
+          </button>
+          <button
+            onClick={() => filtrarAtividades("WORKSHOP")}
+            className={`hover:bg-blue-900 w-full ${
+              tipoAtividadeSelecionada === "WORKSHOP"
+                ? "bg-blue-900"
+                : "bg-indigo-500"
+            } transition-colors font-bold text-3xl px-4 py-3 text-center rounded-md shadow-md`}
+          >
+            Workshops
+          </button>
         </div>
         <table className="w-full">
           <thead className="bg-indigo-500">
             <tr>
-              <th scope="col" className="px-6 py-3 text-center text-xs font-medium text-white uppercase tracking-wider">
+              <th
+                scope="col"
+                className="px-6 py-3 text-center text-xs font-medium text-white uppercase tracking-wider"
+              >
                 Atividade
               </th>
-              <th scope="col" className="px-6 py-3 text-center text-xs font-medium text-white uppercase tracking-wider">
+              <th
+                scope="col"
+                className="px-6 py-3 text-center text-xs font-medium text-white uppercase tracking-wider"
+              >
                 Vagas
               </th>
-              <th scope="col" className="px-6 py-3 text-center text-xs font-medium text-white uppercase tracking-wider">
+              <th
+                scope="col"
+                className="px-6 py-3 text-center text-xs font-medium text-white uppercase tracking-wider"
+              >
                 Lista de Presença
               </th>
-              <th scope="col" className="px-6 py-3 text-center text-xs font-medium text-white uppercase tracking-wider">
+              <th
+                scope="col"
+                className="px-6 py-3 text-center text-xs font-medium text-white uppercase tracking-wider"
+              >
                 Ações
               </th>
             </tr>
@@ -146,16 +186,12 @@ const AtividadesTable = ({ data }) => {
 };
 
 AtividadesTable.propTypes = {
-  data: PropTypes.objectOf(
-    PropTypes.arrayOf(
-      PropTypes.shape({
-        id: PropTypes.string.isRequired,
-        name: PropTypes.string.isRequired,
-        inscricoes: PropTypes.number.isRequired,
-        max_participants: PropTypes.number.isRequired,
-        tipo_atividade: PropTypes.string.isRequired, // Novo campo adicionado para tipo de atividade
-      })
-    )
+  data: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      inscricoes: PropTypes.number.isRequired,
+    })
   ).isRequired,
 };
 
