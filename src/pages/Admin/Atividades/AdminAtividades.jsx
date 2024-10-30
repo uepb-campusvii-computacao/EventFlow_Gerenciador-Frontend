@@ -36,8 +36,6 @@ const AdminAtividades = () => {
           {}
         );
 
-        console.log(mappedResponse);
-
         setTableData(mappedResponse);
       } catch (error) {
         console.error("Erro ao buscar inscritos:", error);
