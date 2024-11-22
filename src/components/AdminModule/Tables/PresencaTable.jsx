@@ -30,7 +30,7 @@ const PresencaTable = ({ data, atividadeId }) => {
     target.disabled = true;
     try {
       await axiosInstance.put(
-        `/admin/atividades/${atividadeId}/inscricoes/${user_id}/frequencia`
+        `/atividades/${atividadeId}/inscricoes/${user_id}/frequencia`
       );
       toast.success("Presença registrada!");
     } catch (error) {
