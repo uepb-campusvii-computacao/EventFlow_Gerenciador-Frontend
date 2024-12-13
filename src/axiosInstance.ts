@@ -8,7 +8,7 @@ const axiosInstance = axios.create({
 });
 
 axiosInstance.interceptors.request.use(
-  (config) => {
+  config => {
     const tokenData = localStorage.getItem('authToken');
     if (tokenData) {
       const { token } = JSON.parse(tokenData);
@@ -16,17 +16,17 @@ axiosInstance.interceptors.request.use(
     }
     return config;
   },
-  (error) => {
+  error => {
     console.error('Erro ao configurar request:', error);
     return Promise.reject(error);
   }
 );
 
 axiosInstance.interceptors.response.use(
-  (response) => {
+  response => {
     return response;
   },
-  (error) => {
+  error => {
     const status = error.response ? error.response.status : null;
 
     if (status === 401) {
