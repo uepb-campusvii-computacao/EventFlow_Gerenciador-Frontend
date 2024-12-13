@@ -1,23 +1,36 @@
 import axios from 'axios';
-import PropTypes from 'prop-types';
-import { createContext, useState } from 'react';
+import { createContext, ReactNode, useContext, useState } from 'react';
 import { toast } from 'react-toastify';
 import { BACKEND_DEFAULT_URL } from '../../backendPaths';
-
-const AuthContext = createContext();
+import { IUserDataLogin } from '../domain/entities/userEntity';
 
 const defaultAuthenticationState = localStorage.getItem('authToken')
   ? true
   : false;
-const defaultUserInfo = JSON.parse(localStorage.getItem('userInfo'));
 
-export const AuthProvider = ({ children }) => {
+// qual o sentido dessa linha sendo que o objeto vai ser carregado apenas no login -> não entendi mto bem
+const defaultUserInfo = JSON.parse(localStorage.getItem('userInfo')!);
+
+interface IAuthContext {
+  isAuthenticated: boolean;
+  userInfo: any; // qual o tipo desse dado ?
+  login: (data: IUserDataLogin) => Promise<void>;
+  logout: () => void;
+}
+
+const AuthContext = createContext({} as IAuthContext);
+
+interface IAuthProviderProps {
+  children: ReactNode;
+}
+
+export function AuthProvider({ children }: IAuthProviderProps) {
   const [isAuthenticated, setIsAuthenticated] = useState(
     defaultAuthenticationState
   );
   const [userInfo, setUserInfo] = useState(defaultUserInfo);
 
-  const login = async data => {
+  const login = async (data: IUserDataLogin) => {
     try {
       const response = await axios.post(`${BACKEND_DEFAULT_URL}/login`, data);
       const { token, user_id } = response.data;
@@ -49,10 +62,9 @@ export const AuthProvider = ({ children }) => {
       {children}
     </AuthContext.Provider>
   );
-};
+}
 
-AuthProvider.propTypes = {
-  children: PropTypes.node.isRequired,
-};
-
-export default AuthContext;
+export function useAuthContext() {
+  const context = useContext(AuthContext);
+  return context;
+}

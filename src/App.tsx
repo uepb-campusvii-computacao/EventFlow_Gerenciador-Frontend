@@ -2,8 +2,6 @@ import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import AdminLayout from './components/AdminModule/Layout/Layout';
-import { AuthProvider } from './context/Auth/AuthContext';
-import PrivateRoute from './context/Auth/PrivateRoute';
 import AdminEdicaoAtividade from './pages/Admin/AdminEdicaoAtividade/AdminEdicaoAtividade';
 import AdminEdicaoEvento from './pages/Admin/AdminEdicaoEvento/AdminEdicaoEvento';
 import AdminEdicaoProduto from './pages/Admin/AdminEdicaoProduto/AdminEdicaoProduto';
@@ -19,9 +17,11 @@ import AdminCompras from './pages/Admin/Loja/AdminCompras';
 import AdminLoja from './pages/Admin/Loja/AdminLoja';
 import Lotes from './pages/Admin/Lotes/Lotes';
 import Sorteio from './pages/Admin/Sorteio/Sorteio';
-import LoginForm from './pages/Login/LoginForm';
-import NotFound from './pages/NotFound/NotFound';
 import { paths } from './paths';
+import { AuthProvider } from './auth/hooks/useAuthContext';
+import { PrivateRoute } from './auth/components/PrivateRoute';
+import { LoginFormPage } from './auth/pages/LoginFormPage';
+import { NotFoundPage } from './auth/pages/NotFoundPage';
 
 export function App() {
   return (
@@ -36,7 +36,7 @@ export function App() {
         />
 
         <Routes>
-          <Route path='/login' element={<LoginForm />} />
+          <Route path='/login' element={<LoginFormPage />} />
           <Route element={<PrivateRoute />}>
             <Route element={<AdminLayout />}>
               <Route path={paths.home} element={<AdminHome />} />
@@ -84,7 +84,7 @@ export function App() {
                 path={`${paths.inscritos}/sorteio`}
                 element={<Sorteio />}
               />
-              <Route path='*' element={<NotFound />} />
+              <Route path='*' element={<NotFoundPage />} />
             </Route>
           </Route>
         </Routes>

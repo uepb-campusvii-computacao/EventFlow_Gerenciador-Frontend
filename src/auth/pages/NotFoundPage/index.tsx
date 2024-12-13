@@ -1,4 +1,4 @@
-const NotFound = () => {
+export function NotFoundPage() {
   return (
     <div className='mx-auto max-w-screen-xl px-4 py-8 lg:px-6 lg:py-16'>
       <div className='mx-auto max-w-screen-sm text-center'>
@@ -21,6 +21,4 @@ const NotFound = () => {
       </div>
     </div>
   );
-};
-
-export default NotFound;
+}

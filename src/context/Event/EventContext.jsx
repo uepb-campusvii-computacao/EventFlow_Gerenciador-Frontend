@@ -3,7 +3,7 @@ import { createContext, useContext, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import axiosInstance from '../../axiosInstance';
 import Loading from '../../pages/Loading/Loading';
-import AuthContext from '../Auth/AuthContext';
+import {useAuthContext} from '../../auth/hooks/useAuthContext'
 
 const EventContext = createContext();
 
@@ -11,7 +11,7 @@ export const EventProvider = ({ children }) => {
   const [events, setEvents] = useState([]);
   const [currentEvent, setCurrentEvent] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-  const { userInfo } = useContext(AuthContext);
+  const { userInfo } = useAuthContext();
 
   useEffect(() => {
     const fetchEvents = async () => {

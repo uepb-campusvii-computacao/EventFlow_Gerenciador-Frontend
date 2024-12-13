@@ -1,22 +1,32 @@
-import logo from '@/assets/images/logo.png';
-import AuthContext from '@/context/Auth/AuthContext';
-import { Eye, EyeSlash } from '@phosphor-icons/react';
-import { useContext, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
 
-const LoginForm = () => {
+import { Eye, EyeSlash } from '@phosphor-icons/react';
+import logo from '@/assets/images/logo.png';
+
+import { useAuthContext } from '../../hooks/useAuthContext';
+import { IUserDataLogin } from '../../domain/entities/userEntity';
+
+export function LoginFormPage() {
+  const [passwordVisibility, setPasswordVisibility] = useState(false);
+
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
-  const [passwordVisibility, setPasswordVisibility] = useState(false);
-  const { login } = useContext(AuthContext);
+  } = useForm<IUserDataLogin>({
+    defaultValues: {
+      email: '',
+      senha: '',
+    },
+  });
+
+  const { login } = useAuthContext();
   const navigate = useNavigate();
 
-  const onSubmit = async data => {
-    await login(data);
+  const onSubmit = async (data: IUserDataLogin) => {
+    login(data);
     navigate('/');
   };
 
@@ -91,6 +101,4 @@ const LoginForm = () => {
       </div>
     </div>
   );
-};
-
-export default LoginForm;
+}
