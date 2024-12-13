@@ -1,13 +1,13 @@
-import axiosInstance from "../../../axiosInstance";
-import Title from "@/components/ui/Title";
-import Loading from "@/pages/Loading/Loading";
-import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-import { FaSpinner } from "react-icons/fa";
-import { useParams } from "react-router-dom";
-import { toast } from "react-toastify";
+import axiosInstance from '../../../axiosInstance';
+import Title from '@/components/ui/Title';
+import Loading from '@/pages/Loading/Loading';
+import { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { FaSpinner } from 'react-icons/fa';
+import { useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
-const fetchProductDataEndpoint = (produto_id) => {
+const fetchProductDataEndpoint = produto_id => {
   return `/loja/produtos/${produto_id}`;
 };
 
@@ -22,7 +22,7 @@ const AdminEdicaoProduto = () => {
     formState: { isSubmitting },
     setValue,
   } = useForm({
-    mode: "all",
+    mode: 'all',
   });
 
   useEffect(() => {
@@ -33,10 +33,10 @@ const AdminEdicaoProduto = () => {
 
       setProduct(data);
 
-      setValue("nome", data.nome);
-      setValue("descricao", data.descricao);
-      setValue("estoque", data.estoque);
-      setValue("preco", data.preco.toFixed(2));
+      setValue('nome', data.nome);
+      setValue('descricao', data.descricao);
+      setValue('estoque', data.estoque);
+      setValue('preco', data.preco.toFixed(2));
 
       setIsLoading(false);
     };
@@ -45,16 +45,16 @@ const AdminEdicaoProduto = () => {
   }, [setValue, produto_id]);
 
   async function onSubmit(data) {
-    console.log(data)
+    console.log(data);
     try {
       await axiosInstance.put(fetchProductDataEndpoint(produto_id), {
         ...data,
         imagem_url: product.imagem_url,
       });
-      toast.success("Produto Atualizado!");
+      toast.success('Produto Atualizado!');
     } catch (error) {
       console.log(error);
-      toast.error("Erro ao atualizar produto!");
+      toast.error('Erro ao atualizar produto!');
     }
   }
 
@@ -63,101 +63,101 @@ const AdminEdicaoProduto = () => {
   }
 
   return (
-    <section className="max-w-3xl mx-auto">
-      <Title title="Editar Produto" />
+    <section className='mx-auto max-w-3xl'>
+      <Title title='Editar Produto' />
 
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col gap-10 max-w-3xl mx-auto bg-white p-7 rounded-lg text-black shadow"
+        className='mx-auto flex max-w-3xl flex-col gap-10 rounded-lg bg-white p-7 text-black shadow'
       >
-        <div className="flex flex-col gap-4">
-          <div className="flex flex-col gap-4">
-            <div className="flex flex-col items-center gap-8 sm:flex-row">
+        <div className='flex flex-col gap-4'>
+          <div className='flex flex-col gap-4'>
+            <div className='flex flex-col items-center gap-8 sm:flex-row'>
               <img
-                className="rounded-full h-[250px] w-[250px] border-[8px] border-indigo-800"
+                className='h-[250px] w-[250px] rounded-full border-[8px] border-indigo-800'
                 src={product.imagem_url}
                 alt={product.nome}
               />
-              <div className="flex flex-col gap-4 w-full">
-                <div className="flex flex-col w-full">
+              <div className='flex w-full flex-col gap-4'>
+                <div className='flex w-full flex-col'>
                   <label
-                    htmlFor="nome"
-                    className="block mb-2 text-sm text-gray-900 font-bold"
+                    htmlFor='nome'
+                    className='mb-2 block text-sm font-bold text-gray-900'
                   >
                     Nome
                   </label>
                   <input
                     required
-                    type="text"
-                    id="nome"
-                    placeholder="Nome"
+                    type='text'
+                    id='nome'
+                    placeholder='Nome'
                     className={`${
-                      isSubmitting ? "blurred" : ""
-                    } input text-gray-900 bg-white shadow border border-gray-300 rounded h-10 p-3`}
-                    {...register("nome", { required: true })}
+                      isSubmitting ? 'blurred' : ''
+                    } input h-10 rounded border border-gray-300 bg-white p-3 text-gray-900 shadow`}
+                    {...register('nome', { required: true })}
                     disabled={isSubmitting}
                   />
                 </div>
-                <div className="flex flex-col w-full">
+                <div className='flex w-full flex-col'>
                   <label
-                    htmlFor="descricao"
-                    className="block mb-2 text-sm text-gray-900 font-bold"
+                    htmlFor='descricao'
+                    className='mb-2 block text-sm font-bold text-gray-900'
                   >
                     Descrição
                   </label>
                   <textarea
                     required
-                    type="text"
-                    id="descricao"
-                    placeholder="descricao"
+                    type='text'
+                    id='descricao'
+                    placeholder='descricao'
                     className={`${
-                      isSubmitting ? "blurred" : ""
-                    } input text-gray-900 bg-white shadow border border-gray-300 rounded h-40 p-3`}
-                    {...register("descricao", { required: true })}
+                      isSubmitting ? 'blurred' : ''
+                    } input h-40 rounded border border-gray-300 bg-white p-3 text-gray-900 shadow`}
+                    {...register('descricao', { required: true })}
                     disabled={isSubmitting}
                   />
                 </div>
               </div>
             </div>
 
-            <div className="flex flex-col gap-8 sm:flex-row">
-              <div className="flex flex-col w-full">
+            <div className='flex flex-col gap-8 sm:flex-row'>
+              <div className='flex w-full flex-col'>
                 <label
-                  htmlFor="estoque"
-                  className="block mb-2 text-sm text-gray-900 font-bold"
+                  htmlFor='estoque'
+                  className='mb-2 block text-sm font-bold text-gray-900'
                 >
                   Estoque
                 </label>
                 <input
                   required
-                  type="number"
-                  id="estoque"
-                  placeholder="Estoque"
+                  type='number'
+                  id='estoque'
+                  placeholder='Estoque'
                   className={`${
-                    isSubmitting ? "blurred" : ""
-                  } input text-gray-900 bg-white shadow border border-gray-300 rounded h-10 p-3`}
-                  {...register("estoque", { required: true })}
+                    isSubmitting ? 'blurred' : ''
+                  } input h-10 rounded border border-gray-300 bg-white p-3 text-gray-900 shadow`}
+                  {...register('estoque', { required: true })}
                   disabled={isSubmitting}
                 />
               </div>
 
-              <div className="flex flex-col w-full">
+              <div className='flex w-full flex-col'>
                 <label
-                  htmlFor="preco"
-                  className="block mb-2 text-sm text-gray-900 font-bold"
+                  htmlFor='preco'
+                  className='mb-2 block text-sm font-bold text-gray-900'
                 >
                   Valor
                 </label>
                 <input
                   required
-                  type="text"
-                  inputMode="numeric"
-                  id="preco"
-                  placeholder="valor"
+                  type='text'
+                  inputMode='numeric'
+                  id='preco'
+                  placeholder='valor'
                   className={`${
-                    isSubmitting ? "blurred" : ""
-                  } input text-gray-900 bg-white shadow border border-gray-300 rounded h-10 p-3`}
-                  {...register("preco", { required: true })}
+                    isSubmitting ? 'blurred' : ''
+                  } input h-10 rounded border border-gray-300 bg-white p-3 text-gray-900 shadow`}
+                  {...register('preco', { required: true })}
                   disabled={isSubmitting}
                 />
               </div>
@@ -165,19 +165,19 @@ const AdminEdicaoProduto = () => {
           </div>
         </div>
 
-        <div className="flex items-center justify-center gap-4 flex-col sm:flex-row">
+        <div className='flex flex-col items-center justify-center gap-4 sm:flex-row'>
           <button
-            type="submit"
+            type='submit'
             disabled={isSubmitting}
-            className="btn-primary inline-flex items-center justify-center rounded h-10 bg-green-400 w-60 text-white font-bold"
+            className='btn-primary inline-flex h-10 w-60 items-center justify-center rounded bg-green-400 font-bold text-white'
           >
             {isSubmitting ? (
               <>
-                <FaSpinner className="animate-spin mr-2" />
+                <FaSpinner className='mr-2 animate-spin' />
                 Aguarde...
               </>
             ) : (
-              "Salvar"
+              'Salvar'
             )}
           </button>
         </div>

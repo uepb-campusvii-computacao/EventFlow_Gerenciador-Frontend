@@ -1,13 +1,13 @@
-import axiosInstance from "@/axiosInstance";
-import { BACKEND_DEFAULT_URL } from "@/backendPaths";
-import Pagination from "@/components/ui/Pagination.jsx";
-import EventContext from "@/context/Event/EventContext.jsx";
-import { DownloadSimple, Funnel, MagnifyingGlass } from "@phosphor-icons/react";
-import PropTypes from "prop-types";
-import { useContext, useState } from "react";
-import { toast } from "react-toastify";
-import * as XLSX from "xlsx";
-import Popover from "../../ui/Popover";
+import axiosInstance from '@/axiosInstance';
+import { BACKEND_DEFAULT_URL } from '@/backendPaths';
+import Pagination from '@/components/ui/Pagination.jsx';
+import EventContext from '@/context/Event/EventContext.jsx';
+import { DownloadSimple, Funnel, MagnifyingGlass } from '@phosphor-icons/react';
+import PropTypes from 'prop-types';
+import { useContext, useState } from 'react';
+import { toast } from 'react-toastify';
+import * as XLSX from 'xlsx';
+import Popover from '../../ui/Popover';
 
 const toggleCredenciamentoEndpoint = (id_evento, user_id) => {
   return `${BACKEND_DEFAULT_URL}/events/${id_evento}/inscricoes/credenciamento/${user_id}`;
@@ -23,14 +23,14 @@ const CredenciamentoTable = ({ data }) => {
 
   const [filterOpen, setFilterOpen] = useState(false);
 
-  const [filter, setFilter] = useState("");
+  const [filter, setFilter] = useState('');
 
   const indexOfLastUser = currentPage * usersPerPage;
   const indexOfFirstUser = indexOfLastUser - usersPerPage;
   const currentUsers = users.slice(indexOfFirstUser, indexOfLastUser);
 
   function searchUser(nome_user) {
-    const filteredUsers = data.filter((user) =>
+    const filteredUsers = data.filter(user =>
       user.name.toLowerCase().includes(nome_user.toLowerCase())
     );
     setUsers(filteredUsers);
@@ -49,24 +49,24 @@ const CredenciamentoTable = ({ data }) => {
     }
   };
 
-  const paginateToggle = (page_number) => {
+  const paginateToggle = page_number => {
     setCurrentPage(page_number);
   };
 
   const convertToExcel = () => {
-    const excelData = data.map((item) => ({
+    const excelData = data.map(item => ({
       ID: item.id,
       Nome: item.name,
-      "Nome no crachá": item.nome_cracha,
+      'Nome no crachá': item.nome_cracha,
       Email: item.email,
       Pagamento: item.paymentStatus,
-      Credenciamento: item.credential ? "Sim" : "Não",
+      Credenciamento: item.credential ? 'Sim' : 'Não',
     }));
 
     const workbook = XLSX.utils.book_new();
     const worksheet = XLSX.utils.json_to_sheet(excelData);
 
-    worksheet["!cols"] = [
+    worksheet['!cols'] = [
       { wch: 40 },
       { wch: 40 },
       { wch: 30 },
@@ -75,20 +75,20 @@ const CredenciamentoTable = ({ data }) => {
       { wch: 20 },
     ];
 
-    XLSX.utils.book_append_sheet(workbook, worksheet, "Dados");
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Dados');
 
     const excelBuffer = XLSX.write(workbook, {
-      bookType: "xlsx",
-      type: "array",
+      bookType: 'xlsx',
+      type: 'array',
     });
 
     const blob = new Blob([excelBuffer], {
-      type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8",
+      type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8',
     });
 
-    const link = document.createElement("a");
+    const link = document.createElement('a');
     link.href = window.URL.createObjectURL(blob);
-    link.setAttribute("download", "Credenciamento.xlsx");
+    link.setAttribute('download', 'Credenciamento.xlsx');
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -96,11 +96,11 @@ const CredenciamentoTable = ({ data }) => {
 
   function toggleFilter(value) {
     if (filter === value) {
-      setFilter("");
+      setFilter('');
       setUsers(data);
     } else {
       setFilter(value);
-      setUsers(data.filter((item) => item.paymentStatus === value));
+      setUsers(data.filter(item => item.paymentStatus === value));
     }
   }
 
@@ -110,27 +110,27 @@ const CredenciamentoTable = ({ data }) => {
       await axiosInstance.put(
         toggleCredenciamentoEndpoint(currentEvent, user_id)
       );
-      toast.success("Credenciamento Marcado");
+      toast.success('Credenciamento Marcado');
     } catch (error) {
       target.checked = !target.checked;
-      console.error("Erro ao marcar credenciamento:", error);
-      toast.error("Erro ao marcar credenciamento");
+      console.error('Erro ao marcar credenciamento:', error);
+      toast.error('Erro ao marcar credenciamento');
     }
     target.disabled = false;
   };
 
   return (
-    <div className="flex flex-col">
-      <div className="relative flex items-center w-full my-4 gap-4">
+    <div className='flex flex-col'>
+      <div className='relative my-4 flex w-full items-center gap-4'>
         <input
-          onChange={(e) => searchUser(e.target.value)}
-          className="rounded-md bg-white px-3 py-2 text-gray-600 w-full pl-12"
-          placeholder="Pesquise pelo nome"
-          type="text"
+          onChange={e => searchUser(e.target.value)}
+          className='w-full rounded-md bg-white px-3 py-2 pl-12 text-gray-600'
+          placeholder='Pesquise pelo nome'
+          type='text'
         />
         <MagnifyingGlass
-          className="absolute left-3"
-          color="#1d4ed8"
+          className='absolute left-3'
+          color='#1d4ed8'
           size={24}
         />
         <Popover
@@ -138,38 +138,38 @@ const CredenciamentoTable = ({ data }) => {
           togglePopover={() => setFilterOpen(!filterOpen)}
           icon={<Funnel size={28} />}
         >
-          <div className="text-black flex flex-col gap-2">
+          <div className='flex flex-col gap-2 text-black'>
             <label
-              htmlFor="realizado"
-              className={`bg-gray-200 px-3 py-2 text-sm rounded-md hover:bg-gray-400 transition-colors ${
-                filter === "REALIZADO" && "bg-gray-400"
+              htmlFor='realizado'
+              className={`rounded-md bg-gray-200 px-3 py-2 text-sm transition-colors hover:bg-gray-400 ${
+                filter === 'REALIZADO' && 'bg-gray-400'
               }`}
             >
               <input
-                onChange={(e) => toggleFilter(e.target.value)}
-                value="REALIZADO"
-                checked={filter === "REALIZADO"}
-                className="hidden"
-                type="checkbox"
-                name=""
-                id="realizado"
+                onChange={e => toggleFilter(e.target.value)}
+                value='REALIZADO'
+                checked={filter === 'REALIZADO'}
+                className='hidden'
+                type='checkbox'
+                name=''
+                id='realizado'
               />
               <span>REALIZADO</span>
             </label>
             <label
-              htmlFor="gratuito"
-              className={`bg-gray-200 px-3 py-2 text-sm rounded-md hover:bg-gray-400 transition-colors ${
-                filter === "GRATUITO" && "bg-gray-400"
+              htmlFor='gratuito'
+              className={`rounded-md bg-gray-200 px-3 py-2 text-sm transition-colors hover:bg-gray-400 ${
+                filter === 'GRATUITO' && 'bg-gray-400'
               }`}
             >
               <input
-                onChange={(e) => toggleFilter(e.target.value)}
-                value="GRATUITO"
-                checked={filter === "gratuito"}
-                className="hidden"
-                type="checkbox"
-                name=""
-                id="gratuito"
+                onChange={e => toggleFilter(e.target.value)}
+                value='GRATUITO'
+                checked={filter === 'gratuito'}
+                className='hidden'
+                type='checkbox'
+                name=''
+                id='gratuito'
               />
               <span>GRATUITO</span>
             </label>
@@ -177,88 +177,88 @@ const CredenciamentoTable = ({ data }) => {
         </Popover>
         <button
           onClick={convertToExcel}
-          title="Exportar XLSX"
-          className="bg-green-500 text-white p-2 rounded-md"
+          title='Exportar XLSX'
+          className='rounded-md bg-green-500 p-2 text-white'
         >
           <DownloadSimple size={28} />
         </button>
       </div>
-      <div className="w-full overflow-x-auto rounded-lg">
-        <table className="w-full">
-          <thead className="bg-indigo-500">
+      <div className='w-full overflow-x-auto rounded-lg'>
+        <table className='w-full'>
+          <thead className='bg-indigo-500'>
             <tr>
-              <th scope="col" className="hidden">
+              <th scope='col' className='hidden'>
                 ID
               </th>
               <th
-                scope="col"
-                className="px-6 py-3 text-center text-xs font-medium text-white uppercase tracking-wider"
+                scope='col'
+                className='px-6 py-3 text-center text-xs font-medium uppercase tracking-wider text-white'
               >
                 Nome
               </th>
               <th
-                scope="col"
-                className="px-6 py-3 text-center text-xs font-medium text-white uppercase tracking-wider"
+                scope='col'
+                className='px-6 py-3 text-center text-xs font-medium uppercase tracking-wider text-white'
               >
                 Nome no crachá
               </th>
               <th
-                scope="col"
-                className="px-6 py-3 text-center text-xs font-medium text-white uppercase tracking-wider"
+                scope='col'
+                className='px-6 py-3 text-center text-xs font-medium uppercase tracking-wider text-white'
               >
                 Email
               </th>
               <th
-                scope="col"
-                className="px-6 py-3 text-center text-xs font-medium text-white uppercase tracking-wider"
+                scope='col'
+                className='px-6 py-3 text-center text-xs font-medium uppercase tracking-wider text-white'
               >
                 Status
               </th>
               <th
-                scope="col"
-                className="px-6 py-3 text-center text-xs font-medium text-white uppercase tracking-wider"
+                scope='col'
+                className='px-6 py-3 text-center text-xs font-medium uppercase tracking-wider text-white'
               >
                 Credenciamento
               </th>
             </tr>
           </thead>
-          <tbody className="bg-white divide-y divide-gray-200">
-            {currentUsers.map((item) => (
+          <tbody className='divide-y divide-gray-200 bg-white'>
+            {currentUsers.map(item => (
               <tr key={item.id}>
-                <td className="hidden">{item.id}</td>
+                <td className='hidden'>{item.id}</td>
                 <td
                   title={item.email}
-                  className={`px-6 py-4 whitespace-nowrap text-black text-center`}
+                  className={`whitespace-nowrap px-6 py-4 text-center text-black`}
                 >
                   {item.name}
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-black text-center">
+                <td className='whitespace-nowrap px-6 py-4 text-center text-black'>
                   {item.nome_cracha}
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-black text-center">
+                <td className='whitespace-nowrap px-6 py-4 text-center text-black'>
                   {item.email}
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-black text-center flex justify-center">
-                  {item.paymentStatus === "REALIZADO" ? (
-                    <span className="bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">
+                <td className='flex justify-center whitespace-nowrap px-6 py-4 text-center text-black'>
+                  {item.paymentStatus === 'REALIZADO' ? (
+                    <span className='me-2 rounded bg-green-100 px-2.5 py-0.5 text-xs font-medium text-green-800 dark:bg-green-900 dark:text-green-300'>
                       {item.paymentStatus}
                     </span>
-                  ) : item.paymentStatus === "PENDENTE" ? (
-                    <span className="bg-red-100 text-red-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-red-900 dark:text-red-300">
+                  ) : item.paymentStatus === 'PENDENTE' ? (
+                    <span className='me-2 rounded bg-red-100 px-2.5 py-0.5 text-xs font-medium text-red-800 dark:bg-red-900 dark:text-red-300'>
                       {item.paymentStatus}
                     </span>
                   ) : (
-                    <span className="bg-gray-400 text-white text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-400 dark:text-white">
+                    <span className='me-2 rounded bg-gray-400 px-2.5 py-0.5 text-xs font-medium text-white dark:bg-gray-400 dark:text-white'>
                       {item.paymentStatus}
                     </span>
                   )}
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-black text-center">
+                <td className='whitespace-nowrap px-6 py-4 text-center text-black'>
                   <input
-                    type="checkbox"
-                    className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+                    type='checkbox'
+                    className='h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500'
                     defaultChecked={item.credential}
-                    onClick={(ref) => toggleCredential(item.id, ref)}
+                    onClick={ref => toggleCredential(item.id, ref)}
                   />
                 </td>
               </tr>
@@ -267,7 +267,7 @@ const CredenciamentoTable = ({ data }) => {
         </table>
       </div>
       {users.length > usersPerPage && (
-        <div className="flex items-center w-full justify-center px-8 py-3">
+        <div className='flex w-full items-center justify-center px-8 py-3'>
           <Pagination
             usersPerPage={usersPerPage}
             totalUsers={users.length}

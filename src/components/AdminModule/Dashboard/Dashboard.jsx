@@ -1,4 +1,4 @@
-import SidebarContext from "@/context/Sidebar/SidebarContext";
+import SidebarContext from '@/context/Sidebar/SidebarContext';
 import { useContext } from 'react';
 import Navbar from '../Navbar/Navbar';
 
@@ -7,11 +7,8 @@ const Dashboard = () => {
 
   return (
     <div className={`w-full`}>
-      <Navbar 
-        sidebarOpen={sidebarOpen}
-        setSidebarOpen={setSidebarOpen}
-      />
+      <Navbar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
     </div>
-  )
-}
-export default Dashboard
+  );
+};
+export default Dashboard;
