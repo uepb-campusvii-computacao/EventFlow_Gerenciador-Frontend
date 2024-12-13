@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
 import { FaEdit, FaSearch } from "react-icons/fa";
 import * as XLSX from "xlsx";
-import paths from "../../../paths.js";
+import { paths } from "../../../paths";
 
 const AtividadesTable = ({ data }) => {
   const [atividadesExibidas, setAtividadesExibidas] = useState([]);

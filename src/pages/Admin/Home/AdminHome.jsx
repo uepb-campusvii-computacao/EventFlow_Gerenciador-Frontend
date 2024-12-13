@@ -1,4 +1,4 @@
-import axiosInstance from "@/axiosInstance";
+import axiosInstance from "../../../axiosInstance";
 import { BACKEND_DEFAULT_URL } from "@/backendPaths";
 import InfoCard from "@/components/AdminModule/Cards/InfoCard";
 import PieChart from "@/components/ui/charts/PieChart/PieChart";

@@ -1,4 +1,4 @@
-import axiosInstance from "@/axiosInstance";
+import axiosInstance from "../../../axiosInstance";
 import AtividadesTable from "@/components/AdminModule/Tables/AtividadesTable";
 import Title from "@/components/ui/Title";
 import EventContext from "@/context/Event/EventContext";

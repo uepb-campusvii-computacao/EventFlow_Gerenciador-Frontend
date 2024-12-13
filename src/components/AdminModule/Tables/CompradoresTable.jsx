@@ -2,7 +2,7 @@ import { DownloadSimple, MagnifyingGlass } from "@phosphor-icons/react";
 import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import * as XLSX from "xlsx";
-import paths from "@/paths.js";
+import { paths } from "@/paths";
 import Pagination from "@/components/ui/Pagination.jsx";
 
 const CompradoresTable = ({ data, produto_id }) => {

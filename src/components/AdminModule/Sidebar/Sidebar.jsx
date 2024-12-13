@@ -1,6 +1,6 @@
 import logo from "@/assets/images/logo.png";
 import SidebarContext from "@/context/Sidebar/SidebarContext";
-import paths from "@/paths.js";
+import { paths } from "@/paths";
 import PropTypes from "prop-types";
 import { useContext } from "react";
 import { FaAddressCard, FaBirthdayCake, FaGift, FaHome, FaShoppingCart, FaUserEdit } from "react-icons/fa";

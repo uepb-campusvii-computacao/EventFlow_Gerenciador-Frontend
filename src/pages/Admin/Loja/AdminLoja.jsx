@@ -1,4 +1,4 @@
-import axiosInstance from "@/axiosInstance";
+import axiosInstance from "../../../axiosInstance";
 import ProductCard from "@/components/AdminModule/Cards/ProductCard";
 import Title from "@/components/ui/Title";
 import EventContext from "@/context/Event/EventContext";

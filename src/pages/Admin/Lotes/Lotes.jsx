@@ -1,4 +1,4 @@
-import axiosInstance from "@/axiosInstance";
+import axiosInstance from "../../../axiosInstance";
 import LotesTable from "@/components/AdminModule/Tables/LotesTable";
 import Title from "@/components/ui/Title";
 import EventContext from "@/context/Event/EventContext";
