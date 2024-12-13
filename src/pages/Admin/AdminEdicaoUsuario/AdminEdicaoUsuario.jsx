@@ -1,16 +1,16 @@
-import axiosInstance from "../../../axiosInstance";
-import Modal from "@/components/ui/Modal";
-import Title from "@/components/ui/Title";
-import EventContext from "@/context/Event/EventContext";
-import Loading from "@/pages/Loading/Loading";
-import { Trash } from "@phosphor-icons/react";
-import { useContext, useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-import { FaSpinner } from "react-icons/fa";
-import { useNavigate, useParams } from "react-router-dom";
-import { toast } from "react-toastify";
+import axiosInstance from '../../../axiosInstance';
+import Modal from '@/components/ui/Modal';
+import Title from '@/components/ui/Title';
+import EventContext from '@/context/Event/EventContext';
+import Loading from '@/pages/Loading/Loading';
+import { Trash } from '@phosphor-icons/react';
+import { useContext, useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { FaSpinner } from 'react-icons/fa';
+import { useNavigate, useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
-const deleteUserDataEndpoint = (user_id) => {
+const deleteUserDataEndpoint = user_id => {
   return `/user/${user_id}`;
 };
 
@@ -18,11 +18,11 @@ const getParticipantDataEndpoint = (event_id, user_id) => {
   return `/events/${event_id}/inscricao/${user_id}`;
 };
 
-const getFormDataEndpoint = (event_id) => {
+const getFormDataEndpoint = event_id => {
   return `/events/${event_id}/atividades`;
 };
 
-const editParticipantDataEndpoint = (user_id) => {
+const editParticipantDataEndpoint = user_id => {
   return `/user/${user_id}`;
 };
 
@@ -40,13 +40,13 @@ const AdminEdicaoUsuario = () => {
     formState: { isSubmitting },
     setValue,
   } = useForm({
-    mode: "all",
+    mode: 'all',
   });
 
   async function handleDeleteUser() {
     await axiosInstance.delete(deleteUserDataEndpoint(user_id));
 
-    navigate("/inscritos");
+    navigate('/inscritos');
   }
 
   useEffect(() => {
@@ -69,21 +69,19 @@ const AdminEdicaoUsuario = () => {
         atividades,
       } = user;
 
-      setValue("nome", nome);
-      setValue("nome_cracha", nome_cracha);
-      setValue("email", email);
-      setValue("instituicao", instituicao);
-      setValue("status_pagamento", status_pagamento);
+      setValue('nome', nome);
+      setValue('nome_cracha', nome_cracha);
+      setValue('email', email);
+      setValue('instituicao', instituicao);
+      setValue('status_pagamento', status_pagamento);
 
-      const oficina = atividades.find((a) => a.tipo_atividade === "OFICINA");
-      const minicurso = atividades.find(
-        (a) => a.tipo_atividade === "MINICURSO"
-      );
-      const workshop = atividades.find((a) => a.tipo_atividade === "WORKSHOP");
+      const oficina = atividades.find(a => a.tipo_atividade === 'OFICINA');
+      const minicurso = atividades.find(a => a.tipo_atividade === 'MINICURSO');
+      const workshop = atividades.find(a => a.tipo_atividade === 'WORKSHOP');
 
-      setValue("oficina", oficina ? oficina.uuid_atividade : "");
-      setValue("minicurso", minicurso ? minicurso.uuid_atividade : "");
-      setValue("workshop", workshop ? workshop.uuid_atividade : "");
+      setValue('oficina', oficina ? oficina.uuid_atividade : '');
+      setValue('minicurso', minicurso ? minicurso.uuid_atividade : '');
+      setValue('workshop', workshop ? workshop.uuid_atividade : '');
 
       setIsLoading(false);
     };
@@ -96,10 +94,10 @@ const AdminEdicaoUsuario = () => {
       await axiosInstance.put(editParticipantDataEndpoint(user_id), {
         ...data,
       });
-      toast.success("Participante Atualizado!");
+      toast.success('Participante Atualizado!');
     } catch (error) {
       console.log(error);
-      toast.error("Erro ao atualizar participante!");
+      toast.error('Erro ao atualizar participante!');
     }
   }
 
@@ -108,159 +106,159 @@ const AdminEdicaoUsuario = () => {
   }
 
   return (
-    <section className="max-w-3xl mx-auto">
-      <Title title="Editar Usuário" />
+    <section className='mx-auto max-w-3xl'>
+      <Title title='Editar Usuário' />
 
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col gap-10 max-w-3xl mx-auto bg-white p-7 rounded-lg text-black shadow"
+        className='mx-auto flex max-w-3xl flex-col gap-10 rounded-lg bg-white p-7 text-black shadow'
       >
-        <div className="flex flex-col gap-4">
-          <h2 className="text-lg font-bold">Dados Pessoais</h2>
-          <div className="grid gap-4 sm:grid-cols-1 md:grid-cols-2">
-            <div className="flex flex-col">
+        <div className='flex flex-col gap-4'>
+          <h2 className='text-lg font-bold'>Dados Pessoais</h2>
+          <div className='grid gap-4 sm:grid-cols-1 md:grid-cols-2'>
+            <div className='flex flex-col'>
               <label
-                htmlFor="first_name"
-                className="block mb-2 text-sm text-gray-900 font-bold"
+                htmlFor='first_name'
+                className='mb-2 block text-sm font-bold text-gray-900'
               >
                 Nome
               </label>
               <input
                 required
-                type="text"
-                id="first_name"
-                placeholder="Nome"
+                type='text'
+                id='first_name'
+                placeholder='Nome'
                 className={`${
-                  isSubmitting ? "blurred" : ""
-                } input text-gray-900 bg-white shadow border border-gray-300 rounded h-10 p-3`}
-                {...register("nome", { required: true })}
+                  isSubmitting ? 'blurred' : ''
+                } input h-10 rounded border border-gray-300 bg-white p-3 text-gray-900 shadow`}
+                {...register('nome', { required: true })}
                 disabled={isSubmitting}
               />
             </div>
-            <div className="flex flex-col">
+            <div className='flex flex-col'>
               <label
-                htmlFor="nome_cracha"
-                className="block mb-2 text-sm text-gray-900 font-bold"
+                htmlFor='nome_cracha'
+                className='mb-2 block text-sm font-bold text-gray-900'
               >
                 Nome Cracha
               </label>
               <input
                 required
-                type="text"
-                id="nome_cracha"
-                placeholder="Nome no crachá"
+                type='text'
+                id='nome_cracha'
+                placeholder='Nome no crachá'
                 className={`${
-                  isSubmitting ? "blurred" : ""
-                } input text-gray-900 bg-white shadow border border-gray-300 rounded h-10 p-3`}
-                {...register("nome_cracha", { required: true })}
+                  isSubmitting ? 'blurred' : ''
+                } input h-10 rounded border border-gray-300 bg-white p-3 text-gray-900 shadow`}
+                {...register('nome_cracha', { required: true })}
                 disabled={isSubmitting}
               />
             </div>
 
-            <div className="flex flex-col">
+            <div className='flex flex-col'>
               <label
-                htmlFor="email"
-                className="block mb-2 text-sm text-gray-900 font-bold"
+                htmlFor='email'
+                className='mb-2 block text-sm font-bold text-gray-900'
               >
                 E-Mail
               </label>
               <input
                 required
-                type="email"
-                id="email"
-                placeholder="Email"
+                type='email'
+                id='email'
+                placeholder='Email'
                 className={`${
-                  isSubmitting ? "blurred" : ""
-                } input text-gray-900 bg-white shadow border border-gray-300 rounded h-10 p-3`}
-                {...register("email", { required: true })}
+                  isSubmitting ? 'blurred' : ''
+                } input h-10 rounded border border-gray-300 bg-white p-3 text-gray-900 shadow`}
+                {...register('email', { required: true })}
                 disabled={isSubmitting}
               />
             </div>
 
-            <div className="flex flex-col">
+            <div className='flex flex-col'>
               <label
-                htmlFor="instituicao"
-                className="block mb-2 text-sm text-gray-900 font-bold"
+                htmlFor='instituicao'
+                className='mb-2 block text-sm font-bold text-gray-900'
               >
                 Instituição
               </label>
               <input
                 required
-                type="text"
-                id="instituicao"
-                placeholder="Instituição"
+                type='text'
+                id='instituicao'
+                placeholder='Instituição'
                 className={`${
-                  isSubmitting ? "blurred" : ""
-                } input text-gray-900 bg-white shadow border border-gray-300 rounded h-10 p-3`}
-                {...register("instituicao", { required: true })}
+                  isSubmitting ? 'blurred' : ''
+                } input h-10 rounded border border-gray-300 bg-white p-3 text-gray-900 shadow`}
+                {...register('instituicao', { required: true })}
                 disabled={isSubmitting}
               />
             </div>
           </div>
         </div>
 
-        <div className="flex flex-col">
-          <p className="text-lg font-bold">Atividades</p>
-          <div className="flex flex-col gap-4 w-full">
+        <div className='flex flex-col'>
+          <p className='text-lg font-bold'>Atividades</p>
+          <div className='flex w-full flex-col gap-4'>
             <select
               className={`${
-                isSubmitting ? "blurred" : ""
-              } select text-gray-900 bg-white shadow border border-gray-300 rounded p-3`}
-              {...register("minicurso")}
+                isSubmitting ? 'blurred' : ''
+              } select rounded border border-gray-300 bg-white p-3 text-gray-900 shadow`}
+              {...register('minicurso')}
               disabled={isSubmitting}
             >
-              <option value="">Minicurso...</option>
+              <option value=''>Minicurso...</option>
               {Array.isArray(atividades) &&
                 atividades
-                  .filter((a) => a.tipo_atividade === "MINICURSO")
-                  .map((minicurso) => (
+                  .filter(a => a.tipo_atividade === 'MINICURSO')
+                  .map(minicurso => (
                     <option
                       key={minicurso.uuid_atividade}
                       value={minicurso.uuid_atividade}
                     >
-                      {minicurso.nome} - Vagas{" "}
+                      {minicurso.nome} - Vagas{' '}
                       {`(${minicurso._count.userAtividade}/${minicurso.max_participants})`}
                     </option>
                   ))}
             </select>
             <select
               className={`${
-                isSubmitting ? "blurred" : ""
-              } select text-gray-900 bg-white shadow border border-gray-300 rounded p-3`}
-              {...register("workshop")}
+                isSubmitting ? 'blurred' : ''
+              } select rounded border border-gray-300 bg-white p-3 text-gray-900 shadow`}
+              {...register('workshop')}
               disabled={isSubmitting}
             >
-              <option value="">Workshop...</option>
+              <option value=''>Workshop...</option>
               {Array.isArray(atividades) &&
                 atividades
-                  .filter((a) => a.tipo_atividade === "WORKSHOP")
-                  .map((workshop) => (
+                  .filter(a => a.tipo_atividade === 'WORKSHOP')
+                  .map(workshop => (
                     <option
                       key={workshop.uuid_atividade}
                       value={workshop.uuid_atividade}
                     >
-                      {workshop.nome} - Vagas{" "}
+                      {workshop.nome} - Vagas{' '}
                       {`(${workshop._count.userAtividade}/${workshop.max_participants})`}
                     </option>
                   ))}
             </select>
             <select
               className={`${
-                isSubmitting ? "blurred" : ""
-              } select text-gray-900 bg-white shadow border border-gray-300 rounded p-3`}
-              {...register("oficina")}
+                isSubmitting ? 'blurred' : ''
+              } select rounded border border-gray-300 bg-white p-3 text-gray-900 shadow`}
+              {...register('oficina')}
               disabled={isSubmitting}
             >
-              <option value="">Oficina...</option>
+              <option value=''>Oficina...</option>
               {Array.isArray(atividades) &&
                 atividades
-                  .filter((a) => a.tipo_atividade === "OFICINA")
-                  .map((oficina) => (
+                  .filter(a => a.tipo_atividade === 'OFICINA')
+                  .map(oficina => (
                     <option
                       key={oficina.uuid_atividade}
                       value={oficina.uuid_atividade}
                     >
-                      {oficina.nome} - Vagas{" "}
+                      {oficina.nome} - Vagas{' '}
                       {`(${oficina._count.userAtividade}/${oficina.max_participants})`}
                     </option>
                   ))}
@@ -268,74 +266,74 @@ const AdminEdicaoUsuario = () => {
           </div>
         </div>
 
-        <div className="space-y-2">
-          <p className="text-lg font-bold">Status de Pagamento</p>
+        <div className='space-y-2'>
+          <p className='text-lg font-bold'>Status de Pagamento</p>
           <select
-            {...register("status_pagamento")}
+            {...register('status_pagamento')}
             className={`${
-              isSubmitting ? "blurred" : ""
-            } select text-gray-900 bg-white shadow border border-gray-300 rounded p-3`}
+              isSubmitting ? 'blurred' : ''
+            } select rounded border border-gray-300 bg-white p-3 text-gray-900 shadow`}
           >
-            <option value="">Selecione o Status de Pagamento...</option>
-            <option value="PENDENTE">Pendente</option>
-            <option value="REALIZADO">Realizado</option>
-            <option value="EXPIRADO">Expirado</option>
-            <option value="GRATUITO">Gratuito</option>
+            <option value=''>Selecione o Status de Pagamento...</option>
+            <option value='PENDENTE'>Pendente</option>
+            <option value='REALIZADO'>Realizado</option>
+            <option value='EXPIRADO'>Expirado</option>
+            <option value='GRATUITO'>Gratuito</option>
           </select>
         </div>
 
-        <div className="flex items-center justify-center gap-4 flex-col sm:flex-row">
+        <div className='flex flex-col items-center justify-center gap-4 sm:flex-row'>
           <button
-            type="submit"
+            type='submit'
             disabled={isSubmitting}
-            className="btn-primary inline-flex items-center justify-center rounded h-10 bg-green-400 w-60 text-white font-bold"
+            className='btn-primary inline-flex h-10 w-60 items-center justify-center rounded bg-green-400 font-bold text-white'
           >
             {isSubmitting ? (
               <>
-                <FaSpinner className="animate-spin mr-2" />
+                <FaSpinner className='mr-2 animate-spin' />
                 Aguarde...
               </>
             ) : (
-              "Salvar"
+              'Salvar'
             )}
           </button>
 
           <button
-            type="button"
+            type='button'
             onClick={() => setOpen(true)}
             disabled={isSubmitting}
-            className="btn-primary inline-flex items-center justify-center rounded h-10 bg-red-500 w-60 text-white font-bold"
+            className='btn-primary inline-flex h-10 w-60 items-center justify-center rounded bg-red-500 font-bold text-white'
           >
             {isSubmitting ? (
               <>
-                <FaSpinner className="animate-spin mr-2" />
+                <FaSpinner className='mr-2 animate-spin' />
                 Aguarde...
               </>
             ) : (
-              "Excluir usuario"
+              'Excluir usuario'
             )}
           </button>
         </div>
       </form>
 
       <Modal open={open} onClose={() => setOpen(false)}>
-        <div className="text-center w-56">
-          <Trash size={56} className="mx-auto text-red-500" />
-          <div className="mx-auto my-4 w-48">
-            <h3 className="text-lg font-black text-gray-800">Confirm Delete</h3>
-            <p className="text-sm text-gray-500">
+        <div className='w-56 text-center'>
+          <Trash size={56} className='mx-auto text-red-500' />
+          <div className='mx-auto my-4 w-48'>
+            <h3 className='text-lg font-black text-gray-800'>Confirm Delete</h3>
+            <p className='text-sm text-gray-500'>
               Você realmente quer excluir esse item?
             </p>
           </div>
-          <div className="flex gap-4">
+          <div className='flex gap-4'>
             <button
               onClick={() => handleDeleteUser()}
-              className="bg-red-500 rounded-md px-3 py-2 w-full"
+              className='w-full rounded-md bg-red-500 px-3 py-2'
             >
               Excluir
             </button>
             <button
-              className="bg-blue-300 rounded-md px-3 py-2 w-full"
+              className='w-full rounded-md bg-blue-300 px-3 py-2'
               onClick={() => setOpen(false)}
             >
               Cancelar

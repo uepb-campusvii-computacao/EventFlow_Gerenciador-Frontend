@@ -1,12 +1,12 @@
-import axiosInstance from "../../../axiosInstance";
-import AtividadesTable from "@/components/AdminModule/Tables/AtividadesTable";
-import Title from "@/components/ui/Title";
-import EventContext from "@/context/Event/EventContext";
-import Loading from "@/pages/Loading/Loading";
-import { useContext, useEffect, useState } from "react";
-import { toast } from "react-toastify";
+import axiosInstance from '../../../axiosInstance';
+import AtividadesTable from '@/components/AdminModule/Tables/AtividadesTable';
+import Title from '@/components/ui/Title';
+import EventContext from '@/context/Event/EventContext';
+import Loading from '@/pages/Loading/Loading';
+import { useContext, useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 
-const getAtividadesDataEndpoint = (event_id) => {
+const getAtividadesDataEndpoint = event_id => {
   return `/events/${event_id}/atividades`;
 };
 
@@ -24,7 +24,7 @@ const AdminAtividades = () => {
 
         const mappedResponse = Object.entries(data).reduce(
           (acc, [tipoAtividade, atividades]) => {
-            acc[tipoAtividade] = atividades.map((item) => ({
+            acc[tipoAtividade] = atividades.map(item => ({
               id: item.uuid_atividade,
               name: item.nome,
               max_participants: item.max_participants,
@@ -38,8 +38,8 @@ const AdminAtividades = () => {
 
         setTableData(mappedResponse);
       } catch (error) {
-        console.error("Erro ao buscar inscritos:", error);
-        toast.error("Erro ao buscar inscritos.");
+        console.error('Erro ao buscar inscritos:', error);
+        toast.error('Erro ao buscar inscritos.');
       }
       setIsLoading(false);
     };
@@ -52,8 +52,8 @@ const AdminAtividades = () => {
       {isLoading ? (
         <Loading />
       ) : (
-        <div className="md:px-8 pb-8">
-          <Title title="Atividades" />
+        <div className='pb-8 md:px-8'>
+          <Title title='Atividades' />
           <AtividadesTable data={tableData} />
         </div>
       )}

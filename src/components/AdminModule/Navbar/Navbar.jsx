@@ -1,38 +1,50 @@
-import AuthContext from "@/context/Auth/AuthContext";
-import EventContext from "@/context/Event/EventContext";
-import PropTypes from "prop-types";
-import { useContext, useEffect, useState } from "react";
-import { FaBars } from "react-icons/fa";
+import AuthContext from '@/context/Auth/AuthContext';
+import EventContext from '@/context/Event/EventContext';
+import PropTypes from 'prop-types';
+import { useContext, useEffect, useState } from 'react';
+import { FaBars } from 'react-icons/fa';
 
-const Navbar = ({sidebarOpen, setSidebarOpen}) => {
+const Navbar = ({ sidebarOpen, setSidebarOpen }) => {
   const { currentEvent, getEventDataById } = useContext(EventContext);
-  const [title, setTitle] = useState("Gerenciador de Eventos");
+  const [title, setTitle] = useState('Gerenciador de Eventos');
   const { logout } = useContext(AuthContext);
-  
+
   useEffect(() => {
     setTitle(getEventDataById(currentEvent).nome);
   }, [currentEvent, getEventDataById]);
 
   return (
-    <div className="bg-gray-800 px-4 flex justify-between">
-      <div className="flex items-center text-xl">
-        <FaBars className="text-white me-4 cursor-pointer" onClick={() => setSidebarOpen(!sidebarOpen)}/>
-        <span className="text-white font-semibold">{title}</span>
+    <div className='flex justify-between bg-gray-800 px-4'>
+      <div className='flex items-center text-xl'>
+        <FaBars
+          className='me-4 cursor-pointer text-white'
+          onClick={() => setSidebarOpen(!sidebarOpen)}
+        />
+        <span className='font-semibold text-white'>{title}</span>
       </div>
-      <div className="flex items-center gap-x-5">
-        <div className="relative">
-          <button className="text-white group">
+      <div className='flex items-center gap-x-5'>
+        <div className='relative'>
+          <button className='group text-white'>
             {/* Caso imagem seja nul null 
               <FaUserCircle className="w-6 h-6 mt-1" />
             */}
-            <div className="relative">
-              <img className="w-10 h-10 rounded-full mt-2 drop-shadow-md shadow-md" src="https://i.pinimg.com/736x/a3/54/f2/a354f2a3713632f175ffa37ef9a73a3b.jpg" alt="" />
-              <span className="top-0 left-7 absolute  w-3.5 h-3.5 bg-green-400 border-2 border-white dark:border-gray-800 rounded-full"></span>
+            <div className='relative'>
+              <img
+                className='mt-2 h-10 w-10 rounded-full shadow-md drop-shadow-md'
+                src='https://i.pinimg.com/736x/a3/54/f2/a354f2a3713632f175ffa37ef9a73a3b.jpg'
+                alt=''
+              />
+              <span className='absolute left-7 top-0 h-3.5 w-3.5 rounded-full border-2 border-white bg-green-400 dark:border-gray-800'></span>
             </div>
-            <div className="z-10 hidden bg-white absolute rounded-lg shadow w-32 group-focus:block top-full right-0">
-              <ul className="py-2 text-sm">
+            <div className='absolute right-0 top-full z-10 hidden w-32 rounded-lg bg-white shadow group-focus:block'>
+              <ul className='py-2 text-sm'>
                 <li>
-                  <a className="block px-4 py-2 text-gray-800 hover:bg-gray-200" onClick={() => logout()}>Log Out</a>
+                  <a
+                    className='block px-4 py-2 text-gray-800 hover:bg-gray-200'
+                    onClick={() => logout()}
+                  >
+                    Log Out
+                  </a>
                 </li>
               </ul>
             </div>

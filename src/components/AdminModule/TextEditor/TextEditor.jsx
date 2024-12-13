@@ -1,13 +1,13 @@
-import { useEditor } from "@tiptap/react";
-import StarterKit from "@tiptap/starter-kit";
-import { useForm } from "react-hook-form";
-import { useParams } from "react-router-dom";
-import TextEditor from "../../../components/AdminModule/TextEditor/TextEditor";
+import { useEditor } from '@tiptap/react';
+import StarterKit from '@tiptap/starter-kit';
+import { useForm } from 'react-hook-form';
+import { useParams } from 'react-router-dom';
+import TextEditor from '../../../components/AdminModule/TextEditor/TextEditor';
 // import axiosInstance from "@/axiosInstance";
-import { useContext, useEffect, useState } from "react";
-import { FaSpinner } from "react-icons/fa";
-import { toast } from "react-toastify";
-import EventContext from "../../../context/Event/EventContext";
+import { useContext, useEffect, useState } from 'react';
+import { FaSpinner } from 'react-icons/fa';
+import { toast } from 'react-toastify';
+import EventContext from '../../../context/Event/EventContext';
 
 const extensions = [StarterKit];
 
@@ -18,7 +18,7 @@ const extensions = [StarterKit];
 const AdminEdicaoEvento = () => {
   const { getEventDataById } = useContext(EventContext);
   const { event_id } = useParams();
-  const [htmlContent, setHtmlContent] = useState("");
+  const [htmlContent, setHtmlContent] = useState('');
   const [evento, setEvento] = useState({});
   // const {isLoading, setIsLoading} = useState({});
 
@@ -27,7 +27,7 @@ const AdminEdicaoEvento = () => {
     editorProps: {
       attributes: {
         class:
-          "prose-sm max-w-full text-black bg-zinc-50 rounded-b-lg p-2 focus:outline-none w-full max-h-[400px] overflow-y-scroll",
+          'prose-sm max-w-full text-black bg-zinc-50 rounded-b-lg p-2 focus:outline-none w-full max-h-[400px] overflow-y-scroll',
       },
     },
   });
@@ -37,7 +37,7 @@ const AdminEdicaoEvento = () => {
     formState: { isSubmitting },
     setValue,
   } = useForm({
-    mode: "all",
+    mode: 'all',
   });
 
   async function onSubmit(data) {
@@ -51,15 +51,15 @@ const AdminEdicaoEvento = () => {
     //   toast.error("Erro ao atualizar Atividade!");
     // }
     toast.info(
-      "Ainda não temos podemos enviar nada pessoal, em fase experimental hehehe"
+      'Ainda não temos podemos enviar nada pessoal, em fase experimental hehehe'
     );
 
     console.log(data);
     console.log(evento);
-    console.log("JSON", editor.getJSON());
-    console.log("HTML", editor.getHTML());
+    console.log('JSON', editor.getJSON());
+    console.log('HTML', editor.getHTML());
     setHtmlContent(editor.getHTML());
-    console.log("TXT ", editor.getText());
+    console.log('TXT ', editor.getText());
   }
 
   useEffect(() => {
@@ -70,8 +70,8 @@ const AdminEdicaoEvento = () => {
 
       const { nome, data } = response;
 
-      setValue("nome", nome);
-      setValue("data", data);
+      setValue('nome', nome);
+      setValue('data', data);
 
       // setIsLoading(false);
     };
@@ -80,39 +80,39 @@ const AdminEdicaoEvento = () => {
   }, [setValue, event_id, setEvento, getEventDataById]);
 
   return (
-    <div className="w-full h-screen">
+    <div className='h-screen w-full'>
       <h1>esse é o id do evento {event_id}</h1>
 
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col gap-10 mx-auto bg-white p-7 rounded-lg text-black shadow"
+        className='mx-auto flex flex-col gap-10 rounded-lg bg-white p-7 text-black shadow'
       >
-        <div className="flex flex-col gap-4">
-          <h2 className="text-lg font-bold">Dados Publicos</h2>
-          <div className="grid gap-4 grid-cols-1">
-            <div className="flex flex-col">
+        <div className='flex flex-col gap-4'>
+          <h2 className='text-lg font-bold'>Dados Publicos</h2>
+          <div className='grid grid-cols-1 gap-4'>
+            <div className='flex flex-col'>
               <label
-                htmlFor="first_name"
-                className="block mb-2 text-sm text-gray-900 font-bold"
+                htmlFor='first_name'
+                className='mb-2 block text-sm font-bold text-gray-900'
               >
                 Nome
               </label>
               <input
                 required
-                type="text"
-                id="first_name"
-                placeholder="Nome"
+                type='text'
+                id='first_name'
+                placeholder='Nome'
                 className={`${
-                  isSubmitting ? "blurred" : ""
-                } input text-gray-900 bg-white shadow border border-gray-300 rounded h-10 p-3`}
-                {...register("nome", { required: true })}
+                  isSubmitting ? 'blurred' : ''
+                } input h-10 rounded border border-gray-300 bg-white p-3 text-gray-900 shadow`}
+                {...register('nome', { required: true })}
                 disabled={isSubmitting}
               />
             </div>
-            <div className="flex flex-col">
+            <div className='flex flex-col'>
               <label
-                htmlFor="descricao"
-                className="block mb-2 text-sm text-gray-900 font-bold"
+                htmlFor='descricao'
+                className='mb-2 block text-sm font-bold text-gray-900'
               >
                 Descricao
               </label>
@@ -121,25 +121,25 @@ const AdminEdicaoEvento = () => {
           </div>
         </div>
 
-        <div className="flex items-center justify-center gap-4 flex-col sm:flex-row">
+        <div className='flex flex-col items-center justify-center gap-4 sm:flex-row'>
           <button
-            type="submit"
+            type='submit'
             disabled={isSubmitting}
-            className="btn-primary inline-flex items-center justify-center rounded h-10 bg-green-400 w-60 text-white font-bold"
+            className='btn-primary inline-flex h-10 w-60 items-center justify-center rounded bg-green-400 font-bold text-white'
           >
             {isSubmitting ? (
               <>
-                <FaSpinner className="animate-spin mr-2" />
+                <FaSpinner className='mr-2 animate-spin' />
                 Aguarde...
               </>
             ) : (
-              "Salvar"
+              'Salvar'
             )}
           </button>
         </div>
       </form>
       {htmlContent && (
-        <div className="w-full mt-4 p-4 border rounded-lg bg-gray-100 prose prose-lg">
+        <div className='prose prose-lg mt-4 w-full rounded-lg border bg-gray-100 p-4'>
           <div dangerouslySetInnerHTML={{ __html: htmlContent }} />
         </div>
       )}

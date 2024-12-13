@@ -1,9 +1,9 @@
-import PropTypes from "prop-types";
-import { createContext, useContext, useEffect, useState } from "react";
-import { toast } from "react-toastify";
-import axiosInstance from "../../axiosInstance";
-import Loading from "../../pages/Loading/Loading";
-import AuthContext from "../Auth/AuthContext";
+import PropTypes from 'prop-types';
+import { createContext, useContext, useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
+import axiosInstance from '../../axiosInstance';
+import Loading from '../../pages/Loading/Loading';
+import AuthContext from '../Auth/AuthContext';
 
 const EventContext = createContext();
 
@@ -25,9 +25,9 @@ export const EventProvider = ({ children }) => {
           setCurrentEvent(null);
         }
       } catch (error) {
-        console.error("Erro ao buscar eventos:", error);
+        console.error('Erro ao buscar eventos:', error);
 
-        let errorMessage = "Não foi possível carregar os eventos.";
+        let errorMessage = 'Não foi possível carregar os eventos.';
         if (
           error.response &&
           error.response.data &&
@@ -47,8 +47,8 @@ export const EventProvider = ({ children }) => {
     }
   }, [userInfo]);
 
-  const getEventDataById = (eventId) => {
-    const event = events.find((e) => e.uuid_evento === eventId);
+  const getEventDataById = eventId => {
+    const event = events.find(e => e.uuid_evento === eventId);
     return event;
   };
 

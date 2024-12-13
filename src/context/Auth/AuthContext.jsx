@@ -6,24 +6,28 @@ import { BACKEND_DEFAULT_URL } from '../../backendPaths';
 
 const AuthContext = createContext();
 
-const defaultAuthenticationState = localStorage.getItem('authToken') ? true : false;
+const defaultAuthenticationState = localStorage.getItem('authToken')
+  ? true
+  : false;
 const defaultUserInfo = JSON.parse(localStorage.getItem('userInfo'));
 
 export const AuthProvider = ({ children }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(defaultAuthenticationState);
+  const [isAuthenticated, setIsAuthenticated] = useState(
+    defaultAuthenticationState
+  );
   const [userInfo, setUserInfo] = useState(defaultUserInfo);
 
-  const login = async (data) => {
+  const login = async data => {
     try {
       const response = await axios.post(`${BACKEND_DEFAULT_URL}/login`, data);
       const { token, user_id } = response.data;
 
-      const user = {id: user_id};
+      const user = { id: user_id };
 
-      localStorage.setItem('authToken', JSON.stringify({token: token}));
-      localStorage.setItem('userInfo', JSON.stringify({id: user_id}));
+      localStorage.setItem('authToken', JSON.stringify({ token: token }));
+      localStorage.setItem('userInfo', JSON.stringify({ id: user_id }));
 
-      setUserInfo(user)
+      setUserInfo(user);
       setIsAuthenticated(true);
       toast.success('Login bem-sucedido!');
     } catch (error) {
@@ -37,7 +41,7 @@ export const AuthProvider = ({ children }) => {
       setIsAuthenticated(false);
       localStorage.removeItem('authToken');
       localStorage.removeItem('userInfo');
-    }, 2000)    
+    }, 2000);
   };
 
   return (

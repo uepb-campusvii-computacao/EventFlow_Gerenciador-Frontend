@@ -1,9 +1,9 @@
-import SidebarContext from "@/context/Sidebar/SidebarContext";
-import PropTypes from "prop-types";
-import { useContext, useEffect, useRef, useState } from "react";
+import SidebarContext from '@/context/Sidebar/SidebarContext';
+import PropTypes from 'prop-types';
+import { useContext, useEffect, useRef, useState } from 'react';
 import Confetti from 'react-confetti';
-import { GrCycle } from "react-icons/gr";
-import { toast } from "react-toastify";
+import { GrCycle } from 'react-icons/gr';
+import { toast } from 'react-toastify';
 import styles from './Raffle.module.css';
 
 const Raffle = ({ data }) => {
@@ -39,7 +39,7 @@ const Raffle = ({ data }) => {
     if (!isRunning) return;
 
     if (data.length === 0) {
-      toast.error("Não há usuários para sortear.");
+      toast.error('Não há usuários para sortear.');
       setIsRunning(false);
       return;
     }
@@ -66,11 +66,11 @@ const Raffle = ({ data }) => {
       }, 50);
       counter++;
       if (counter >= indices.length) {
-        clearInterval(interval);        
+        clearInterval(interval);
         setWinner(data[indices[indices.length - 1]]);
         setShowConfetti(true);
         setTimeout(() => {
-          setShowConfetti(false)
+          setShowConfetti(false);
           setIsRunning(false);
         }, 3000);
       }
@@ -81,7 +81,7 @@ const Raffle = ({ data }) => {
 
   const startRaffle = () => {
     if (data.length === 0) {
-      toast.error("Não há usuários para sortear.");
+      toast.error('Não há usuários para sortear.');
       return;
     }
 
@@ -90,18 +90,20 @@ const Raffle = ({ data }) => {
   };
 
   return (
-    <div className="flex flex-col items-center gap-8">
+    <div className='flex flex-col items-center gap-8'>
       <div
         ref={containerRef}
-        className={`relative w-full lg:w-8/12 text-center flex flex-col gap-4 justify-center items-center h-32 border border-gray-300 rounded-lg ${winner ? 'bg-green-500 text-gray-700' : 'bg-white text-gray-700'} shadow-md`}
+        className={`relative flex h-32 w-full flex-col items-center justify-center gap-4 rounded-lg border border-gray-300 text-center lg:w-8/12 ${winner ? 'bg-green-500 text-gray-700' : 'bg-white text-gray-700'} shadow-md`}
       >
-        {winner &&
-          <p className={`text-xl font-bold`}>
-            PARABÉNS 🎉🎉
-          </p>
-        }
-        <p className={`text-xl font-bold ${showFadeIn && !winner ? styles.fadeIn : ""}`}>
-          {winner ? winner.nome : currentUserIndex !== -1 ? data[currentUserIndex]?.nome : 'Sorteie algum inscrito!'}
+        {winner && <p className={`text-xl font-bold`}>PARABÉNS 🎉🎉</p>}
+        <p
+          className={`text-xl font-bold ${showFadeIn && !winner ? styles.fadeIn : ''}`}
+        >
+          {winner
+            ? winner.nome
+            : currentUserIndex !== -1
+              ? data[currentUserIndex]?.nome
+              : 'Sorteie algum inscrito!'}
         </p>
         {showConfetti && winner && (
           <Confetti
@@ -114,10 +116,10 @@ const Raffle = ({ data }) => {
       </div>
       <button
         onClick={startRaffle}
-        className={`bg-indigo-500 text-white flex flex-row gap-1 items-center px-6 py-3 rounded-md ${isRunning ? "opacity-50 cursor-not-allowed" : ""}`}
+        className={`flex flex-row items-center gap-1 rounded-md bg-indigo-500 px-6 py-3 text-white ${isRunning ? 'cursor-not-allowed opacity-50' : ''}`}
         disabled={isRunning}
       >
-        <GrCycle size={24}/> Sortear Inscrito
+        <GrCycle size={24} /> Sortear Inscrito
       </button>
     </div>
   );

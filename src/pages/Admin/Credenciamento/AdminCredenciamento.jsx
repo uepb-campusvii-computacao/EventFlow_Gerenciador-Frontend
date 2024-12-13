@@ -1,12 +1,12 @@
-import axiosInstance from "@/axiosInstance";
-import CredenciamentoTable from "@/components/AdminModule/Tables/CredenciamentoTable";
-import Title from "@/components/ui/Title";
-import EventContext from "@/context/Event/EventContext";
-import Loading from "@/pages/Loading/Loading";
-import { useContext, useEffect, useState } from "react";
-import { toast } from "react-toastify";
+import axiosInstance from '@/axiosInstance';
+import CredenciamentoTable from '@/components/AdminModule/Tables/CredenciamentoTable';
+import Title from '@/components/ui/Title';
+import EventContext from '@/context/Event/EventContext';
+import Loading from '@/pages/Loading/Loading';
+import { useContext, useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 
-const inscricoesEndpoint = (id_evento) => {
+const inscricoesEndpoint = id_evento => {
   return `/events/${id_evento}/inscricoes`;
 };
 
@@ -22,7 +22,7 @@ const AdminCredenciamento = () => {
           inscricoesEndpoint(currentEvent)
         );
 
-        const mappedResponse = data.all_subscribers.map((item) => {
+        const mappedResponse = data.all_subscribers.map(item => {
           return {
             id: item.uuid_user,
             name: item.nome,
@@ -35,8 +35,8 @@ const AdminCredenciamento = () => {
 
         setTableData(mappedResponse);
       } catch (error) {
-        console.error("Erro ao buscar inscritos:", error);
-        toast.error("Erro ao buscar inscritos.");
+        console.error('Erro ao buscar inscritos:', error);
+        toast.error('Erro ao buscar inscritos.');
       }
       setIsLoading(false);
     };
@@ -49,10 +49,14 @@ const AdminCredenciamento = () => {
       {isLoading ? (
         <Loading />
       ) : (
-        <div className="md:px-8 pb-8">
-          <Title title="Credenciamento" />
+        <div className='pb-8 md:px-8'>
+          <Title title='Credenciamento' />
           <CredenciamentoTable
-            data={tableData.filter((item) => item.paymentStatus === "REALIZADO" || item.paymentStatus === "GRATUITO")}
+            data={tableData.filter(
+              item =>
+                item.paymentStatus === 'REALIZADO' ||
+                item.paymentStatus === 'GRATUITO'
+            )}
           />
         </div>
       )}

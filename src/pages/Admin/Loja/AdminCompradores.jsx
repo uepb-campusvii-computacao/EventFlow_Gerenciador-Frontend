@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";
-import axiosInstance from "../../../axiosInstance";
-import Title from "@/components/ui/Title";
-import { useParams } from "react-router-dom";
-import CompradoresTable from "../../../components/AdminModule/Tables/CompradoresTable";
+import { useEffect, useState } from 'react';
+import axiosInstance from '../../../axiosInstance';
+import Title from '@/components/ui/Title';
+import { useParams } from 'react-router-dom';
+import CompradoresTable from '../../../components/AdminModule/Tables/CompradoresTable';
 
-const getUsersWithOrdersDataEndpoint = (produto_id) => {
+const getUsersWithOrdersDataEndpoint = produto_id => {
   return `/admin/loja/produtos/${produto_id}/compradores`;
 };
 
@@ -20,7 +20,7 @@ const AdminCompradores = () => {
           getUsersWithOrdersDataEndpoint(produto_id)
         );
 
-        const mappedResponse = data.map((item) => {
+        const mappedResponse = data.map(item => {
           return {
             uuid_user: item.uuid_user,
             nome: item.nome,
@@ -29,10 +29,9 @@ const AdminCompradores = () => {
         });
 
         setTableData(mappedResponse);
-
       } catch (error) {
-        console.error("Erro ao buscar inscritos:", error);
-        toast.error("Erro ao buscar inscritos.");
+        console.error('Erro ao buscar inscritos:', error);
+        toast.error('Erro ao buscar inscritos.');
       }
       setIsLoading(false);
     };
@@ -42,12 +41,12 @@ const AdminCompradores = () => {
   return (
     <>
       {tableData.length === 0 ? (
-        <div className="flex w-full h-[90vh] items-center justify-center">
-          <Title title={"Nenhuma compra foi realizada"} />
+        <div className='flex h-[90vh] w-full items-center justify-center'>
+          <Title title={'Nenhuma compra foi realizada'} />
         </div>
       ) : (
-        <div className="py-8">
-          <Title title={"Compradores"} />
+        <div className='py-8'>
+          <Title title={'Compradores'} />
           <CompradoresTable data={tableData} produto_id={produto_id} />
         </div>
       )}

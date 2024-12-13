@@ -1,13 +1,13 @@
-import axiosInstance from "../../../axiosInstance";
-import Title from "@/components/ui/Title";
-import Loading from "@/pages/Loading/Loading";
-import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-import { FaSpinner } from "react-icons/fa";
-import { useParams } from "react-router-dom";
-import { toast } from "react-toastify";
+import axiosInstance from '../../../axiosInstance';
+import Title from '@/components/ui/Title';
+import Loading from '@/pages/Loading/Loading';
+import { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { FaSpinner } from 'react-icons/fa';
+import { useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
-const fetchDataEndpoint = (atividade_id) => {
+const fetchDataEndpoint = atividade_id => {
   return `/atividades/${atividade_id}`;
 };
 
@@ -22,7 +22,7 @@ const AdminEdicaoAtividade = () => {
     formState: { isSubmitting },
     setValue,
   } = useForm({
-    mode: "all",
+    mode: 'all',
   });
 
   useEffect(() => {
@@ -34,10 +34,10 @@ const AdminEdicaoAtividade = () => {
       const { nome, descricao, tipo_atividade, max_participants } =
         response.data;
 
-      setValue("nome", nome);
-      setValue("descricao", descricao);
-      setValue("tipo_atividade", tipo_atividade);
-      setValue("max_participants", max_participants);
+      setValue('nome', nome);
+      setValue('descricao', descricao);
+      setValue('tipo_atividade', tipo_atividade);
+      setValue('max_participants', max_participants);
 
       setIsLoading(false);
     };
@@ -50,10 +50,10 @@ const AdminEdicaoAtividade = () => {
       await axiosInstance.put(fetchDataEndpoint(atividade_id), {
         ...data,
       });
-      toast.success("Atividade Atualizado!");
+      toast.success('Atividade Atualizado!');
     } catch (error) {
       console.log(error);
-      toast.error("Erro ao atualizar Atividade!");
+      toast.error('Erro ao atualizar Atividade!');
     }
   }
 
@@ -62,108 +62,113 @@ const AdminEdicaoAtividade = () => {
   }
 
   return (
-    <section className="max-w-3xl mx-auto pb-8 sm:pb-16">
-      <Title title="Editar Atividade" />
+    <section className='mx-auto max-w-3xl pb-8 sm:pb-16'>
+      <Title title='Editar Atividade' />
 
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col gap-10 max-w-3xl mx-auto bg-white p-7 rounded-lg text-black shadow"
+        className='mx-auto flex max-w-3xl flex-col gap-10 rounded-lg bg-white p-7 text-black shadow'
       >
-        <div className="flex flex-col gap-4">
-          <h2 className="text-lg font-bold">Dados Publicos</h2>
-          <div className="grid gap-4 grid-cols-1">
-            <div className="flex flex-col">
+        <div className='flex flex-col gap-4'>
+          <h2 className='text-lg font-bold'>Dados Publicos</h2>
+          <div className='grid grid-cols-1 gap-4'>
+            <div className='flex flex-col'>
               <label
-                htmlFor="first_name"
-                className="block mb-2 text-sm text-gray-900 font-bold"
+                htmlFor='first_name'
+                className='mb-2 block text-sm font-bold text-gray-900'
               >
                 Nome
               </label>
               <input
                 required
-                type="text"
-                id="first_name"
-                placeholder="Nome"
+                type='text'
+                id='first_name'
+                placeholder='Nome'
                 className={`${
-                  isSubmitting ? "blurred" : ""
-                } input text-gray-900 bg-white shadow border border-gray-300 rounded h-10 p-3`}
-                {...register("nome", { required: true })}
+                  isSubmitting ? 'blurred' : ''
+                } input h-10 rounded border border-gray-300 bg-white p-3 text-gray-900 shadow`}
+                {...register('nome', { required: true })}
                 disabled={isSubmitting}
               />
             </div>
-            <div className="flex flex-col">
+            <div className='flex flex-col'>
               <label
-                htmlFor="descricao"
-                className="block mb-2 text-sm text-gray-900 font-bold"
+                htmlFor='descricao'
+                className='mb-2 block text-sm font-bold text-gray-900'
               >
                 Descricao
               </label>
               <textarea
                 required
-                type="text"
-                id="descricao"
-                placeholder="Descricao"
+                type='text'
+                id='descricao'
+                placeholder='Descricao'
                 className={`${
-                  isSubmitting ? "blurred" : ""
-                } input text-gray-900 bg-white shadow border border-gray-300 rounded h-40 p-3`}
-                {...register("descricao", { required: true })}
+                  isSubmitting ? 'blurred' : ''
+                } input h-40 rounded border border-gray-300 bg-white p-3 text-gray-900 shadow`}
+                {...register('descricao', { required: true })}
                 disabled={isSubmitting}
               />
             </div>
           </div>
         </div>
 
-        <div className="space-y-2 flex flex-col gap-4 items-center sm:flex-row">
-          <div className="flex flex-col w-full">
-            <label htmlFor="tipo_atividade" className="block mb-2 text-sm text-gray-900 font-bold">Tipo de atividade</label>
+        <div className='flex flex-col items-center gap-4 space-y-2 sm:flex-row'>
+          <div className='flex w-full flex-col'>
+            <label
+              htmlFor='tipo_atividade'
+              className='mb-2 block text-sm font-bold text-gray-900'
+            >
+              Tipo de atividade
+            </label>
             <select
-              {...register("tipo_atividade")}
-              id="tipo_atividade"
+              {...register('tipo_atividade')}
+              id='tipo_atividade'
               defaultValue={atividade.tipo_atividade}
               className={`${
-                isSubmitting ? "blurred" : ""
-              } text-gray-900 bg-white shadow border border-gray-300 rounded h-12 p-3`}
+                isSubmitting ? 'blurred' : ''
+              } h-12 rounded border border-gray-300 bg-white p-3 text-gray-900 shadow`}
             >
-              <option value="">Selecione o Tipo da Atividade...</option>
-              <option value="MINICURSO">MINICURSO</option>
-              <option value="WORKSHOP">WORKSHOP</option>
-              <option value="OFICINA">OFICINA</option>
+              <option value=''>Selecione o Tipo da Atividade...</option>
+              <option value='MINICURSO'>MINICURSO</option>
+              <option value='WORKSHOP'>WORKSHOP</option>
+              <option value='OFICINA'>OFICINA</option>
             </select>
           </div>
-          <div className="flex flex-col w-full">
-              <label
-                htmlFor="max_participants"
-                className="block mb-2 text-sm text-gray-900 font-bold"
-              >
-                Quantidade de vagas ofertadas
-              </label>
-              <input
-                required
-                type="number"
-                id="max_participants"
-                placeholder="Nome"
-                className={`${
-                  isSubmitting ? "blurred" : ""
-                } text-gray-900 bg-white shadow border border-gray-300 h-12 mb-2 rounded p-3`}
-                {...register("max_participants", { required: true })}
-                disabled={isSubmitting}
-              />
-            </div>
+          <div className='flex w-full flex-col'>
+            <label
+              htmlFor='max_participants'
+              className='mb-2 block text-sm font-bold text-gray-900'
+            >
+              Quantidade de vagas ofertadas
+            </label>
+            <input
+              required
+              type='number'
+              id='max_participants'
+              placeholder='Nome'
+              className={`${
+                isSubmitting ? 'blurred' : ''
+              } mb-2 h-12 rounded border border-gray-300 bg-white p-3 text-gray-900 shadow`}
+              {...register('max_participants', { required: true })}
+              disabled={isSubmitting}
+            />
+          </div>
         </div>
 
-        <div className="flex items-center justify-center gap-4 flex-col sm:flex-row">
+        <div className='flex flex-col items-center justify-center gap-4 sm:flex-row'>
           <button
-            type="submit"
+            type='submit'
             disabled={isSubmitting}
-            className="btn-primary inline-flex items-center justify-center rounded h-10 bg-green-400 w-60 text-white font-bold"
+            className='btn-primary inline-flex h-10 w-60 items-center justify-center rounded bg-green-400 font-bold text-white'
           >
             {isSubmitting ? (
               <>
-                <FaSpinner className="animate-spin mr-2" />
+                <FaSpinner className='mr-2 animate-spin' />
                 Aguarde...
               </>
             ) : (
-              "Salvar"
+              'Salvar'
             )}
           </button>
         </div>
