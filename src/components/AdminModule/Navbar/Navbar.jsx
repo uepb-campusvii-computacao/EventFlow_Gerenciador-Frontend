@@ -1,13 +1,13 @@
-import AuthContext from '@/context/Auth/AuthContext';
 import EventContext from '@/context/Event/EventContext';
 import PropTypes from 'prop-types';
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { FaBars } from 'react-icons/fa';
+import { useAuthContext } from '../../../auth/hooks/useAuthContext';
 
 const Navbar = ({ sidebarOpen, setSidebarOpen }) => {
   const { currentEvent, getEventDataById } = useContext(EventContext);
   const [title, setTitle] = useState('Gerenciador de Eventos');
-  const { logout } = useContext(AuthContext);
+  const { logout } = useAuthContext();
 
   useEffect(() => {
     setTitle(getEventDataById(currentEvent).nome);
@@ -25,7 +25,7 @@ const Navbar = ({ sidebarOpen, setSidebarOpen }) => {
       <div className='flex items-center gap-x-5'>
         <div className='relative'>
           <button className='group text-white'>
-            {/* Caso imagem seja nul null 
+            {/* Caso imagem seja nul null
               <FaUserCircle className="w-6 h-6 mt-1" />
             */}
             <div className='relative'>
