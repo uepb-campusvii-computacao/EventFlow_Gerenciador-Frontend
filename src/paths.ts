@@ -1,4 +1,4 @@
-const paths = {
+export const paths = {
     participante: "/participante",
     loja: "/loja",
     atividades: "/atividades",
@@ -9,5 +9,3 @@ const paths = {
     sorteio_inscritos: "/inscritos/sorteio",
     eventos: "/eventos"
 }
-
-export default paths;

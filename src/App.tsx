@@ -1,4 +1,3 @@
-import paths from '@/paths.js';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -22,8 +21,9 @@ import Lotes from './pages/Admin/Lotes/Lotes';
 import Sorteio from './pages/Admin/Sorteio/Sorteio';
 import LoginForm from './pages/Login/LoginForm';
 import NotFound from './pages/NotFound/NotFound';
+import { paths } from './paths'
 
-const App = () => {
+export function App() {
 	return (
 		<AuthProvider>
 			<Router>
@@ -39,72 +39,59 @@ const App = () => {
 					<Route path='/login' element={<LoginForm />} />
 					<Route element={<PrivateRoute />}>
 						<Route element={<AdminLayout />}>
-							<Route exact path={paths.home} element={<AdminHome />} />
+							<Route path={paths.home} element={<AdminHome />} />
 							<Route
-								exact
 								path={paths.credenciamento}
 								element={<AdminCredenciamento />}
 							/>
-							<Route exact path={paths.eventos} element={<Eventos />} />
-							<Route exact path={paths.lotes} element={<Lotes />} />
+							<Route path={paths.eventos} element={<Eventos />} />
+							<Route path={paths.lotes} element={<Lotes />} />
 							<Route
-								exact
 								path={paths.inscritos}
 								element={<AdminInscritosEvento />}
 							/>
 							<Route
-								exact
 								path={paths.atividades}
 								element={<AdminAtividades />}
 							/>
 							<Route
-								exact
 								path={`${paths.participante}/editar/:user_id`}
 								element={<AdminEdicaoUsuario />}
 							/>
 							<Route
-								exact
 								path={`${paths.eventos}/editar/:event_id`}
 								element={<AdminEdicaoEvento />}
 							/>
 							<Route
-								exact
 								path={`${paths.atividades}/:id`}
 								element={<AdminPresencaAtividade />}
 							/>
 							<Route
-								exact
 								path={`${paths.atividades}/editar/:atividade_id`}
 								element={<AdminEdicaoAtividade />}
 							/>
-							<Route exact path={paths.loja} element={<AdminLoja />} />
+							<Route path={paths.loja} element={<AdminLoja />} />
 							<Route
-								exact
 								path={`${paths.loja}/produto/:produto_id/editar`}
 								element={<AdminEdicaoProduto />}
 							/>
 							<Route
-								exact
 								path={`${paths.loja}/compras/:produto_id`}
 								element={<AdminCompradores />}
 							/>
 							<Route
-								exact
 								path={`${paths.loja}/usuario/:user_id/compras/:produto_id`}
 								element={<AdminCompras />}
 							/>
 							<Route
-								exact
 								path={`${paths.inscritos}/sorteio`}
 								element={<Sorteio />}
 							/>
-							<Route exact path='*' element={<NotFound />} />
+							<Route path='*' element={<NotFound />} />
 						</Route>
 					</Route>
 				</Routes>
 			</Router>
 		</AuthProvider>
 	);
-};
-
-export default App;
+}
