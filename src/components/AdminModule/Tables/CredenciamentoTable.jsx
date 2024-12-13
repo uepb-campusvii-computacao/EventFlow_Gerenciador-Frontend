@@ -1,5 +1,5 @@
-import axiosInstance from "@/axiosInstance.js";
-import { BACKEND_DEFAULT_URL } from "@/backendPaths.js";
+import axiosInstance from "@/axiosInstance";
+import { BACKEND_DEFAULT_URL } from "@/backendPaths";
 import Pagination from "@/components/ui/Pagination.jsx";
 import EventContext from "@/context/Event/EventContext.jsx";
 import { DownloadSimple, Funnel, MagnifyingGlass } from "@phosphor-icons/react";

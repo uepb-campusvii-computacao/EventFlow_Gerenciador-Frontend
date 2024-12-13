@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Title from "@/components/ui/Title";
-import axiosInstance from "@/axiosInstance";
+import axiosInstance from "../../../axiosInstance";
 import moment from "moment";
 
 const getOrdersDataEndpoint = (user_id, produto_id) => {

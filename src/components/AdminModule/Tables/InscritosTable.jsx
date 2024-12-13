@@ -1,5 +1,5 @@
 import Pagination from "@/components/ui/Pagination.jsx";
-import paths from "@/paths.js";
+import { paths } from "@/paths";
 import { DownloadSimple, Funnel, MagnifyingGlass } from "@phosphor-icons/react";
 import PropTypes from "prop-types";
 import { useState } from "react";

@@ -1,6 +1,7 @@
 import axios from 'axios';
-import { BACKEND_DEFAULT_URL } from './backendPaths';
 import { toast } from 'react-toastify';
+
+import { BACKEND_DEFAULT_URL } from './backendPaths';
 
 const axiosInstance = axios.create({
   baseURL: BACKEND_DEFAULT_URL,

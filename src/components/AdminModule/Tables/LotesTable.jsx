@@ -1,4 +1,4 @@
-import axiosInstance from '@/axiosInstance'; // Certifique-se de que o caminho está correto
+import axiosInstance from '../../../axiosInstance'; // Certifique-se de que o caminho está correto
 import PropTypes from 'prop-types';
 import { useState } from 'react';
 

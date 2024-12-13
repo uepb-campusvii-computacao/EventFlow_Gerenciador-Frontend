@@ -1,4 +1,4 @@
-import axiosInstance from "@/axiosInstance";
+import axiosInstance from "../../../axiosInstance";
 import Title from "@/components/ui/Title";
 import Loading from "@/pages/Loading/Loading";
 import { useEffect, useState } from "react";

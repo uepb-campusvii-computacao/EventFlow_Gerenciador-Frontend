@@ -1,8 +1,6 @@
-import { useContext, useEffect, useState } from "react";
-import EventContext from "@/context/Event/EventContext";
-import axiosInstance from "@/axiosInstance";
+import { useEffect, useState } from "react";
+import axiosInstance from "../../../axiosInstance";
 import Title from "@/components/ui/Title";
-import ProductCard from "@/components/AdminModule/Cards/ProductCard";
 import { useParams } from "react-router-dom";
 import CompradoresTable from "../../../components/AdminModule/Tables/CompradoresTable";
 

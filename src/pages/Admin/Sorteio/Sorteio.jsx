@@ -1,4 +1,4 @@
-import axiosInstance from "@/axiosInstance";
+import axiosInstance from "../../../axiosInstance";
 import Raffle from "@/components/AdminModule/Raffle/Raffle";
 import Title from "@/components/ui/Title";
 import EventContext from "@/context/Event/EventContext";
