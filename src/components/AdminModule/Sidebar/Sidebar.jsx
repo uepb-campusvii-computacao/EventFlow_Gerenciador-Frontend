@@ -90,13 +90,13 @@ const Sidebar = () => {
               icon={<FaUserGroup className='-mt-1 mr-2 h-6 w-6' />}
             />
           </li>
-          <li className='mb-2 rounded hover:shadow'>
+          {/* <li className='mb-2 rounded hover:shadow'>
             <SidebarItem
               nome='Loja'
               link={paths.loja}
               icon={<FaShoppingCart className='-mt-1 mr-2 h-6 w-6' />}
             />
-          </li>
+          </li> */}
         </ul>
       </div>
     </div>
