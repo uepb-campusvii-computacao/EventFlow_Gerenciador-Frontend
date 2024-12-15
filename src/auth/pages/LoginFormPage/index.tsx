@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 
 import { Eye, EyeSlash } from '@phosphor-icons/react';
-import logo from '@/assets/images/logo.png';
+import logo from '../../../assets/images/logo.png';
 
 import { useAuthContext } from '../../hooks/useAuthContext';
 import { IUserDataLogin } from '../../domain/entities/userEntity';
@@ -26,7 +26,7 @@ export function LoginFormPage() {
   const navigate = useNavigate();
 
   const onSubmit = async (data: IUserDataLogin) => {
-    login(data);
+    await login(data);
     navigate('/');
   };
 
