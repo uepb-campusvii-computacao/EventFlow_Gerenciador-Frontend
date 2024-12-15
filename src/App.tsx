@@ -1,27 +1,23 @@
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import AdminLayout from './components/AdminModule/Layout/Layout';
-import AdminEdicaoAtividade from './pages/Admin/AdminEdicaoAtividade/AdminEdicaoAtividade';
-import AdminEdicaoEvento from './pages/Admin/AdminEdicaoEvento/AdminEdicaoEvento';
-import AdminEdicaoProduto from './pages/Admin/AdminEdicaoProduto/AdminEdicaoProduto';
-import AdminEdicaoUsuario from './pages/Admin/AdminEdicaoUsuario/AdminEdicaoUsuario';
-import AdminInscritosEvento from './pages/Admin/AdminInscritosEvento/AdminInscritosEvento';
-import AdminPresencaAtividade from './pages/Admin/AdminPresencaAtividade/AdminPresencaAtividade';
-import AdminAtividades from './pages/Admin/Atividades/AdminAtividades';
-import AdminCredenciamento from './pages/Admin/Credenciamento/AdminCredenciamento';
-import Eventos from './pages/Admin/Eventos/Eventos';
-import AdminHome from './pages/Admin/Home/AdminHome';
-import AdminCompradores from './pages/Admin/Loja/AdminCompradores';
-import AdminCompras from './pages/Admin/Loja/AdminCompras';
-import AdminLoja from './pages/Admin/Loja/AdminLoja';
-import Lotes from './pages/Admin/Lotes/Lotes';
-import Sorteio from './pages/Admin/Sorteio/Sorteio';
-import { paths } from './paths';
+
+import { Home } from './core/pages/Home';
 import { AuthProvider } from './auth/hooks/useAuthContext';
 import { PrivateRoute } from './auth/components/PrivateRoute';
 import { LoginFormPage } from './auth/pages/LoginFormPage';
 import { NotFoundPage } from './auth/pages/NotFoundPage';
+import { EventPage } from './events/pages/EventPage';
+import { LotesPage } from './lots/pages/LotsPage';
+import { Layout } from './core/pages/Layout';
+import { EventRafflePage } from './events/pages/EventRafflePage';
+import { EventRegistrationPage } from './events/pages/EventRegistrationPage';
+import { EventSubscribersPage } from './events/pages/EventSubscribersPage';
+import { EditParticipantPage } from './events/pages/EditParticipantPage';
+import { ActivityPage } from './activities/pages/ActivityPage';
+import { EditActivityPage } from './activities/pages/EditActivityPage';
+import { ActivityPresencePage } from './activities/pages/ActivityPresencePage';
+import { paths } from './paths';
 
 export function App() {
   return (
@@ -38,51 +34,34 @@ export function App() {
         <Routes>
           <Route path='/login' element={<LoginFormPage />} />
           <Route element={<PrivateRoute />}>
-            <Route element={<AdminLayout />}>
-              <Route path={paths.home} element={<AdminHome />} />
+            <Route element={<Layout />}>
+              <Route path={paths.home} element={<Home />} />
               <Route
                 path={paths.credenciamento}
-                element={<AdminCredenciamento />}
+                element={<EventRegistrationPage />}
               />
-              <Route path={paths.eventos} element={<Eventos />} />
-              <Route path={paths.lotes} element={<Lotes />} />
+              <Route path={paths.eventos} element={<EventPage />} />
+              <Route path={paths.lotes} element={<LotesPage />} />
               <Route
                 path={paths.inscritos}
-                element={<AdminInscritosEvento />}
+                element={<EventSubscribersPage />}
               />
-              <Route path={paths.atividades} element={<AdminAtividades />} />
               <Route
                 path={`${paths.participante}/editar/:user_id`}
-                element={<AdminEdicaoUsuario />}
+                element={<EditParticipantPage />}
               />
-              <Route
-                path={`${paths.eventos}/editar/:event_id`}
-                element={<AdminEdicaoEvento />}
-              />
+              <Route path={paths.atividades} element={<ActivityPage />} />
               <Route
                 path={`${paths.atividades}/:id`}
-                element={<AdminPresencaAtividade />}
+                element={<ActivityPresencePage />}
               />
               <Route
                 path={`${paths.atividades}/editar/:atividade_id`}
-                element={<AdminEdicaoAtividade />}
-              />
-              <Route path={paths.loja} element={<AdminLoja />} />
-              <Route
-                path={`${paths.loja}/produto/:produto_id/editar`}
-                element={<AdminEdicaoProduto />}
-              />
-              <Route
-                path={`${paths.loja}/compras/:produto_id`}
-                element={<AdminCompradores />}
-              />
-              <Route
-                path={`${paths.loja}/usuario/:user_id/compras/:produto_id`}
-                element={<AdminCompras />}
+                element={<EditActivityPage />}
               />
               <Route
                 path={`${paths.inscritos}/sorteio`}
-                element={<Sorteio />}
+                element={<EventRafflePage />}
               />
               <Route path='*' element={<NotFoundPage />} />
             </Route>
