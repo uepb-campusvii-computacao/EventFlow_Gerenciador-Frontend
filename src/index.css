@@ -3,11 +3,11 @@
 @tailwind utilities;
 
 body {
-  font-family: "Poppins", sans-serif;
+  font-family: 'Poppins', sans-serif;
   line-height: 1.7;
   color: #fff;
   background: #1f2641;
-  background-image: url("./assets/images/bg-stars.svg");
+  background-image: url('./assets/images/bg-stars.svg');
   overflow-x: hidden;
 }
 
