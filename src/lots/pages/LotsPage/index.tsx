@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import axiosInstance from '../../../axiosInstance';
 import {
   ILotsEntity,
@@ -9,11 +9,12 @@ import { Title } from '../../../core/components/Title';
 import { Loading } from '../../../core/components/Loading';
 import { loadLotsEndpoint } from '../../utils/loadLotsEndpoint';
 import { LotsTable } from '../../components/LotsTable';
+import { useEventsContext } from '../../../events/hooks/useEventsContext';
 
 export function LotesPage() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const { currentEvent } = useContext(EventContext);
   const [tableData, setTableData] = useState<ILotsTableDataEntity[]>([]);
+  const { currentEvent } = useEventsContext();
 
   useEffect(() => {
     async function fetchData() {
@@ -21,7 +22,7 @@ export function LotesPage() {
 
       try {
         const lotesResponse = await axiosInstance.get(
-          loadLotsEndpoint(currentEvent)
+          loadLotsEndpoint(currentEvent.uuid_evento)
         );
 
         const mappedResponse = lotesResponse.data.map((item: ILotsEntity) => ({
