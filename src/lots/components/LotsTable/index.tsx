@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import axiosInstance from '../../../axiosInstance';
 import { ILotsTableDataEntity } from '../../domain/entities/lotsEntity';
-import { formatPrice } from '../../utils/formatPrice';
+import { formatPrice } from '../../../core/utils/formatPrice';
 
 interface LotesTableProps {
   data: ILotsTableDataEntity[];
