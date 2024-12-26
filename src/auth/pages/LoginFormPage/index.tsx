@@ -1,12 +1,29 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
+import { z } from 'zod';
 
-import { Eye, EyeSlash } from '@phosphor-icons/react';
+import { Eye, EyeOff } from 'lucide-react';
 import logo from '../../../assets/images/logo.png';
 
 import { useAuthContext } from '../../hooks/useAuthContext';
-import { IUserDataLogin } from '../../domain/entities/userEntity';
+import { Button } from '@/core/components/ui/button';
+import { Label } from '@/core/components/ui/label';
+import { Input } from '@/core/components/ui/input';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/core/components/ui/card';
+
+const logInForm = z.object({
+  email: z.string().email(),
+  senha: z.string().min(4),
+});
+
+type LogInForm = z.infer<typeof logInForm>;
 
 export function LoginFormPage() {
   const [passwordVisibility, setPasswordVisibility] = useState(false);
@@ -14,8 +31,8 @@ export function LoginFormPage() {
   const {
     register,
     handleSubmit,
-    formState: { errors },
-  } = useForm<IUserDataLogin>({
+    formState: { isSubmitting, errors },
+  } = useForm<LogInForm>({
     defaultValues: {
       email: '',
       senha: '',
@@ -25,79 +42,98 @@ export function LoginFormPage() {
   const { login } = useAuthContext();
   const navigate = useNavigate();
 
-  const onSubmit = async (data: IUserDataLogin) => {
+  const onSubmit = async (data: LogInForm) => {
     await login(data);
     navigate('/');
   };
 
   return (
-    <div className='flex h-screen items-center justify-center'>
-      <div className='w-full max-w-sm rounded-lg bg-white p-8 shadow-lg'>
-        <img className='py-10' src={logo} alt='Logo' />
+    <div className='grid min-h-screen grid-cols-2'>
+      <div className='flex h-full flex-col justify-between border-r border-foreground/5 bg-muted p-10 text-muted-foreground'>
+        <div className='flex items-center'>
+          <img className='w-35 h-10' src={logo} alt='Logo' />
+        </div>
+        <footer className='text-sm'>
+          Gerenciador de eventos dos parceiros &copy; event.flow -{' '}
+          {new Date().getFullYear()}
+        </footer>
+      </div>
 
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <div className='mb-4'>
-            <label
-              htmlFor='email'
-              className='mb-2 block font-bold text-gray-700'
-            >
-              E-mail
-            </label>
-            <input
-              type='email'
-              id='email'
-              {...register('email', { required: 'O e-mail é obrigatório' })}
-              className={`focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none ${
-                errors.email ? 'border-red-500' : ''
-              }`}
-              placeholder='Seu e-mail'
-            />
-            {errors.email && (
-              <p className='mt-1 text-xs text-red-500'>
-                {errors.email.message}
-              </p>
-            )}
-          </div>
+      <div className='flex flex-col items-center justify-center bg-gradient-to-b from-[#7C3AED] to-purple-950'>
+        <Card className='flex w-[450px] flex-col justify-center gap-2'>
+          <CardHeader className='flex flex-col items-start justify-start gap-2'>
+            <CardTitle>Entre!</CardTitle>
+            <CardDescription>
+              O melhor gerenciador de eventos da região!
+            </CardDescription>
+          </CardHeader>
 
-          <div className='relative mb-6'>
-            <label
-              htmlFor='senha'
-              className='mb-2 block font-bold text-gray-700'
-            >
-              Senha
-            </label>
-            <input
-              type={passwordVisibility ? 'text' : 'password'}
-              id='senha'
-              {...register('senha', { required: 'A senha é obrigatória' })}
-              className={`focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none ${
-                errors.senha ? 'border-red-500' : ''
-              }`}
-              placeholder='Sua senha'
-            />
-            <button
-              onClick={() => setPasswordVisibility(!passwordVisibility)}
-              className='absolute right-4 top-[42px] text-black'
-              type='button'
-            >
-              {passwordVisibility ? <EyeSlash size={24} /> : <Eye size={24} />}
-            </button>
-            {errors.senha && (
-              <p className='mt-1 text-xs text-red-500'>
-                {errors.senha.message}
-              </p>
-            )}
-          </div>
+          <CardContent>
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <div className='mb-4'>
+                <Label
+                  htmlFor='email'
+                  className='mb-2 block font-bold text-gray-700'
+                >
+                  E-mail
+                </Label>
+                <Input
+                  type='email'
+                  id='email'
+                  {...register('email', { required: 'O e-mail é obrigatório' })}
+                  placeholder='Seu e-mail'
+                />
+                {errors.email && (
+                  <p className='mt-1 text-xs text-red-500'>
+                    {errors.email.message}
+                  </p>
+                )}
+              </div>
 
-          <div className='flex items-center justify-center pt-6'>
-            <button
-              type='submit'
-              className='focus:shadow-outline rounded bg-green-700 px-4 py-2 font-bold text-white hover:bg-green-600 focus:outline-none'
-            >
-              Entrar
-            </button>
-          </div>
-        </form>
+              <div className='relative'>
+                <Label
+                  htmlFor='senha'
+                  className='mb-2 block font-bold text-gray-700'
+                >
+                  Senha
+                </Label>
+
+                <Input
+                  type={passwordVisibility ? 'text' : 'password'}
+                  id='senha'
+                  {...register('senha', { required: 'A senha é obrigatória' })}
+                  placeholder='Sua senha'
+                />
+                <button
+                  onClick={() => setPasswordVisibility(!passwordVisibility)}
+                  className='absolute right-0 top-0 h-full px-3 py-7 hover:bg-transparent'
+                  type='button'
+                >
+                  {passwordVisibility ? (
+                    <EyeOff aria-hidden='true' size={24} />
+                  ) : (
+                    <Eye aria-hidden='true' size={24} />
+                  )}
+                </button>
+                {errors.senha && (
+                  <p className='mt-1 text-xs text-red-500'>
+                    {errors.senha.message}
+                  </p>
+                )}
+              </div>
+
+              <div className='flex items-center justify-center pt-6'>
+                <Button
+                  type='submit'
+                  className='w-full'
+                  disabled={isSubmitting}
+                >
+                  Entrar
+                </Button>
+              </div>
+            </form>
+          </CardContent>
+        </Card>
       </div>
     </div>
   );
