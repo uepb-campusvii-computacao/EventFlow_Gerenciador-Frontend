@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 
 import { useEventsContext } from '../../hooks/useEventsContext';
-import axiosInstance from '../../../axiosInstance';
 
 import { loadRegistrationsEndpoint } from '../../utils/loadRegistrationsEndpoint';
 import {
@@ -12,6 +11,7 @@ import {
 import { Loading } from '../../../core/components/Loading';
 import { Title } from '../../../core/components/Title';
 import { EventRegistrationTable } from '../../components/EventRegistrationTable';
+import { api } from '@/core/lib/axios';
 
 export function EventRegistrationPage() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -22,7 +22,7 @@ export function EventRegistrationPage() {
     const fetchData = async () => {
       setIsLoading(true);
       try {
-        const { data } = await axiosInstance.get(
+        const { data } = await api.get(
           loadRegistrationsEndpoint(currentEvent.uuid_evento)
         );
 

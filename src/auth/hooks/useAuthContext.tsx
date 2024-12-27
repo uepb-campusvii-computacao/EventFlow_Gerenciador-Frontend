@@ -1,8 +1,9 @@
-import axios from 'axios';
 import { createContext, ReactNode, useContext, useState } from 'react';
 import { toast } from 'react-toastify';
-import { BACKEND_DEFAULT_URL } from '../../backendPaths';
 import { IUserDataLogin } from '../domain/entities/userEntity';
+
+import { env } from '@/env';
+import { api } from '@/core/lib/axios';
 
 const defaultAuthenticationState = localStorage.getItem('authToken')
   ? true
@@ -32,7 +33,7 @@ export function AuthProvider({ children }: IAuthProviderProps) {
 
   const login = async (data: IUserDataLogin) => {
     try {
-      const response = await axios.post(`${BACKEND_DEFAULT_URL}/login`, data);
+      const response = await api.post(`${env.VITE_API_URL}/login`, data);
       const { token, user_id } = response.data;
 
       const user = { id: user_id };

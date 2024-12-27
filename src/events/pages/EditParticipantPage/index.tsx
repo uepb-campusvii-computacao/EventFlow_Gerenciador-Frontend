@@ -5,7 +5,6 @@ import { toast } from 'react-toastify';
 import { Trash } from '@phosphor-icons/react';
 import { FaSpinner } from 'react-icons/fa';
 
-import axiosInstance from '../../../axiosInstance';
 import { Loading } from '../../../core/components/Loading';
 import { Title } from '../../../core/components/Title';
 import { Modal } from '../../../core/components/Modal';
@@ -16,6 +15,7 @@ import { getFormDataEndpoint } from '../../utils/participants/loadGetParticipant
 import { editParticipantDataEndpoint } from '../../utils/participants/loadEditParticipantEndpoint';
 
 import { useEventsContext } from '../../hooks/useEventsContext';
+import { api } from '@/core/lib/axios';
 
 export function EditParticipantPage() {
   const { user_id } = useParams() as { user_id: string };
@@ -35,18 +35,18 @@ export function EditParticipantPage() {
   });
 
   async function handleDeleteUser() {
-    await axiosInstance.delete(deleteUserDataEndpoint(user_id));
+    await api.delete(deleteUserDataEndpoint(user_id));
 
     navigate('/inscritos');
   }
 
   useEffect(() => {
     const fetchData = async () => {
-      const { data: user } = await axiosInstance.get(
+      const { data: user } = await api.get(
         getParticipantDataEndpoint(currentEvent.uuid_evento, user_id)
       );
 
-      const { data: activities } = await axiosInstance.get(
+      const { data: activities } = await api.get(
         getFormDataEndpoint(currentEvent.uuid_evento)
       );
 
@@ -82,7 +82,7 @@ export function EditParticipantPage() {
 
   async function onSubmit(data) {
     try {
-      await axiosInstance.put(editParticipantDataEndpoint(user_id), {
+      await api.put(editParticipantDataEndpoint(user_id), {
         ...data,
       });
       toast.success('Participante Atualizado!');

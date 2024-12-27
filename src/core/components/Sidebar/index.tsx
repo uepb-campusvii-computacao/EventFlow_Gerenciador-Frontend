@@ -1,92 +1,38 @@
-import { FaTicket, FaUserGroup } from 'react-icons/fa6';
+import { ComponentProps } from 'react';
+
 import {
-  FaAddressCard,
-  FaBirthdayCake,
-  FaGift,
-  FaHome,
-  // FaShoppingCart,
-  FaUserEdit,
-} from 'react-icons/fa';
+  Sidebar,
+  SidebarContent,
+  SidebarFooter,
+  SidebarGroupLabel,
+  SidebarHeader,
+  useSidebar,
+} from '../ui/sidebar';
 
 import logo from '../../../assets/images/logo.png';
-import { SidebarItem } from './SidebarItem';
 
-import { useSidebarContext } from '../../hooks/useSidebarContext';
-import { paths } from '../../../paths';
+import { NavUserFooter } from './nav-user-footer';
+import { NavMain } from './nav-main';
 
-export function Sidebar() {
-  const { sidebarOpen } = useSidebarContext();
+export function AppSidebar({ ...props }: ComponentProps<typeof Sidebar>) {
+  const { open, isMobile } = useSidebar();
 
   return (
-    <div
-      className={`${
-        sidebarOpen ? 'block' : 'hidden'
-      } h-full w-64 bg-gray-800 px-4 py-2`}
-    >
-      <div>
-        <div className='flex flex-col items-center justify-center py-3'>
-          <img src={logo} />
-        </div>
-        <hr className='my-4 h-px border-0 bg-gray-200 dark:bg-gray-700' />
-        <ul className='mt-3 font-bold text-white'>
-          <li className='mb-2 rounded hover:shadow'>
-            <SidebarItem
-              nome='Home'
-              link={paths.home}
-              icon={<FaHome className='-mt-1 mr-2 h-6 w-6' />}
-            />
-          </li>
-          <li className='mb-2 rounded hover:shadow'>
-            <SidebarItem
-              nome='Eventos'
-              link={paths.eventos}
-              icon={<FaBirthdayCake className='-mt-1 mr-2 h-6 w-6' />}
-            />
-          </li>
-          <li className='mb-2 rounded hover:shadow'>
-            <SidebarItem
-              nome='Lotes'
-              link={paths.lotes}
-              icon={<FaTicket className='-mt-1 mr-2 h-6 w-6' />}
-            />
-          </li>
-          <li className='mb-2 rounded hover:shadow'>
-            <SidebarItem
-              nome='Credenciamento'
-              link={paths.credenciamento}
-              icon={<FaAddressCard className='-mt-1 mr-2 h-6 w-6' />}
-            />
-          </li>
-          <li className='mb-2 rounded hover:shadow'>
-            <SidebarItem
-              nome='Inscritos'
-              link={paths.inscritos}
-              icon={<FaUserEdit className='-mt-1 mr-2 h-6 w-6' />}
-            />
-          </li>
-          <li className='mb-2 rounded hover:shadow'>
-            <SidebarItem
-              nome='Sorteio Inscritos'
-              link={paths.sorteio_inscritos}
-              icon={<FaGift className='-mt-1 mr-2 h-6 w-6' />}
-            />
-          </li>
-          <li className='mb-2 rounded hover:shadow'>
-            <SidebarItem
-              nome='Atividades'
-              link={paths.atividades}
-              icon={<FaUserGroup className='-mt-1 mr-2 h-6 w-6' />}
-            />
-          </li>
-          {/* <li className='mb-2 rounded hover:shadow'>
-            <SidebarItem
-              nome='Loja'
-              link={paths.loja}
-              icon={<FaShoppingCart className='-mt-1 mr-2 h-6 w-6' />}
-            />
-          </li> */}
-        </ul>
-      </div>
-    </div>
+    <Sidebar variant='floating' collapsible='icon' {...props}>
+      <SidebarHeader>
+        <img
+          src={logo}
+          className={open ? '' : 'hidden'}
+          alt='Logo do event-flow'
+        />
+        <SidebarGroupLabel>Navegue por aqui!</SidebarGroupLabel>
+      </SidebarHeader>
+      <SidebarContent>
+        <NavMain />
+      </SidebarContent>
+      <SidebarFooter>
+        <NavUserFooter isMobile={isMobile} />
+      </SidebarFooter>
+    </Sidebar>
   );
 }

@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import axiosInstance from '../../../axiosInstance';
 import { ILotsTableDataEntity } from '../../domain/entities/lotsEntity';
 import { formatPrice } from '../../../core/utils/formatPrice';
+import { api } from '@/core/lib/axios';
 
 interface LotesTableProps {
   data: ILotsTableDataEntity[];
@@ -15,7 +15,7 @@ export function LotsTable({ data }: LotesTableProps) {
     setLoading(true);
 
     try {
-      await axiosInstance.put(`/lote/${lote_id}/change_inscricoes_visibility`);
+      await api.put(`/lote/${lote_id}/change_inscricoes_visibility`);
 
       setLotes(prevLotes =>
         prevLotes.map(lote =>

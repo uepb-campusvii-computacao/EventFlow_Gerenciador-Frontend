@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import axiosInstance from '../../../axiosInstance';
 import {
   ILotsEntity,
   ILotsTableDataEntity,
@@ -10,6 +9,7 @@ import { Loading } from '../../../core/components/Loading';
 import { loadLotsEndpoint } from '../../utils/loadLotsEndpoint';
 import { LotsTable } from '../../components/LotsTable';
 import { useEventsContext } from '../../../events/hooks/useEventsContext';
+import { api } from '@/core/lib/axios';
 
 export function LotesPage() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -21,7 +21,7 @@ export function LotesPage() {
       setIsLoading(true);
 
       try {
-        const lotesResponse = await axiosInstance.get(
+        const lotesResponse = await api.get(
           loadLotsEndpoint(currentEvent.uuid_evento)
         );
 

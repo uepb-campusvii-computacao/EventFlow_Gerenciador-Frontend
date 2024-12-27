@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 import { Eye, EyeOff } from 'lucide-react';
 import logo from '../../../assets/images/logo.png';
@@ -19,8 +20,11 @@ import {
 } from '@/core/components/ui/card';
 
 const logInForm = z.object({
-  email: z.string().email(),
-  senha: z.string().min(4),
+  email: z
+    .string()
+    .min(1, 'O campo é obrigatório.')
+    .email('O E-mail está inválido.'),
+  senha: z.string().min(4, 'O campo senha deve conter mais de 4 caracteres.'),
 });
 
 type LogInForm = z.infer<typeof logInForm>;
@@ -33,6 +37,7 @@ export function LoginFormPage() {
     handleSubmit,
     formState: { isSubmitting, errors },
   } = useForm<LogInForm>({
+    resolver: zodResolver(logInForm),
     defaultValues: {
       email: '',
       senha: '',
@@ -60,11 +65,11 @@ export function LoginFormPage() {
       </div>
 
       <div className='flex flex-col items-center justify-center bg-gradient-to-b from-[#7C3AED] to-purple-950'>
-        <Card className='flex w-[450px] flex-col justify-center gap-2'>
+        <Card className='flex w-[380px] flex-col justify-center gap-2'>
           <CardHeader className='flex flex-col items-start justify-start gap-2'>
             <CardTitle>Entre!</CardTitle>
             <CardDescription>
-              O melhor gerenciador de eventos da região!
+              Venha planejar as ações do seu evento!
             </CardDescription>
           </CardHeader>
 
@@ -83,11 +88,11 @@ export function LoginFormPage() {
                   {...register('email', { required: 'O e-mail é obrigatório' })}
                   placeholder='Seu e-mail'
                 />
-                {errors.email && (
-                  <p className='mt-1 text-xs text-red-500'>
+                {errors.email ? (
+                  <p className='mx-1 mt-1 text-xs text-red-500'>
                     {errors.email.message}
                   </p>
-                )}
+                ) : null}
               </div>
 
               <div className='relative'>
@@ -110,16 +115,24 @@ export function LoginFormPage() {
                   type='button'
                 >
                   {passwordVisibility ? (
-                    <EyeOff aria-hidden='true' size={24} />
+                    <EyeOff
+                      className='text-muted-foreground'
+                      aria-hidden='true'
+                      size={22}
+                    />
                   ) : (
-                    <Eye aria-hidden='true' size={24} />
+                    <Eye
+                      className='text-muted-foreground'
+                      aria-hidden='true'
+                      size={22}
+                    />
                   )}
                 </button>
-                {errors.senha && (
-                  <p className='mt-1 text-xs text-red-500'>
+                {errors.senha ? (
+                  <p className='mx-1 mt-1 text-xs text-red-500'>
                     {errors.senha.message}
                   </p>
-                )}
+                ) : null}
               </div>
 
               <div className='flex items-center justify-center pt-6'>

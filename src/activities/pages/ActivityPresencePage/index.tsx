@@ -9,8 +9,8 @@ import {
   ISubscribeEntity,
   ISubscribeModel,
 } from '../../domain/entities/subscribeEntity';
-import axiosInstance from '../../../axiosInstance';
 import { toast } from 'react-toastify';
+import { api } from '@/core/lib/axios';
 
 export function ActivityPresencePage() {
   const { id } = useParams() as { id: string };
@@ -19,9 +19,7 @@ export function ActivityPresencePage() {
 
   const fetchData = async (activityId: string) => {
     try {
-      const response = await axiosInstance.get(
-        `/atividades/${activityId}/inscricoes`
-      );
+      const response = await api.get(`/atividades/${activityId}/inscricoes`);
 
       const mappedData = response.data.map((inscrito: ISubscribeEntity) => ({
         id: inscrito.uuid_user,

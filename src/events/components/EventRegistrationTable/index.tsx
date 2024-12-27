@@ -9,10 +9,10 @@ import {
   StatusPagamento,
 } from '../../domain/entities/subscribersEntity';
 import { useEventsContext } from '../../hooks/useEventsContext';
-import axiosInstance from '../../../axiosInstance';
 import { loadToggleRegistrationEndpoint } from '../../utils/loadToggleRegistrationEndpoint';
 import { Popover } from '../../../core/components/Popover';
 import { Pagination } from '../../../core/components/Pagination';
+import { api } from '@/core/lib/axios';
 
 interface IEventRegistrationTableProps {
   data: ISubscribersEntity[];
@@ -131,7 +131,7 @@ export function EventRegistrationTable({ data }: IEventRegistrationTableProps) {
     user_id: string
   ) => {
     try {
-      await axiosInstance.put(
+      await api.put(
         loadToggleRegistrationEndpoint(currentEvent.uuid_evento, user_id)
       );
       event.target.checked = !event.target.checked;

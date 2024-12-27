@@ -7,8 +7,8 @@ import { Title } from '../../../core/components/Title';
 import { ActivityTable } from '../../components/ActivityTable';
 
 import { useEventsContext } from '../../../events/hooks/useEventsContext';
-import axiosInstance from '../../../axiosInstance';
 import { IActivityEntity } from '../../domain/entities/activityEntity';
+import { api } from '@/core/lib/axios';
 
 export function ActivityPage() {
   const [isLoading, setIsLoading] = useState(true);
@@ -20,7 +20,7 @@ export function ActivityPage() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const { data } = await axiosInstance.get(
+        const { data } = await api.get(
           loadGetActivitiesData(currentEvent.uuid_evento)
         );
 

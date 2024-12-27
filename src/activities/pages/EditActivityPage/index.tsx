@@ -4,10 +4,10 @@ import { FaSpinner } from 'react-icons/fa';
 import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
-import axiosInstance from '../../../axiosInstance';
 import { IActivityDataEditFormEntity } from '../../domain/entities/activityEntity';
 import { Loading } from '../../../core/components/Loading';
 import { Title } from '../../../core/components/Title';
+import { api } from '@/core/lib/axios';
 
 const fetchDataEndpoint = (atividade_id: string) => {
   return `/atividades/${atividade_id}`;
@@ -31,7 +31,7 @@ export function EditActivityPage() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await axiosInstance.get(fetchDataEndpoint(atividade_id));
+      const response = await api.get(fetchDataEndpoint(atividade_id));
 
       setAtividade(response.data);
 
@@ -51,7 +51,7 @@ export function EditActivityPage() {
 
   async function onSubmit(data: IActivityDataEditFormEntity) {
     try {
-      await axiosInstance.put(fetchDataEndpoint(atividade_id), {
+      await api.put(fetchDataEndpoint(atividade_id), {
         ...data,
       });
       toast.success('Atividade Atualizado!');

@@ -7,10 +7,10 @@ import {
 } from 'react';
 import { toast } from 'react-toastify';
 
-import axiosInstance from '../../axiosInstance';
 import { useAuthContext } from '../../auth/hooks/useAuthContext';
 import { IEventEntity } from '../domain/entities/eventEntity';
 import { Loading } from '../../core/components/Loading';
+import { api } from '@/core/lib/axios';
 
 interface IEventContext {
   events: IEventEntity[];
@@ -38,7 +38,7 @@ export function EventProvider({ children }: IEventProviderProps) {
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const response = await axiosInstance.get(`/user/my-events`);
+        const response = await api.get(`/user/my-events`);
         const fetchedEvents = response.data;
 
         setEvents(fetchedEvents);

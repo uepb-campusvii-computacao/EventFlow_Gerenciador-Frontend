@@ -1,13 +1,15 @@
 import axios from 'axios';
 import { toast } from 'react-toastify';
 
-import { BACKEND_DEFAULT_URL } from './backendPaths';
+import { env } from '@/env';
 
-const axiosInstance = axios.create({
-  baseURL: BACKEND_DEFAULT_URL,
+// @TODO: acredito que usar o cookies hoje é um pouco mais seguro que o localstorage
+
+const api = axios.create({
+  baseURL: env.VITE_API_URL,
 });
 
-axiosInstance.interceptors.request.use(
+api.interceptors.request.use(
   config => {
     const tokenData = localStorage.getItem('authToken');
     if (tokenData) {
@@ -22,7 +24,7 @@ axiosInstance.interceptors.request.use(
   }
 );
 
-axiosInstance.interceptors.response.use(
+api.interceptors.response.use(
   response => {
     return response;
   },
@@ -43,4 +45,4 @@ axiosInstance.interceptors.response.use(
   }
 );
 
-export default axiosInstance;
+export { api };

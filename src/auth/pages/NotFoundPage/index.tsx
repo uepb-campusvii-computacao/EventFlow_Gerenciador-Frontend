@@ -16,7 +16,7 @@ export function NotFoundPage() {
           href='/'
           className='inline-flex rounded bg-blue-900 p-3 text-white shadow-sm hover:bg-blue-700'
         >
-          Voltar para home
+          Voltar para página inicial!
         </a>
       </div>
     </div>

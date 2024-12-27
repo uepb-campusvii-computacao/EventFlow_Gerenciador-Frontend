@@ -1,1 +1,0 @@
-export const BACKEND_DEFAULT_URL = import.meta.env.VITE_API_URL;

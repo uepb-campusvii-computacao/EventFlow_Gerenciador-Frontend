@@ -1,4 +1,3 @@
-import axiosInstance from '../../../axiosInstance';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { useEventsContext } from '../../hooks/useEventsContext';
@@ -7,6 +6,7 @@ import { ISubscribersEntity } from '../../domain/entities/subscribersEntity';
 import { Loading } from '../../../core/components/Loading';
 import { Title } from '../../../core/components/Title';
 import { EventSubscribersTable } from '../../components/EventSubscribersTable';
+import { api } from '@/core/lib/axios';
 
 export function EventSubscribersPage() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -40,7 +40,7 @@ export function EventSubscribersPage() {
       setIsLoading(true);
 
       try {
-        const inscricoesResponse = await axiosInstance.get(
+        const inscricoesResponse = await api.get(
           loadSubscribersEndpoint(currentEvent.uuid_evento)
         );
 

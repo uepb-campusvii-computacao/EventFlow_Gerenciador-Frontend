@@ -7,8 +7,7 @@ interface PopoverProps {
   togglePopover: () => void;
 }
 
-// tentar aplicar composition pattern aqui (seria legal)
-
+// @TODO: tentar aplicar composition pattern aqui (seria legal)
 export function Popover({ open, togglePopover, children, icon }: PopoverProps) {
   return (
     <div className='relative flex items-center justify-center'>

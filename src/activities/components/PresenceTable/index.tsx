@@ -2,8 +2,8 @@ import { ChangeEvent, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import * as XLSX from 'xlsx';
 
-import axiosInstance from '../../../axiosInstance';
 import { ISubscribeModel } from '../../domain/entities/subscribeEntity';
+import { api } from '@/core/lib/axios';
 
 interface PresenceTableProps {
   data: ISubscribeModel[];
@@ -19,7 +19,7 @@ export function PresenceTable({ data, atividadeId }: PresenceTableProps) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const { data } = await axiosInstance.get(`/atividades/${atividadeId}`);
+        const { data } = await api.get(`/atividades/${atividadeId}`);
 
         setAtividade(prev => {
           return { ...prev, name: data.nome };
@@ -38,7 +38,7 @@ export function PresenceTable({ data, atividadeId }: PresenceTableProps) {
   ) => {
     event.target.disabled = true;
     try {
-      await axiosInstance.put(
+      await api.put(
         `/atividades/${atividadeId}/inscricoes/${user_id}/frequencia`
       );
       toast.success('Presença registrada!');

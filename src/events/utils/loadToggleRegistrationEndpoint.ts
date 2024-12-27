@@ -1,8 +1,8 @@
-import { BACKEND_DEFAULT_URL } from '../../backendPaths';
+import { env } from '@/env';
 
 export const loadToggleRegistrationEndpoint = (
   id_evento: string,
   user_id: string
 ) => {
-  return `${BACKEND_DEFAULT_URL}/events/${id_evento}/inscricoes/credenciamento/${user_id}`;
+  return `${env.VITE_API_URL}/events/${id_evento}/inscricoes/credenciamento/${user_id}`;
 };

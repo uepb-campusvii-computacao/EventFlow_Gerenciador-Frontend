@@ -1,14 +1,18 @@
-import axiosInstance from '../../../axiosInstance';
 import { useEffect, useState } from 'react';
-import { FaMoneyBillWave, FaUser } from 'react-icons/fa';
 import { toast } from 'react-toastify';
-import { useEventsContext } from '../../../events/hooks/useEventsContext';
-import { BACKEND_DEFAULT_URL } from '../../../backendPaths';
-import { Loading } from '../../components/Loading';
-import { InfoCard } from '../../components/cards/InfoCard';
-import { PieChart } from '../../components/charts/PieChart';
 
-export function Home() {
+import { RegistrationMoneyCard } from './cards/registration-money-card';
+import { TotalRegistrationsCard } from './cards/total-number-registrations-card';
+import { SalesMoneyCard } from './cards/sales-money-card';
+import { RegistrationsChart } from './charts/registrations-chart';
+import { RegistrationsAccreditedChart } from './charts/registrations-accredited-chart';
+import { Loading } from '../../components/Loading';
+import { useEventsContext } from '../../../events/hooks/useEventsContext';
+
+import { env } from '@/env';
+import { api } from '@/core/lib/axios';
+
+export function Dashboard() {
   const [isLoading, setIsLoading] = useState(true);
   const [financialData, setFinancialData] = useState({
     totalInscritos: 0,
@@ -22,10 +26,8 @@ export function Home() {
   useEffect(() => {
     const fetchFinancialInformation = async () => {
       try {
-        const FINANCIAL_INFORMATION_ENDPOINT = `${BACKEND_DEFAULT_URL}/events/${currentEvent.uuid_evento}/dashboard`;
-        const response = await axiosInstance.get(
-          FINANCIAL_INFORMATION_ENDPOINT
-        );
+        const FINANCIAL_INFORMATION_ENDPOINT = `${env.VITE_API_URL}/events/${currentEvent.uuid_evento}/dashboard`;
+        const response = await api.get(FINANCIAL_INFORMATION_ENDPOINT);
 
         const data = response.data;
 
@@ -58,21 +60,17 @@ export function Home() {
 
   return (
     <>
+      {/* @TODO: remover loading e adicionar o padrão da lib do shadcn */}
       {isLoading ? (
         <Loading />
       ) : (
-        <>
-          <div className='mt-8 grid grid-cols-1 gap-4 px-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3'>
-            <InfoCard
-              icon={<FaUser className='h-12 w-12 text-white' />}
-              bgColor='bg-green-400'
-              title='Total de inscritos'
-              value={financialData.totalInscritos.toString()}
+        <div className='flex flex-col gap-4'>
+          <h2 className='text-3xl font-bold tracking-tight'>Dashboard</h2>
+          <div className='grid grid-cols-3 gap-4'>
+            <TotalRegistrationsCard
+              total={financialData.totalInscritos.toString()}
             />
-            <InfoCard
-              icon={<FaMoneyBillWave className='h-12 w-12 text-white' />}
-              bgColor='bg-blue-400'
-              title='Dinheiro Inscrições'
+            <RegistrationMoneyCard
               value={new Intl.NumberFormat('pt-BR', {
                 style: 'currency',
                 currency: 'BRL',
@@ -82,10 +80,7 @@ export function Home() {
                 financialData.totalArrecadado.totalArrecadadoInscricoes
               )}
             />
-            <InfoCard
-              icon={<FaMoneyBillWave className='h-12 w-12 text-white' />}
-              bgColor='bg-purple-400'
-              title='Dinheiro Vendas'
+            <SalesMoneyCard
               value={new Intl.NumberFormat('pt-BR', {
                 style: 'currency',
                 currency: 'BRL',
@@ -94,53 +89,49 @@ export function Home() {
               }).format(financialData.totalArrecadado.totalArrecadadoVendas)}
             />
           </div>
-          <div className='mb-8 mt-4 gap-4 px-6 sm:flex sm:flex-col lg:flex-row'>
-            <PieChart
-              title={'INSCRIÇÕES REALIZADAS'}
+          <div className='grid grid-cols-2 gap-4'>
+            <RegistrationsChart
               data={[
                 {
-                  name: 'Pagas',
+                  name: 'payers',
                   value:
                     financialData.totalInscritos -
                     (financialData.inscricoesPendentes +
                       financialData.inscricoesGratuitas),
-                  color: '#0088FE',
+                  fill: 'var(--blue)',
                 },
                 {
-                  name: 'Pendentes',
+                  name: 'free',
                   value: financialData.inscricoesPendentes,
-                  color: '#af3d39',
+                  fill: 'var(--green)',
                 },
                 {
-                  name: 'Gratis',
+                  name: 'pending',
                   value: financialData.inscricoesGratuitas,
-                  color: '#127205',
+                  fill: 'var(--red)',
                 },
               ]}
               total={financialData.totalInscritos}
             />
-            <div className='h-4' />
-            {/* Gap não funciona no Mobile */}
-            <PieChart
-              title={'INSCRITOS CREDENCIADOS'}
+            <RegistrationsAccreditedChart
               data={[
                 {
-                  name: 'Não credenciado',
+                  name: 'accredited',
                   value:
                     financialData.totalInscritos -
                     financialData.totalCredenciados,
-                  color: '#af3d39',
+                  fill: 'var(--blue)',
                 },
                 {
-                  name: 'Credenciado',
+                  name: 'unaccredited',
                   value: financialData.totalCredenciados,
-                  color: '#127205',
+                  fill: 'var(--red)',
                 },
               ]}
               total={financialData.totalInscritos}
             />
           </div>
-        </>
+        </div>
       )}
     </>
   );
