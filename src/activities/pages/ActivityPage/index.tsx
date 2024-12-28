@@ -3,7 +3,6 @@ import { toast } from 'react-toastify';
 
 import { loadGetActivitiesData } from '../../utils/loadGetActivitiesData';
 import { Loading } from '../../../core/components/Loading';
-import { Title } from '../../../core/components/Title';
 import { ActivityTable } from '../../components/ActivityTable';
 
 import { useEventsContext } from '../../../events/hooks/useEventsContext';
@@ -39,8 +38,8 @@ export function ActivityPage() {
       {isLoading ? (
         <Loading />
       ) : (
-        <div className='pb-8 md:px-8'>
-          <Title title='Atividades' />
+        <div className='flex flex-col gap-4'>
+          <h2 className='text-3xl font-bold tracking-tight'>Eventos</h2>
           <ActivityTable data={tableData} />
         </div>
       )}

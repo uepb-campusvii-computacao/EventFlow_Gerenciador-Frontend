@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { Loading } from '../../../core/components/Loading';
-import { Title } from '../../../core/components/Title';
 import { PresenceTable } from '../../components/PresenceTable';
 
 import {
@@ -47,7 +46,9 @@ export function ActivityPresencePage() {
         <Loading />
       ) : (
         <div className='pb-8 md:px-8'>
-          <Title title='Registrar Presença' />
+          <h2 className='text-3xl font-bold tracking-tight'>
+            Registrar presença
+          </h2>
           <PresenceTable data={data} atividadeId={id} />
         </div>
       )}

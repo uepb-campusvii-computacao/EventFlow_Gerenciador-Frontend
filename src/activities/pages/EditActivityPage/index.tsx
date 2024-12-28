@@ -6,7 +6,6 @@ import { toast } from 'react-toastify';
 
 import { IActivityDataEditFormEntity } from '../../domain/entities/activityEntity';
 import { Loading } from '../../../core/components/Loading';
-import { Title } from '../../../core/components/Title';
 import { api } from '@/core/lib/axios';
 
 const fetchDataEndpoint = (atividade_id: string) => {
@@ -66,14 +65,14 @@ export function EditActivityPage() {
 
   return (
     <section className='mx-auto max-w-3xl pb-8 sm:pb-16'>
-      <Title title='Editar Atividade' />
+      <h2 className='text-3xl font-bold tracking-tight'>Editar atividade</h2>
 
       <form
         onSubmit={handleSubmit(onSubmit)}
         className='mx-auto flex max-w-3xl flex-col gap-10 rounded-lg bg-white p-7 text-black shadow'
       >
         <div className='flex flex-col gap-4'>
-          <h2 className='text-lg font-bold'>Dados Publicos</h2>
+          <h2 className='text-lg font-bold'>Dados Públicos</h2>
           <div className='grid grid-cols-1 gap-4'>
             <div className='flex flex-col'>
               <label
