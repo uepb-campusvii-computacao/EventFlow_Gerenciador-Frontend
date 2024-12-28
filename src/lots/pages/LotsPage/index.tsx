@@ -52,9 +52,11 @@ export function LotesPage() {
       {isLoading ? (
         <Loading />
       ) : (
-        <div className='pb-8 md:px-8'>
-          <Title title='Lotes' />
-          <LotsTable data={tableData} />
+        <div className='flex flex-col gap-4'>
+          <h2 className='text-3xl font-bold tracking-tight'>Lotes</h2>
+          <div className='rounded-md border'>
+            <LotsTable data={tableData} />
+          </div>
         </div>
       )}
     </>
