@@ -1,18 +1,21 @@
-import { ChangeEvent, useState } from 'react';
+import { useState } from 'react';
 
 import { toast } from 'react-toastify';
 import * as XLSX from 'xlsx';
-import { DownloadSimple, Funnel, MagnifyingGlass } from '@phosphor-icons/react';
 
-import {
-  ISubscribersEntity,
-  StatusPagamento,
-} from '../../domain/entities/subscribersEntity';
+import { ISubscribersEntity } from '../../domain/entities/subscribersEntity';
 import { useEventsContext } from '../../hooks/useEventsContext';
 import { loadToggleRegistrationEndpoint } from '../../utils/loadToggleRegistrationEndpoint';
-import { Popover } from '../../../core/components/Popover';
 import { Pagination } from '../../../core/components/Pagination';
 import { api } from '@/core/lib/axios';
+import {
+  Table,
+  TableBody,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/core/components/ui/table';
+import { EventRegistrationTableRow } from './event-registration-table-row';
 
 interface IEventRegistrationTableProps {
   data: ISubscribersEntity[];
@@ -40,6 +43,7 @@ export function EventRegistrationTable({ data }: IEventRegistrationTableProps) {
   const indexOfLastUser = state.currentPage * state.usersPerPage;
   const indexOfFirstUser = indexOfLastUser - state.usersPerPage;
   const currentUsers = state.users.slice(indexOfFirstUser, indexOfLastUser);
+  // console.log(currentUsers);
 
   function searchUser(nome_user: string) {
     const filteredUsers = data.filter(user =>
@@ -126,25 +130,77 @@ export function EventRegistrationTable({ data }: IEventRegistrationTableProps) {
     }
   }
 
-  const toggleCredential = async (
-    event: ChangeEvent<HTMLInputElement>,
-    user_id: string
-  ) => {
+  const handleToggleCredential = async (user_id: string, checked: boolean) => {
     try {
-      await api.put(
-        loadToggleRegistrationEndpoint(currentEvent.uuid_evento, user_id)
-      );
-      event.target.checked = !event.target.checked;
-      toast.success('Credenciamento Marcado');
+      if (checked) {
+        await api.put(
+          loadToggleRegistrationEndpoint(currentEvent.uuid_evento, user_id)
+        );
+        toast.success('Credenciamento Marcado');
+      } else {
+        await api.put(
+          loadToggleRegistrationEndpoint(currentEvent.uuid_evento, user_id)
+        );
+        toast.success('Credenciamento Desmarcado');
+      }
     } catch (error) {
-      console.error('Erro ao marcar credenciamento:', error);
-      toast.error('Erro ao marcar credenciamento');
+      console.error('Erro ao alterar credenciamento:', error);
+      toast.error('Erro ao alterar credenciamento');
     }
   };
 
   return (
-    <div className='flex flex-col'>
-      <div className='relative my-4 flex w-full items-center gap-4'>
+    <div>
+      <div className='rounded-md border'>
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead className='hidden'>Identificador</TableHead>
+              <TableHead className='text-md font-semibold text-violet-600'>
+                Nome
+              </TableHead>
+              <TableHead className='text-md font-semibold text-violet-600'>
+                Nome no crachá
+              </TableHead>
+              <TableHead className='text-md font-semibold text-violet-600'>
+                E-mail
+              </TableHead>
+              <TableHead className='text-md w-[164px] font-semibold text-violet-600'>
+                Status
+              </TableHead>
+              <TableHead className='text-md w-[64px] font-semibold text-violet-600'>
+                Credenciado
+              </TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {currentUsers.map(item => (
+              <EventRegistrationTableRow
+                key={`${item.nome_cracha}-${item.email}`}
+                item={item}
+                onToggleCredential={handleToggleCredential}
+              />
+            ))}
+          </TableBody>
+        </Table>
+      </div>
+      {state.users.length > state.usersPerPage && (
+        <div className='m-2'>
+          <Pagination
+            usersPerPage={state.usersPerPage}
+            totalUsers={state.users.length}
+            paginateFront={paginateFront}
+            paginateBack={paginateBack}
+            currentPage={state.currentPage}
+            paginateToggle={paginateToggle}
+          />
+        </div>
+      )}
+    </div>
+  );
+}
+
+/* <div className='relative my-4 flex w-full items-center gap-4'>
         <input
           onChange={e => searchUser(e.target.value)}
           className='w-full rounded-md bg-white px-3 py-2 pl-12 text-gray-600'
@@ -177,7 +233,7 @@ export function EventRegistrationTable({ data }: IEventRegistrationTableProps) {
                 onChange={e => toggleFilter(e.target.value)}
                 value='REALIZADO'
                 checked={state.filter === 'REALIZADO'}
-                className='hidden'
+
                 type='checkbox'
                 name=''
                 id='realizado'
@@ -210,102 +266,4 @@ export function EventRegistrationTable({ data }: IEventRegistrationTableProps) {
         >
           <DownloadSimple size={28} />
         </button>
-      </div>
-      <div className='w-full overflow-x-auto rounded-lg'>
-        <table className='w-full'>
-          <thead className='bg-indigo-500'>
-            <tr>
-              <th scope='col' className='hidden'>
-                ID
-              </th>
-              <th
-                scope='col'
-                className='px-6 py-3 text-center text-xs font-medium uppercase tracking-wider text-white'
-              >
-                Nome
-              </th>
-              <th
-                scope='col'
-                className='px-6 py-3 text-center text-xs font-medium uppercase tracking-wider text-white'
-              >
-                Nome no crachá
-              </th>
-              <th
-                scope='col'
-                className='px-6 py-3 text-center text-xs font-medium uppercase tracking-wider text-white'
-              >
-                Email
-              </th>
-              <th
-                scope='col'
-                className='px-6 py-3 text-center text-xs font-medium uppercase tracking-wider text-white'
-              >
-                Status
-              </th>
-              <th
-                scope='col'
-                className='px-6 py-3 text-center text-xs font-medium uppercase tracking-wider text-white'
-              >
-                Credenciamento
-              </th>
-            </tr>
-          </thead>
-          <tbody className='divide-y divide-gray-200 bg-white'>
-            {currentUsers.map(item => (
-              <tr key={item.uuid_user}>
-                <td className='hidden'>{item.uuid_user}</td>
-                <td
-                  title={item.email}
-                  className={`whitespace-nowrap px-6 py-4 text-center text-black`}
-                >
-                  {item.nome}
-                </td>
-                <td className='whitespace-nowrap px-6 py-4 text-center text-black'>
-                  {item.nome_cracha}
-                </td>
-                <td className='whitespace-nowrap px-6 py-4 text-center text-black'>
-                  {item.email}
-                </td>
-                <td className='flex justify-center whitespace-nowrap px-6 py-4 text-center text-black'>
-                  {item.status_pagamento === StatusPagamento.REALIZED ? (
-                    <span className='me-2 rounded bg-green-100 px-2.5 py-0.5 text-xs font-medium text-green-800 dark:bg-green-900 dark:text-green-300'>
-                      {item.status_pagamento}
-                    </span>
-                  ) : item.status_pagamento === StatusPagamento.PENDING ? (
-                    <span className='me-2 rounded bg-red-100 px-2.5 py-0.5 text-xs font-medium text-red-800 dark:bg-red-900 dark:text-red-300'>
-                      {item.status_pagamento}
-                    </span>
-                  ) : (
-                    <span className='me-2 rounded bg-gray-400 px-2.5 py-0.5 text-xs font-medium text-white dark:bg-gray-400 dark:text-white'>
-                      {item.status_pagamento}
-                    </span>
-                  )}
-                </td>
-                <td className='whitespace-nowrap px-6 py-4 text-center text-black'>
-                  <input
-                    type='checkbox'
-                    className='h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500'
-                    defaultChecked={item.credenciamento}
-                    onChange={event => toggleCredential(event, item.uuid_user)}
-                  />
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-      {state.users.length > state.usersPerPage && (
-        <div className='flex w-full items-center justify-center px-8 py-3'>
-          <Pagination
-            usersPerPage={state.usersPerPage}
-            totalUsers={state.users.length}
-            paginateFront={paginateFront}
-            paginateBack={paginateBack}
-            currentPage={state.currentPage}
-            paginateToggle={paginateToggle}
-          />
-        </div>
-      )}
-    </div>
-  );
-}
+      </div> */
