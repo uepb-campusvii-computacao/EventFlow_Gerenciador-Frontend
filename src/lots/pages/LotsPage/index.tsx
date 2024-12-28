@@ -4,7 +4,6 @@ import {
   ILotsTableDataEntity,
 } from '../../domain/entities/lotsEntity';
 import { toast } from 'react-toastify';
-import { Title } from '../../../core/components/Title';
 import { Loading } from '../../../core/components/Loading';
 import { loadLotsEndpoint } from '../../utils/loadLotsEndpoint';
 import { LotsTable } from '../../components/LotsTable';

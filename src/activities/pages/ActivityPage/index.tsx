@@ -39,7 +39,7 @@ export function ActivityPage() {
         <Loading />
       ) : (
         <div className='flex flex-col gap-4'>
-          <h2 className='text-3xl font-bold tracking-tight'>Eventos</h2>
+          <h2 className='text-3xl font-bold tracking-tight'>Atividades</h2>
           <ActivityTable data={tableData} />
         </div>
       )}
