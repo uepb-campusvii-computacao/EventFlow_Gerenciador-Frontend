@@ -10,7 +10,7 @@ export function Header() {
     <div className='border-b'>
       <div className='flex h-16 items-center gap-6 px-6'>
         <div>
-          <span className='text-lg font-semibold text-muted-foreground'>
+          <span className='text-lg font-semibold text-violet-600'>
             {currentEvent.nome}
           </span>
         </div>
