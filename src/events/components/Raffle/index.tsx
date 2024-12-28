@@ -7,6 +7,7 @@ import { useSidebarContext } from '../../../core/hooks/useSidebarContext';
 import { ISubscribersEntity } from '../../domain/entities/subscribersEntity';
 
 import styles from './styles.module.css';
+import { Button } from '@/core/components/ui/button';
 
 interface RaffleProps {
   data: ISubscribersEntity[];
@@ -121,13 +122,13 @@ export function Raffle({ data }: RaffleProps) {
           />
         )}
       </div>
-      <button
+      <Button
         onClick={startRaffle}
         className={`flex flex-row items-center gap-1 rounded-md bg-indigo-500 px-6 py-3 text-white ${isRunning ? 'cursor-not-allowed opacity-50' : ''}`}
         disabled={isRunning}
       >
         <GrCycle size={24} /> Sortear Inscrito
-      </button>
+      </Button>
     </div>
   );
 }

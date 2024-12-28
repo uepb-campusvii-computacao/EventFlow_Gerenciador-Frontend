@@ -9,7 +9,6 @@ import {
   StatusPagamento,
 } from '../../domain/entities/subscribersEntity';
 import { Loading } from '../../../core/components/Loading';
-import { Title } from '../../../core/components/Title';
 import { EventRegistrationTable } from '../../components/EventRegistrationTable';
 import { api } from '@/core/lib/axios';
 
@@ -54,8 +53,8 @@ export function EventRegistrationPage() {
       {isLoading ? (
         <Loading />
       ) : (
-        <div className='pb-8 md:px-8'>
-          <Title title='Credenciamento' />
+        <div className='flex flex-col gap-4'>
+          <h2 className='text-3xl font-bold tracking-tight'>Credenciamentos</h2>
           <EventRegistrationTable
             data={tableData.filter(
               item =>

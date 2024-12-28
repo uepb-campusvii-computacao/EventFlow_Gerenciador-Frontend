@@ -6,7 +6,6 @@ import { Trash } from '@phosphor-icons/react';
 import { FaSpinner } from 'react-icons/fa';
 
 import { Loading } from '../../../core/components/Loading';
-import { Title } from '../../../core/components/Title';
 import { Modal } from '../../../core/components/Modal';
 
 import { deleteUserDataEndpoint } from '../../utils/participants/loadDeleteParticipantEndpoint';
@@ -97,7 +96,7 @@ export function EditParticipantPage() {
 
   return (
     <section className='mx-auto max-w-3xl'>
-      <Title title='Editar Usuário' />
+      <h2 className='text-3xl font-bold tracking-tight'>Editar usuário</h2>
 
       <form
         onSubmit={handleSubmit(onSubmit)}

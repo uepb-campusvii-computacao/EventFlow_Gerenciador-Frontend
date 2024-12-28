@@ -4,7 +4,6 @@ import { useEventsContext } from '../../hooks/useEventsContext';
 import { loadSubscribersEndpoint } from '../../utils/loadSubscribersEndpoint';
 import { ISubscribersEntity } from '../../domain/entities/subscribersEntity';
 import { Loading } from '../../../core/components/Loading';
-import { Title } from '../../../core/components/Title';
 import { EventSubscribersTable } from '../../components/EventSubscribersTable';
 import { api } from '@/core/lib/axios';
 
@@ -83,8 +82,8 @@ export function EventSubscribersPage() {
       {isLoading ? (
         <Loading />
       ) : (
-        <div className='pb-8 md:px-8'>
-          <Title title='Inscrições' />
+        <div className='flex flex-col gap-4'>
+          <h2 className='text-3xl font-bold tracking-tight'>Inscrições</h2>
           <EventSubscribersTable data={tableData} />
         </div>
       )}

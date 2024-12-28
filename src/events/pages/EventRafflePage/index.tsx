@@ -4,7 +4,6 @@ import { toast } from 'react-toastify';
 import { useEventsContext } from '../../hooks/useEventsContext';
 import { ISubscribersEntity } from '../../domain/entities/subscribersEntity';
 import { Loading } from '../../../core/components/Loading';
-import { Title } from '../../../core/components/Title';
 import { Raffle } from '../../components/Raffle';
 import { api } from '@/core/lib/axios';
 
@@ -37,7 +36,9 @@ export function EventRafflePage() {
         <Loading />
       ) : (
         <>
-          <Title title='Sorteio de Inscritos' />
+          <h2 className='text-3xl font-bold tracking-tight'>
+            Sorteio de inscritos
+          </h2>
           <Raffle data={users} />
         </>
       )}
