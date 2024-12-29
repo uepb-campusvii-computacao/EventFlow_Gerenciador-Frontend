@@ -43,7 +43,6 @@ export function EventRegistrationTable({ data }: IEventRegistrationTableProps) {
   const indexOfLastUser = state.currentPage * state.usersPerPage;
   const indexOfFirstUser = indexOfLastUser - state.usersPerPage;
   const currentUsers = state.users.slice(indexOfFirstUser, indexOfLastUser);
-  // console.log(currentUsers);
 
   function searchUser(nome_user: string) {
     const filteredUsers = data.filter(user =>
@@ -176,7 +175,7 @@ export function EventRegistrationTable({ data }: IEventRegistrationTableProps) {
           <TableBody>
             {currentUsers.map(item => (
               <EventRegistrationTableRow
-                key={`${item.nome_cracha}-${item.email}`}
+                key={`${item.uuid_user}-${item.email}`}
                 item={item}
                 onToggleCredential={handleToggleCredential}
               />

@@ -17,6 +17,7 @@ import { useEventsContext } from '../../hooks/useEventsContext';
 import { api } from '@/core/lib/axios';
 
 export function EditParticipantPage() {
+  // transformar essa página em um modal
   const { user_id } = useParams() as { user_id: string };
   const { currentEvent } = useEventsContext();
   const [atividades, setAtividades] = useState({});
@@ -40,6 +41,7 @@ export function EditParticipantPage() {
   }
 
   useEffect(() => {
+    console.log('chegou aqui', user_id);
     const fetchData = async () => {
       const { data: user } = await api.get(
         getParticipantDataEndpoint(currentEvent.uuid_evento, user_id)
@@ -96,7 +98,7 @@ export function EditParticipantPage() {
 
   return (
     <section className='mx-auto max-w-3xl'>
-      <h2 className='text-3xl font-bold tracking-tight'>Editar usuário</h2>
+      <h2 className='text-3xl font-bold tracking-tight'>Editar participante</h2>
 
       <form
         onSubmit={handleSubmit(onSubmit)}

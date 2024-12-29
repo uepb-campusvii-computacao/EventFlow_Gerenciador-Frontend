@@ -19,10 +19,10 @@ export function EventSubscribersPage() {
       'text-red-500',
       'text-blue-500',
       'text-yellow-500',
-    ]; // Adicione mais cores conforme necessário
+    ];
     const coresMap = {};
     lotes.forEach((lote, index) => {
-      coresMap[lote] = cores[index % cores.length]; // corrigir erro de any aqui
+      coresMap[lote] = cores[index % cores.length]; // remover essa porra
     });
     return coresMap;
   }
@@ -54,7 +54,7 @@ export function EventSubscribersPage() {
           (item: ISubscribersEntity) => {
             const cor_texto = gerarCorTexto(item.uuid_lote, coresMap);
             return {
-              uui_user: item.uuid_user,
+              uuid_user: item.uuid_user,
               nome: item.nome,
               nome_cracha: item.nome_cracha,
               email: item.email,

@@ -45,6 +45,10 @@ export function RoutesWrapper() {
               path={`${paths.participante}/editar/:user_id`}
               element={<EditParticipantPage />}
             />
+            <Route
+              path={`${paths.eventos}/editar/:event_id`}
+              element={<EditParticipantPage />}
+            />
             <Route path={paths.atividades} element={<ActivityPage />} />
             <Route
               path={`${paths.atividades}/:id`}
