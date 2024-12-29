@@ -130,8 +130,10 @@ export function EventRegistrationTable({ data }: IEventRegistrationTableProps) {
   }
 
   const handleToggleCredential = async (user_id: string, checked: boolean) => {
+    // @TODO: corrigir o comportamento do switch nessa tabela
     try {
       if (checked) {
+        console.log(user_id);
         await api.put(
           loadToggleRegistrationEndpoint(currentEvent.uuid_evento, user_id)
         );
@@ -143,7 +145,6 @@ export function EventRegistrationTable({ data }: IEventRegistrationTableProps) {
         toast.success('Credenciamento Desmarcado');
       }
     } catch (error) {
-      console.error('Erro ao alterar credenciamento:', error);
       toast.error('Erro ao alterar credenciamento');
     }
   };

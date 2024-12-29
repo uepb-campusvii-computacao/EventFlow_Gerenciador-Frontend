@@ -29,7 +29,7 @@ export function EventRegistrationPage() {
         const mappedResponse = data.all_subscribers.map(
           (item: ISubscribersEntity) => {
             return {
-              uui_user: item.uuid_user,
+              uuid_user: item.uuid_user,
               nome: item.nome,
               nome_cracha: item.nome_cracha,
               email: item.email,
