@@ -2,11 +2,9 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
-import { Trash } from '@phosphor-icons/react';
 import { FaSpinner } from 'react-icons/fa';
 
 import { Loading } from '../../../core/components/Loading';
-import { Modal } from '../../../core/components/Modal';
 
 import { deleteUserDataEndpoint } from '../../utils/participants/loadDeleteParticipantEndpoint';
 import { getParticipantDataEndpoint } from '../../utils/participants/loadGetParticipantEndpoint';
@@ -17,7 +15,7 @@ import { useEventsContext } from '../../hooks/useEventsContext';
 import { api } from '@/core/lib/axios';
 
 export function EditParticipantPage() {
-  // transformar essa página em um modal
+  // transformar essa página em um modal -> parte visual feita, agora fazer a parte lógica
   const { user_id } = useParams() as { user_id: string };
   const { currentEvent } = useEventsContext();
   const [atividades, setAtividades] = useState({});
@@ -307,7 +305,7 @@ export function EditParticipantPage() {
         </div>
       </form>
 
-      <Modal open={open} onClose={() => setOpen(false)}>
+      {/* <Modal open={open} onClose={() => setOpen(false)}>
         <div className='w-56 text-center'>
           <Trash size={56} className='mx-auto text-red-500' />
           <div className='mx-auto my-4 w-48'>
@@ -331,7 +329,7 @@ export function EditParticipantPage() {
             </button>
           </div>
         </div>
-      </Modal>
+      </Modal> */}
     </section>
   );
 }

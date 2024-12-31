@@ -6,7 +6,6 @@ import * as XLSX from 'xlsx';
 import { ISubscribersEntity } from '../../domain/entities/subscribersEntity';
 import { useEventsContext } from '../../hooks/useEventsContext';
 import { loadToggleRegistrationEndpoint } from '../../utils/loadToggleRegistrationEndpoint';
-import { Pagination } from '../../../core/components/Pagination';
 import { api } from '@/core/lib/axios';
 import {
   Table,
@@ -16,6 +15,7 @@ import {
   TableRow,
 } from '@/core/components/ui/table';
 import { EventRegistrationTableRow } from './event-registration-table-row';
+import { Pagination } from '@/core/components/ui/pagination';
 
 interface IEventRegistrationTableProps {
   data: ISubscribersEntity[];
