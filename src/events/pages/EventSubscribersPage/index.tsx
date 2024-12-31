@@ -6,8 +6,8 @@ import { loadSubscribersEndpoint } from '../../utils/loadSubscribersEndpoint';
 import { Loading } from '../../../core/components/Loading';
 import { EventSubscribersTable } from '../../components/EventSubscribersTable';
 import { api } from '@/core/lib/axios';
-// import { Pagination } from '@/core/components/Pagination';
 import { EventSubscribersTableFilters } from '@/events/components/EventSubscribersTable/event-subscribers-table-filters';
+import { Title } from '@/core/components/ui/title';
 
 export function EventSubscribersPage() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -44,9 +44,12 @@ export function EventSubscribersPage() {
         <Loading />
       ) : (
         <div className='flex flex-col gap-4'>
-          <h2 className='text-3xl font-bold tracking-tight'>Inscrições</h2>
+          <Title>Inscritos</Title>
+
           <EventSubscribersTableFilters />
+
           <EventSubscribersTable data={tableData} />
+
           <div className='flex w-full items-center justify-center px-8 py-3'>
             {/* <Pagination
               usersPerPage={state.usersPerPage}

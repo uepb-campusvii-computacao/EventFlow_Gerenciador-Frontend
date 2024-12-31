@@ -9,6 +9,7 @@ import { loadLotsEndpoint } from '../../utils/loadLotsEndpoint';
 import { LotsTable } from '../../components/LotsTable';
 import { useEventsContext } from '../../../events/hooks/useEventsContext';
 import { api } from '@/core/lib/axios';
+import { Title } from '@/core/components/ui/title';
 
 export function LotesPage() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -52,7 +53,8 @@ export function LotesPage() {
         <Loading />
       ) : (
         <div className='flex flex-col gap-4'>
-          <h2 className='text-3xl font-bold tracking-tight'>Lotes</h2>
+          <Title>Lotes</Title>
+
           <div className='rounded-md border'>
             <LotsTable data={tableData} />
           </div>

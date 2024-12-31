@@ -11,6 +11,7 @@ import { useEventsContext } from '../../../events/hooks/useEventsContext';
 
 import { env } from '@/env';
 import { api } from '@/core/lib/axios';
+import { Title } from '../ui/title';
 
 export function Dashboard() {
   const [isLoading, setIsLoading] = useState(true);
@@ -65,7 +66,8 @@ export function Dashboard() {
         <Loading />
       ) : (
         <div className='flex flex-col gap-4'>
-          <h2 className='text-3xl font-bold tracking-tight'>Dashboard</h2>
+          <Title>Dashboard</Title>
+
           <div className='grid grid-cols-3 gap-4'>
             <TotalRegistrationsCard
               total={financialData.totalInscritos.toString()}

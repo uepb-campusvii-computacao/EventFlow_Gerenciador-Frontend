@@ -6,6 +6,7 @@ import { ISubscribersEntity } from '../../domain/entities/subscribersEntity';
 import { Loading } from '../../../core/components/Loading';
 import { Raffle } from '../../components/Raffle';
 import { api } from '@/core/lib/axios';
+import { Title } from '@/core/components/ui/title';
 
 export function EventRafflePage() {
   const [users, setUsers] = useState<ISubscribersEntity[]>([]);
@@ -35,12 +36,11 @@ export function EventRafflePage() {
       {load ? (
         <Loading />
       ) : (
-        <>
-          <h2 className='text-3xl font-bold tracking-tight'>
-            Sorteio de inscritos
-          </h2>
+        <div className='flex flex-col gap-4'>
+          <Title>Sorteio de inscritos</Title>
+
           <Raffle data={users} />
-        </>
+        </div>
       )}
     </>
   );

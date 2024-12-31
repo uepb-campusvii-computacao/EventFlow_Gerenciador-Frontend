@@ -13,6 +13,7 @@ import { editParticipantDataEndpoint } from '../../utils/participants/loadEditPa
 
 import { useEventsContext } from '../../hooks/useEventsContext';
 import { api } from '@/core/lib/axios';
+import { Title } from '@/core/components/ui/title';
 
 export function EditParticipantPage() {
   // transformar essa página em um modal -> parte visual feita, agora fazer a parte lógica
@@ -96,7 +97,7 @@ export function EditParticipantPage() {
 
   return (
     <section className='mx-auto max-w-3xl'>
-      <h2 className='text-3xl font-bold tracking-tight'>Editar participante</h2>
+      <Title>Editar participante</Title>
 
       <form
         onSubmit={handleSubmit(onSubmit)}
@@ -304,7 +305,6 @@ export function EditParticipantPage() {
           </button>
         </div>
       </form>
-
       {/* <Modal open={open} onClose={() => setOpen(false)}>
         <div className='w-56 text-center'>
           <Trash size={56} className='mx-auto text-red-500' />

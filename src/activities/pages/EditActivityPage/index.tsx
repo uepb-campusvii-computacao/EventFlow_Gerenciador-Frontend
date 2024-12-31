@@ -7,6 +7,7 @@ import { toast } from 'react-toastify';
 import { IActivityDataEditFormEntity } from '../../domain/entities/activityEntity';
 import { Loading } from '../../../core/components/Loading';
 import { api } from '@/core/lib/axios';
+import { Title } from '@/core/components/ui/title';
 
 const fetchDataEndpoint = (atividade_id: string) => {
   return `/atividades/${atividade_id}`;
@@ -65,7 +66,7 @@ export function EditActivityPage() {
 
   return (
     <section className='mx-auto max-w-3xl pb-8 sm:pb-16'>
-      <h2 className='text-3xl font-bold tracking-tight'>Editar atividade</h2>
+      <Title>Editar atividade</Title>
 
       <form
         onSubmit={handleSubmit(onSubmit)}

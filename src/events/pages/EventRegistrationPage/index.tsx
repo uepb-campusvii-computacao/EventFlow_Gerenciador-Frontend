@@ -12,6 +12,7 @@ import { Loading } from '../../../core/components/Loading';
 import { EventRegistrationTable } from '../../components/EventRegistrationTable';
 import { api } from '@/core/lib/axios';
 import { EventRegistrationTableFilters } from '@/events/components/EventRegistrationTable/event-registration-table-filters';
+import { Title } from '@/core/components/ui/title';
 
 export function EventRegistrationPage() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -55,7 +56,7 @@ export function EventRegistrationPage() {
         <Loading />
       ) : (
         <div className='flex flex-col gap-4'>
-          <h2 className='text-3xl font-bold tracking-tight'>Credenciamentos</h2>
+          <Title>Credenciamentos</Title>
 
           <div className='space-y-2'>
             <EventRegistrationTableFilters />
