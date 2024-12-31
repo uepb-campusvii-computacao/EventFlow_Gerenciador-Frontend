@@ -1,9 +1,9 @@
 import { Outlet } from 'react-router-dom';
 
 import { SidebarProvider } from '@/core/components/ui/sidebar';
-import { Header } from '@/core/components/Header';
 import { AppSidebar } from '../components/Sidebar';
 import { EventProvider } from '@/events/hooks/useEventsContext';
+import { Header } from '../components/ui/header';
 
 export function AppLayout() {
   return (

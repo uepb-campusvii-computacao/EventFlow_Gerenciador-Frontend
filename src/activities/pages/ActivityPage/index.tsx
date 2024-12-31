@@ -9,7 +9,7 @@ import { useEventsContext } from '../../../events/hooks/useEventsContext';
 import { api } from '@/core/lib/axios';
 import { ActivityTableFilters } from '@/activities/components/ActivityTable/activity-table-filters';
 import { IActivityEntity } from '@/activities/domain/entities/activityEntity';
-import { Pagination } from '@/core/components/Pagination';
+import { Pagination } from '@/core/components/ui/pagination';
 
 interface IActivityPageState {
   data: IActivityEntity[];
