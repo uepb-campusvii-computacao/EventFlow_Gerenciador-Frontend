@@ -4,14 +4,14 @@ import { LotsTable } from '../../components/LotsTable';
 import { useEventsContext } from '../../../events/hooks/useEventsContext';
 import { Title } from '@/core/components/ui/title';
 import { Spinner } from '@/core/components/spinner';
-import { getLotsData } from '@/lots/api/get-lots-data';
+import { listLotsService } from '@/lots/data/services/listLots';
 
 export function LotesPage() {
   const { currentEvent } = useEventsContext();
 
   const { data, isLoading } = useQuery({
     queryKey: ['lots-data'],
-    queryFn: () => getLotsData(currentEvent.uuid_evento),
+    queryFn: () => listLotsService(currentEvent.uuid_evento),
   });
 
   return (

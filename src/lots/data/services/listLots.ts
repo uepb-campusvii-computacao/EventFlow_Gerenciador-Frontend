@@ -1,6 +1,6 @@
 import { api } from '@/core/lib/axios';
 
-interface IGetLotsDataResponse {
+interface IListLotsServiceDataResponse {
   uuid_lote: string;
   uuid_evento: string;
   preco: number;
@@ -9,8 +9,8 @@ interface IGetLotsDataResponse {
   ativo: boolean;
 }
 
-export async function getLotsData(eventId: string) {
-  const response = await api.get<IGetLotsDataResponse[]>(
+export async function listLotsService(eventId: string) {
+  const response = await api.get<IListLotsServiceDataResponse[]>(
     `/events/${eventId}/all/lotes`
   );
 
