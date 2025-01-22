@@ -58,7 +58,7 @@ export function LoginFormPage() {
         <div className='flex items-center'>
           <img className='w-35 h-10' src={logo} alt='Logo' />
         </div>
-        <footer className='text-sm'>
+        <footer className='w-full border-b-2 text-sm'>
           Gerenciador de eventos dos parceiros &copy; event.flow -{' '}
           {new Date().getFullYear()}
         </footer>
@@ -69,7 +69,8 @@ export function LoginFormPage() {
           <CardHeader className='flex flex-col items-start justify-start gap-2'>
             <CardTitle>Entre!</CardTitle>
             <CardDescription>
-              Venha planejar as ações do seu evento!
+              Venha planejar as ações do seu evento, com o um gerenciador
+              fantástico!
             </CardDescription>
           </CardHeader>
 
