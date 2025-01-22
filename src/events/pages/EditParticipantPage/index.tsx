@@ -4,8 +4,6 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { FaSpinner } from 'react-icons/fa';
 
-import { Loading } from '../../../core/components/Loading';
-
 import { deleteUserDataEndpoint } from '../../utils/participants/loadDeleteParticipantEndpoint';
 import { getParticipantDataEndpoint } from '../../utils/participants/loadGetParticipantEndpoint';
 import { getFormDataEndpoint } from '../../utils/participants/loadGetParticipantFormEndpoint';
@@ -14,6 +12,7 @@ import { editParticipantDataEndpoint } from '../../utils/participants/loadEditPa
 import { useEventsContext } from '../../hooks/useEventsContext';
 import { api } from '@/core/lib/axios';
 import { Title } from '@/core/components/ui/title';
+import { Spinner } from '@/core/components/spinner';
 
 export function EditParticipantPage() {
   // transformar essa página em um modal -> parte visual feita, agora fazer a parte lógica
@@ -92,7 +91,7 @@ export function EditParticipantPage() {
   }
 
   if (isLoading) {
-    return <Loading />;
+    return <Spinner />;
   }
 
   return (

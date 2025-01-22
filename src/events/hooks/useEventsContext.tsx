@@ -9,8 +9,8 @@ import { toast } from 'react-toastify';
 
 import { useAuthContext } from '../../auth/hooks/useAuthContext';
 import { IEventEntity } from '../domain/entities/eventEntity';
-import { Loading } from '../../core/components/Loading';
 import { api } from '@/core/lib/axios';
+import { Spinner } from '@/core/components/spinner';
 
 interface IEventContext {
   events: IEventEntity[];
@@ -88,7 +88,7 @@ export function EventProvider({ children }: IEventProviderProps) {
         getEventDataById,
       }}
     >
-      {isLoading ? <Loading /> : children}
+      {isLoading ? <Spinner /> : children}
     </EventContext.Provider>
   );
 }

@@ -3,11 +3,11 @@ import { toast } from 'react-toastify';
 
 import { useEventsContext } from '../../hooks/useEventsContext';
 import { loadSubscribersEndpoint } from '../../utils/loadSubscribersEndpoint';
-import { Loading } from '../../../core/components/Loading';
 import { EventSubscribersTable } from '../../components/EventSubscribersTable';
 import { api } from '@/core/lib/axios';
 import { EventSubscribersTableFilters } from '@/events/components/EventSubscribersTable/event-subscribers-table-filters';
 import { Title } from '@/core/components/ui/title';
+import { Spinner } from '@/core/components/spinner';
 
 export function EventSubscribersPage() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -41,7 +41,7 @@ export function EventSubscribersPage() {
   return (
     <>
       {isLoading ? (
-        <Loading />
+        <Spinner />
       ) : (
         <div className='flex flex-col gap-4'>
           <Title>Inscritos</Title>

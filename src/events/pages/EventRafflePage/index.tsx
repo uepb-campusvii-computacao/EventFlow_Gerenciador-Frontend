@@ -3,10 +3,10 @@ import { toast } from 'react-toastify';
 
 import { useEventsContext } from '../../hooks/useEventsContext';
 import { ISubscribersEntity } from '../../domain/entities/subscribersEntity';
-import { Loading } from '../../../core/components/Loading';
 import { Raffle } from '../../components/Raffle';
 import { api } from '@/core/lib/axios';
 import { Title } from '@/core/components/ui/title';
+import { Spinner } from '@/core/components/spinner';
 
 export function EventRafflePage() {
   const [users, setUsers] = useState<ISubscribersEntity[]>([]);
@@ -34,7 +34,7 @@ export function EventRafflePage() {
   return (
     <>
       {load ? (
-        <Loading />
+        <Spinner />
       ) : (
         <div className='flex flex-col gap-4'>
           <Title>Sorteio de inscritos</Title>

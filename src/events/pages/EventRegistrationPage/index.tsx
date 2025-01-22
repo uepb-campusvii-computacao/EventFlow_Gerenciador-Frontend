@@ -8,11 +8,11 @@ import {
   ISubscribersEntity,
   StatusPagamento,
 } from '../../domain/entities/subscribersEntity';
-import { Loading } from '../../../core/components/Loading';
 import { EventRegistrationTable } from '../../components/EventRegistrationTable';
 import { api } from '@/core/lib/axios';
 import { EventRegistrationTableFilters } from '@/events/components/EventRegistrationTable/event-registration-table-filters';
 import { Title } from '@/core/components/ui/title';
+import { Spinner } from '@/core/components/spinner';
 
 export function EventRegistrationPage() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -53,7 +53,7 @@ export function EventRegistrationPage() {
   return (
     <>
       {isLoading ? (
-        <Loading />
+        <Spinner />
       ) : (
         <div className='flex flex-col gap-4'>
           <Title>Credenciamentos</Title>
