@@ -71,7 +71,7 @@ export function RegistrationsChart({ data, total }: RegistrationsChartProps) {
                           y={viewBox.cy}
                           className='fill-foreground text-3xl font-bold'
                         >
-                          {total.toLocaleString()}
+                          {total?.toLocaleString()}
                         </tspan>
                         <tspan
                           x={viewBox.cx}
