@@ -1,5 +1,6 @@
 export interface ILotsEntity {
   uuid_lote: string;
+  uuid_evento: string;
   nome: string;
   descricao: string;
   preco: number;
@@ -7,7 +8,7 @@ export interface ILotsEntity {
 }
 
 export interface ILotsTableDataEntity {
-  id: string
+  id: string;
   nome: string;
   descricao: string;
   preco: number;

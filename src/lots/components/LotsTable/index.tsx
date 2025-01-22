@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ILotsTableDataEntity } from '../../domain/entities/lotsEntity';
+import { ILotsEntity } from '../../domain/entities/lotsEntity';
 import { formatPrice } from '../../../core/utils/formatPrice';
 import {
   Table,
@@ -15,11 +15,11 @@ import { api } from '@/core/lib/axios';
 import { toast } from 'react-toastify';
 
 interface LotesTableProps {
-  data: ILotsTableDataEntity[];
+  data: ILotsEntity[];
 }
 
 export function LotsTable({ data }: LotesTableProps) {
-  const [lotes, setLotes] = useState<ILotsTableDataEntity[]>(data);
+  const [lotes, setLotes] = useState<ILotsEntity[]>(data);
   const [loading, setLoading] = useState<boolean>(false);
 
   const handleToggleActive = async (lotId: string) => {
@@ -28,7 +28,7 @@ export function LotsTable({ data }: LotesTableProps) {
     try {
       setLotes(prevLotes =>
         prevLotes.map(lote =>
-          lote.id === lotId ? { ...lote, ativo: !lote.ativo } : lote
+          lote.uuid_lote === lotId ? { ...lote, ativo: !lote.ativo } : lote
         )
       );
 
@@ -61,7 +61,7 @@ export function LotsTable({ data }: LotesTableProps) {
       </TableHeader>
       <TableBody>
         {lotes.map(item => (
-          <TableRow key={item.id}>
+          <TableRow key={item.uuid_lote}>
             <TableCell>{item.nome}</TableCell>
             <TableCell>{item.descricao || 'Não disponível'}</TableCell>
             <TableCell>{formatPrice(item.preco)}</TableCell>
@@ -69,7 +69,7 @@ export function LotsTable({ data }: LotesTableProps) {
               <Switch
                 disabled={loading}
                 checked={item.ativo}
-                onCheckedChange={() => handleToggleActive(item.id)}
+                onCheckedChange={() => handleToggleActive(item.uuid_lote)}
               />
             </TableCell>
           </TableRow>
