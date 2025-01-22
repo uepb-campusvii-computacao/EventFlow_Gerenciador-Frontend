@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 
 import { loadGetActivitiesData } from '../../utils/loadGetActivitiesData';
-import { Loading } from '../../../core/components/Loading';
 import { ActivityTable } from '../../components/ActivityTable';
 
 import { useEventsContext } from '../../../events/hooks/useEventsContext';
@@ -11,6 +10,7 @@ import { ActivityTableFilters } from '@/activities/components/ActivityTable/acti
 import { IActivityEntity } from '@/activities/domain/entities/activityEntity';
 import { Pagination } from '@/core/components/ui/pagination';
 import { Title } from '@/core/components/ui/title';
+import { Spinner } from '@/core/components/spinner';
 
 interface IActivityPageState {
   data: IActivityEntity[];
@@ -86,7 +86,7 @@ export function ActivityPage() {
   return (
     <>
       {isLoading ? (
-        <Loading />
+        <Spinner />
       ) : (
         <div className='flex flex-col gap-4'>
           <Title>Atividades</Title>

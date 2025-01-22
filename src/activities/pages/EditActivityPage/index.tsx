@@ -5,9 +5,9 @@ import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 import { IActivityDataEditFormEntity } from '../../domain/entities/activityEntity';
-import { Loading } from '../../../core/components/Loading';
 import { api } from '@/core/lib/axios';
 import { Title } from '@/core/components/ui/title';
+import { Spinner } from '@/core/components/spinner';
 
 const fetchDataEndpoint = (atividade_id: string) => {
   return `/atividades/${atividade_id}`;
@@ -61,7 +61,7 @@ export function EditActivityPage() {
   }
 
   if (isLoading) {
-    return <Loading />;
+    return <Spinner />;
   }
 
   return (

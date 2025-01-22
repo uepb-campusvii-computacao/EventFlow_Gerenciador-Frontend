@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { Loading } from '../../../core/components/Loading';
 import { PresenceTable } from '../../components/PresenceTable';
 
 import {
@@ -11,6 +10,7 @@ import {
 import { toast } from 'react-toastify';
 import { api } from '@/core/lib/axios';
 import { Button } from '@/core/components/ui/button';
+import { Spinner } from '@/core/components/spinner';
 
 interface IActivityProps {
   name: string;
@@ -59,7 +59,7 @@ export function ActivityPresencePage() {
   return (
     <>
       {isLoading ? (
-        <Loading />
+        <Spinner />
       ) : (
         <div className='flex flex-col'>
           <div>
