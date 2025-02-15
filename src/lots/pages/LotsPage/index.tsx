@@ -9,7 +9,7 @@ import { listLotsService } from '@/lots/data/services/listLots';
 export function LotesPage() {
   const { currentEvent } = useEventsContext();
 
-  const { data, isLoading } = useQuery({
+  const { data: lotsData, isLoading } = useQuery({
     queryKey: ['lots-data'],
     queryFn: () => listLotsService(currentEvent.uuid_evento),
   });
@@ -24,9 +24,11 @@ export function LotesPage() {
         <div className='flex flex-col gap-4'>
           <Title>Lotes</Title>
 
-          <div className='rounded-md border'>
-            <LotsTable data={data} />
-          </div>
+          {lotsData && (
+            <div className='rounded-md border'>
+              <LotsTable data={lotsData} />
+            </div>
+          )}
         </div>
       )}
     </>

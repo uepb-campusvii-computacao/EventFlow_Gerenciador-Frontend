@@ -2,7 +2,7 @@ export interface ILotsEntity {
   uuid_lote: string;
   uuid_evento: string;
   nome: string;
-  descricao: string;
+  descricao: string | null;
   preco: number;
   ativo: boolean;
 }

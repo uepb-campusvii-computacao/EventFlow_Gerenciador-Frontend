@@ -1,4 +1,6 @@
-import { useState } from 'react';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { toast } from 'react-toastify';
+
 import { ILotsEntity } from '../../domain/entities/lotsEntity';
 import { formatPrice } from '../../../core/utils/formatPrice';
 import {
@@ -10,36 +12,30 @@ import {
   TableRow,
 } from '@/core/components/ui/table';
 import { Switch } from '@/core/components/ui/switch';
-
-import { api } from '@/core/lib/axios';
-import { toast } from 'react-toastify';
+import { toggleLot } from '@/lots/data/services/toggleLot';
 
 interface LotesTableProps {
   data: ILotsEntity[];
 }
 
 export function LotsTable({ data }: LotesTableProps) {
-  const [lotes, setLotes] = useState<ILotsEntity[]>(data);
-  const [loading, setLoading] = useState<boolean>(false);
+  const queryClient = useQueryClient();
+  const { mutateAsync: updateActiveLot, isPending } = useMutation({
+    mutationFn: toggleLot,
+    mutationKey: ['toggle-lot'],
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['lots-data'] });
+    },
+  });
 
-  const handleToggleActive = async (lotId: string) => {
-    setLoading(true);
-
+  async function handleToggleLot(lotId: string) {
     try {
-      setLotes(prevLotes =>
-        prevLotes.map(lote =>
-          lote.uuid_lote === lotId ? { ...lote, ativo: !lote.ativo } : lote
-        )
-      );
-
-      await api.put(`/lote/${lotId}/change_inscricoes_visibility`);
-      toast.success('Lote alterado com sucesso.');
+      await updateActiveLot(lotId);
+      toast.success('Lote alterado com sucesso!');
     } catch (error) {
-      console.error('Erro ao alternar o estado ativo do lote:', error);
-    } finally {
-      setLoading(false);
+      toast.error('Erro ao alterar lote!');
     }
-  };
+  }
 
   return (
     <Table>
@@ -60,16 +56,16 @@ export function LotsTable({ data }: LotesTableProps) {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {lotes.map(item => (
+        {data.map(item => (
           <TableRow key={item.uuid_lote}>
             <TableCell>{item.nome}</TableCell>
             <TableCell>{item.descricao || 'Não disponível'}</TableCell>
             <TableCell>{formatPrice(item.preco)}</TableCell>
             <TableCell>
               <Switch
-                disabled={loading}
+                disabled={isPending}
                 checked={item.ativo}
-                onCheckedChange={() => handleToggleActive(item.uuid_lote)}
+                onCheckedChange={() => handleToggleLot(item.uuid_lote)}
               />
             </TableCell>
           </TableRow>
