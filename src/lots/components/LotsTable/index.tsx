@@ -28,10 +28,12 @@ export function LotsTable({ data }: LotesTableProps) {
     },
   });
 
-  async function handleToggleLot(lotId: string) {
+  async function handleToggleLot(lotId: string, checked: boolean) {
+    const message = checked ? 'ativado' : 'inativado';
+
     try {
       await updateActiveLot(lotId);
-      toast.success('Lote alterado com sucesso!');
+      toast.success(`Lote ${message} com sucesso!`);
     } catch (error) {
       toast.error('Erro ao alterar lote!');
     }
@@ -65,7 +67,9 @@ export function LotsTable({ data }: LotesTableProps) {
               <Switch
                 disabled={isPending}
                 checked={item.ativo}
-                onCheckedChange={() => handleToggleLot(item.uuid_lote)}
+                onCheckedChange={checked =>
+                  handleToggleLot(item.uuid_lote, checked)
+                }
               />
             </TableCell>
           </TableRow>
