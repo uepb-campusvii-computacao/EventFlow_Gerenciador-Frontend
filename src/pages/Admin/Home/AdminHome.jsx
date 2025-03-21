@@ -37,6 +37,7 @@ const AdminHome = () => {
             total_arrecadado_vendas: vVend ? vVend : 0},
           inscricoesPendentes: data.inscricoes_pendentes,
           inscriicoesCanceladas: data.inscricoes_canceladas,
+          inscricoesRejeitadas: data.inscricoes_rejeitadas,
           inscricoesGratuitas: data.inscricoes_gratuitas          
         });
       } catch (error) {
@@ -97,7 +98,9 @@ const AdminHome = () => {
                 title={"INSCRIÇÕES REALIZADAS"} 
                 data={[
                   { name: 'Pagas', value: financialData.totalInscritos - (financialData.inscricoesPendentes + financialData.inscricoesGratuitas), color: '#0088FE'},
-                  { name: 'Pendentes', value: financialData.inscricoesPendentes, color: '#af3d39'},
+                  { name: 'Pendentes', value: financialData.inscricoesPendentes, color: '#afad39'},
+                  { name: 'Canceladas', value: financialData.inscriicoesCanceladas, color: '#a1a1a1'},
+                  { name: 'Rejeitadas', value: financialData.inscricoesRejeitadas, color: '#af3d39'},
                   { name: 'Gratis', value: financialData.inscricoesGratuitas, color: '#127205'},
                 ]}
                 total={financialData.totalInscritos}
