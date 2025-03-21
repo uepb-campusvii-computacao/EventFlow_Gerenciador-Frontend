@@ -264,14 +264,19 @@ const InscritosTable = ({ data }) => {
                       {item.paymentStatus}
                     </span>
                   ) : item.paymentStatus === "PENDENTE" || item.paymentStatus === "EXPIRADO" ? (
+                    <span className="bg-yellow-100 text-yellow-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-yellow-900 dark:text-yellow-300">
+                      {item.paymentStatus}
+                    </span>
+                  ) : item.paymentStatus === "CANCELADO" ? (
                     <span className="bg-red-100 text-red-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-red-900 dark:text-red-300">
                       {item.paymentStatus}
                     </span>
-                  ) : (
+                  ): (
                     <span className="bg-gray-400 text-white text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-400 dark:text-white">
                       {item.paymentStatus}
                     </span>
-                  )}
+                  )
+                    }
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-black text-center">
                   <a

@@ -278,6 +278,7 @@ const AdminEdicaoUsuario = () => {
           >
             <option value="">Selecione o Status de Pagamento...</option>
             <option value="PENDENTE">Pendente</option>
+            <option value="CANCELADO">Cancelado</option>  
             <option value="REALIZADO">Realizado</option>
             <option value="EXPIRADO">Expirado</option>
             <option value="GRATUITO">Gratuito</option>

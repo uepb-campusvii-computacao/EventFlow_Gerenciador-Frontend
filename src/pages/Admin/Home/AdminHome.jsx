@@ -16,6 +16,7 @@ const AdminHome = () => {
     totalArrecadado: {totalArrecadadoInscricoes: 0, totalArrecadadoVendas: 0},
     inscricoesPendentes: 0,
     inscricoesGratuitas: 0,
+    inscriicoesCanceladas: 0
   });
   const { currentEvent } = useContext(EventContext);
 
@@ -35,6 +36,7 @@ const AdminHome = () => {
             total_arrecadado_inscricoes: vInsc ? vInsc : 0, 
             total_arrecadado_vendas: vVend ? vVend : 0},
           inscricoesPendentes: data.inscricoes_pendentes,
+          inscriicoesCanceladas: data.inscricoes_canceladas,
           inscricoesGratuitas: data.inscricoes_gratuitas          
         });
       } catch (error) {
