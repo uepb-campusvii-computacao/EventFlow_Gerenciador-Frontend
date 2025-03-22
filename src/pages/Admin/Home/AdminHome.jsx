@@ -14,6 +14,8 @@ const AdminHome = () => {
     totalInscritos: 0,
     totalCredenciados: 0,
     totalArrecadado: {totalArrecadadoInscricoes: 0, totalArrecadadoVendas: 0},
+    inscricoesRealizadas: 0,
+    inscricoesRejeitadas: 0,
     inscricoesPendentes: 0,
     inscricoesGratuitas: 0,
     inscriicoesCanceladas: 0
@@ -35,6 +37,7 @@ const AdminHome = () => {
           totalArrecadado:  {
             total_arrecadado_inscricoes: vInsc ? vInsc : 0, 
             total_arrecadado_vendas: vVend ? vVend : 0},
+          inscricoesRealizadas: data.inscricoes_realizadas,
           inscricoesPendentes: data.inscricoes_pendentes,
           inscriicoesCanceladas: data.inscricoes_canceladas,
           inscricoesRejeitadas: data.inscricoes_rejeitadas,
@@ -97,7 +100,7 @@ const AdminHome = () => {
               <PieChart 
                 title={"INSCRIÇÕES REALIZADAS"} 
                 data={[
-                  { name: 'Pagas', value: financialData.totalInscritos - (financialData.inscricoesPendentes + financialData.inscricoesGratuitas), color: '#0088FE'},
+                  { name: 'Pagas', value: financialData.inscricoesRealizadas, color: '#0088FE'},
                   { name: 'Pendentes', value: financialData.inscricoesPendentes, color: '#afad39'},
                   { name: 'Canceladas', value: financialData.inscriicoesCanceladas, color: '#a1a1a1'},
                   { name: 'Rejeitadas', value: financialData.inscricoesRejeitadas, color: '#af3d39'},
